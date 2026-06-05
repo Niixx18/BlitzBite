@@ -97,3 +97,54 @@ body {
     box-shadow: 0 12px 24px rgba(0,0,0,0.06);
   }
 }
+
+@keyframes shimmer {
+  0% { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}
+
+@keyframes slide-up {
+  from { opacity: 0; transform: translateY(16px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes fade-in-up {
+  from { opacity: 0; transform: translateY(8px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes pulse-soft {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.6; }
+}
+
+@utility skeleton {
+  background: linear-gradient(90deg, #ffe9e2 25%, #fadcd2 50%, #ffe9e2 75%);
+  background-size: 200% 100%;
+  animation: shimmer 1.5s infinite;
+  border-radius: 0.75rem;
+}
+
+@utility animate-slide-up {
+  animation: slide-up 0.35s ease both;
+}
+
+@utility animate-fade-in-up {
+  animation: fade-in-up 0.3s ease both;
+}
+
+@utility animate-pulse-soft {
+  animation: pulse-soft 2s ease-in-out infinite;
+}
+
+@utility dashboard-card {
+  background-color: var(--color-surface-container-lowest);
+  border: 1px solid color-mix(in srgb, var(--color-outline-variant) 30%, transparent);
+  border-radius: 1.5rem;
+  box-shadow: 0 1px 4px rgba(39,24,18,0.06);
+  transition: box-shadow 0.2s ease, transform 0.2s ease;
+  &:hover {
+    box-shadow: 0 6px 20px rgba(39,24,18,0.09);
+    transform: translateY(-1px);
+  }
+}
