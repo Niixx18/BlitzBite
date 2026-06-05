@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Customer Profile Dashboard - BlitzFood</title>
+<!-- Material Symbols -->
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Google Fonts: Geist -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Tailwind CSS -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<!-- Tailwind Config from Brand Anchors -->
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "on-tertiary-fixed-variant": "#454747",
+                    "on-primary-container": "#521800",
+                    "error": "#ba1a1a",
+                    "tertiary": "#5d5f5f",
+                    "on-error-container": "#93000a",
+                    "secondary": "#5f5e5e",
+                    "background": "#fff8f6",
+                    "surface-container-lowest": "#ffffff",
+                    "secondary-fixed-dim": "#c8c6c5",
+                    "surface-variant": "#fadcd2",
+                    "surface-tint": "#a73a00",
+                    "inverse-primary": "#ffb59a",
+                    "on-background": "#271812",
+                    "on-primary-fixed-variant": "#802a00",
+                    "on-secondary-fixed-variant": "#474646",
+                    "inverse-on-surface": "#ffede7",
+                    "primary": "#a73a00",
+                    "surface-bright": "#fff8f6",
+                    "surface-container": "#ffe9e2",
+                    "primary-container": "#ff5c00",
+                    "on-secondary-fixed": "#1c1b1b",
+                    "inverse-surface": "#3e2c26",
+                    "secondary-fixed": "#e5e2e1",
+                    "surface-container-high": "#ffe2d8",
+                    "primary-fixed-dim": "#ffb59a",
+                    "on-surface": "#271812",
+                    "tertiary-fixed-dim": "#c6c6c7",
+                    "surface-dim": "#f1d4ca",
+                    "surface-container-low": "#fff1ec",
+                    "primary-fixed": "#ffdbce",
+                    "surface-container-highest": "#fadcd2",
+                    "secondary-container": "#e5e2e1",
+                    "error-container": "#ffdad6",
+                    "outline-variant": "#e4beb1",
+                    "on-secondary": "#ffffff",
+                    "on-tertiary": "#ffffff",
+                    "tertiary-container": "#929393",
+                    "on-primary": "#ffffff",
+                    "on-tertiary-fixed": "#1a1c1c",
+                    "on-primary-fixed": "#370e00",
+                    "on-tertiary-container": "#2a2c2c",
+                    "on-error": "#ffffff",
+                    "surface": "#fff8f6",
+                    "outline": "#8f7065",
+                    "on-surface-variant": "#5b4137",
+                    "on-secondary-container": "#656464",
+                    "tertiary-fixed": "#e2e2e2"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.25rem",
+                    "lg": "0.5rem",
+                    "xl": "0.75rem",
+                    "full": "9999px"
+            },
+            "spacing": {
+                    "stack-lg": "24px",
+                    "gutter": "16px",
+                    "stack-xl": "48px",
+                    "unit": "4px",
+                    "stack-sm": "8px",
+                    "stack-xs": "4px",
+                    "margin-mobile": "16px",
+                    "margin-desktop": "64px",
+                    "stack-md": "16px"
+            },
+            "fontFamily": {
+                    "body-md": ["Geist"],
+                    "display-lg": ["Geist"],
+                    "label-sm": ["Geist"],
+                    "headline-lg-mobile": ["Geist"],
+                    "body-lg": ["Geist"],
+                    "label-md": ["Geist"],
+                    "headline-md": ["Geist"],
+                    "headline-lg": ["Geist"]
+            },
+            "fontSize": {
+                    "body-md": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                    "display-lg": ["48px", {"lineHeight": "56px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                    "label-sm": ["12px", {"lineHeight": "16px", "fontWeight": "600"}],
+                    "headline-lg-mobile": ["28px", {"lineHeight": "34px", "fontWeight": "600"}],
+                    "body-lg": ["18px", {"lineHeight": "28px", "fontWeight": "400"}],
+                    "label-md": ["14px", {"lineHeight": "20px", "letterSpacing": "0.01em", "fontWeight": "500"}],
+                    "headline-md": ["24px", {"lineHeight": "32px", "fontWeight": "600"}],
+                    "headline-lg": ["32px", {"lineHeight": "40px", "letterSpacing": "-0.01em", "fontWeight": "600"}]
+            }
+          }
+        }
+      }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .material-symbols-fill {
+            font-variation-settings: 'FILL' 1, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+    </style>
+</head>
+<body class="bg-background text-on-background font-body-md min-h-screen flex antialiased">
+<!-- SideNavBar (Desktop) -->
+<nav class="hidden md:flex flex-col h-full w-64 fixed left-0 top-0 bg-surface-container-low dark:bg-surface-container-lowest py-stack-xl px-stack-md z-40 border-r border-surface-container-highest">
+<!-- Header -->
+<div class="mb-stack-xl px-stack-md">
+<h1 class="font-headline-md text-headline-md text-primary font-bold tracking-tight mb-stack-lg">BlitzFood</h1>
+<div class="flex items-center gap-stack-md">
+<img alt="User profile picture" class="w-[48px] h-[48px] rounded-full object-cover shadow-sm border-2 border-surface-container-lowest" data-alt="A close-up studio portrait of a professional urban dweller in their late twenties. The lighting is soft, high-key, and neutral, creating a pristine and modern atmosphere. The background is a clean, slightly warm off-white surface that perfectly matches a high-end corporate lifestyle app aesthetic. The subject exudes confidence and approachability, aligning with a premium food delivery brand identity." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCelw1v6vI6yEyzHhm5P5T_yYm67vMBtj-Ah9a_emikEjtzcMzZ1ZF1lWdeMo4W_7ukX5FYk9JumahkWa7-cb-6JY3QvOMDw2j1KsAvAW3jxUoAIJXlTyPyi-s2LXDformOElYZXe0bKNxx4a20qXAMmbwH1BtLwPS6SJBGyHMoj1tlASO6t_aM49YXi-7jMiewDStW_sQQmvPtMOI7Ywk08OBbWvoIofmmnOFJ9j9X2nhBLAoEbKgL52wJIPF0C4KSY6pzvt049QY"/>
+<div>
+<p class="font-label-md text-label-md text-on-surface font-semibold">Alex Thompson</p>
+<p class="font-label-sm text-label-sm text-on-surface-variant">Premium Member</p>
+</div>
+</div>
+</div>
+<!-- Navigation Links -->
+<div class="flex flex-col gap-stack-xs flex-1">
+<a class="flex items-center gap-stack-md bg-primary-container text-on-primary-container rounded-lg p-stack-md hover:bg-primary-container transition-all scale-100 active:scale-95 duration-200 shadow-sm" href="#">
+<span class="material-symbols-outlined material-symbols-fill" data-icon="person">person</span>
+<span class="font-label-md text-label-md font-semibold">Profile</span>
+</a>
+<a class="flex items-center gap-stack-md text-on-surface-variant p-stack-md rounded-lg hover:bg-surface-container-high hover:text-on-surface transition-all duration-200" href="#">
+<span class="material-symbols-outlined" data-icon="receipt_long">receipt_long</span>
+<span class="font-label-md text-label-md">My Orders</span>
+</a>
+<a class="flex items-center gap-stack-md text-on-surface-variant p-stack-md rounded-lg hover:bg-surface-container-high hover:text-on-surface transition-all duration-200" href="#">
+<span class="material-symbols-outlined" data-icon="location_on">location_on</span>
+<span class="font-label-md text-label-md">Addresses</span>
+</a>
+<a class="flex items-center gap-stack-md text-on-surface-variant p-stack-md rounded-lg hover:bg-surface-container-high hover:text-on-surface transition-all duration-200" href="#">
+<span class="material-symbols-outlined" data-icon="account_balance_wallet">account_balance_wallet</span>
+<span class="font-label-md text-label-md">Payments</span>
+</a>
+<a class="flex items-center gap-stack-md text-on-surface-variant p-stack-md rounded-lg hover:bg-surface-container-high hover:text-on-surface transition-all duration-200" href="#">
+<span class="material-symbols-outlined" data-icon="settings">settings</span>
+<span class="font-label-md text-label-md">Settings</span>
+</a>
+</div>
+<!-- Footer CTA -->
+<div class="mt-auto">
+<button class="w-full flex items-center justify-center gap-stack-sm text-on-surface-variant p-stack-md rounded-lg hover:bg-surface-container-high transition-all duration-200 font-label-md text-label-md">
+<span class="material-symbols-outlined" data-icon="logout">logout</span>
+                Logout
+            </button>
+</div>
+</nav>
+<!-- TopNavBar (Mobile Only Pivot) -->
+<nav class="md:hidden w-full sticky top-0 z-50 bg-surface/90 backdrop-blur-md shadow-sm border-b border-surface-container-highest px-margin-mobile py-stack-md flex justify-between items-center">
+<div class="flex items-center gap-stack-md">
+<h1 class="text-headline-md font-headline-md font-bold text-primary">BlitzFood</h1>
+</div>
+<div class="flex items-center gap-stack-md">
+<span class="material-symbols-outlined text-on-surface hover:text-primary transition-colors cursor-pointer" data-icon="notifications">notifications</span>
+<img alt="User profile" class="w-[32px] h-[32px] rounded-full object-cover shadow-sm" data-alt="A close-up studio portrait of a professional urban dweller in their late twenties. The lighting is soft, high-key, and neutral, creating a pristine and modern atmosphere. The background is a clean, slightly warm off-white surface that perfectly matches a high-end corporate lifestyle app aesthetic. The subject exudes confidence and approachability, aligning with a premium food delivery brand identity." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAXdGq0oM9UfEg29u_uhDO_FmuQUxWQkWqsd2a8AjBqUF-xQkunc4LS21hUaKhiNAferHShRdx20GnSzHA_pSveQBdbyd5fWGtLzYBMoHUtfPiVJy398n-UnV8HQWXlJU-yKu6rjy5FMDhJRDD2m5lXJQLrgL_0cJtyrdYbrYVKhJyULbmGyqBH5qOkHhPxNTjoh3VIKs0JCaZC97IvNQuXCXTkM4ScvGpvjyxgGgDYoBVP53sZaUkE62iZFT8jMZe2SMCEEproSG8"/>
+</div>
+</nav>
+<!-- Main Content Canvas -->
+<main class="flex-1 md:ml-64 p-margin-mobile md:p-margin-desktop w-full max-w-[1280px] mx-auto">
+<!-- Header Section -->
+<header class="mb-stack-xl">
+<h2 class="font-headline-lg-mobile md:font-headline-lg text-headline-lg-mobile md:text-headline-lg text-on-background font-bold mb-stack-sm">Welcome back, Alex.</h2>
+<p class="font-body-lg text-body-lg text-on-surface-variant">Manage your account, view your orders, and track your rewards.</p>
+</header>
+<!-- Profile Bento Card -->
+<section class="bg-surface-container-lowest rounded-[24px] p-stack-lg shadow-[0_4px_20px_rgba(0,0,0,0.05)] border border-outline-variant/30 mb-stack-xl flex flex-col md:flex-row items-start md:items-center justify-between gap-stack-lg relative overflow-hidden group hover:scale-[1.01] transition-transform duration-300">
+<!-- Decorative Accent -->
+<div class="absolute top-0 right-0 w-64 h-64 bg-primary-container/20 rounded-full blur-3xl -translate-y-1/2 translate-x-1/3 pointer-events-none"></div>
+<div class="flex items-center gap-stack-lg relative z-10">
+<div class="relative">
+<img alt="User Avatar Large" class="w-[88px] h-[88px] md:w-[104px] md:h-[104px] rounded-full object-cover shadow-sm border-4 border-surface" data-alt="A close-up studio portrait of a professional urban dweller in their late twenties. The lighting is soft, high-key, and neutral, creating a pristine and modern atmosphere. The background is a clean, slightly warm off-white surface that perfectly matches a high-end corporate lifestyle app aesthetic. The subject exudes confidence and approachability, aligning with a premium food delivery brand identity." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBb6Vt9_waUMQkQtPkWWVRlZgc0deEZMm_xL0-WoEM7LSpImmSFAZIU7OsDZzdIbYLLIHtja808e13N1qslveD3CqMZNNDWv8wqtca_QHrGRt062AQmWKOizAJm5al6b81_Tpwkk6zVTWnhcQAFbVUhyzaP5dnCaG5YjZsmMFF-mhBD6NKiPYRTPGXt_gXM8-U0PtuNW3uPsnZCeV-7E75hDpcFAenbU39Xc1DwSajxLhuv-fNosgbg10M1tmevZe3Y0XjwlKK2geU"/>
+<button class="absolute bottom-0 right-0 bg-primary text-on-primary rounded-full p-stack-xs shadow-md hover:bg-primary-container hover:scale-105 transition-all">
+<span class="material-symbols-outlined text-[16px]" data-icon="edit">edit</span>
+</button>
+</div>
+<div>
+<h3 class="font-headline-md text-headline-md text-on-background font-bold mb-unit">Alex Thompson</h3>
+<div class="flex flex-col md:flex-row md:items-center gap-stack-xs md:gap-stack-md text-on-surface-variant font-body-md text-body-md">
+<span class="flex items-center gap-unit"><span class="material-symbols-outlined text-[18px]" data-icon="mail">mail</span> alex.thompson@example.com</span>
+<span class="hidden md:inline text-surface-container-highest">•</span>
+<span class="flex items-center gap-unit"><span class="material-symbols-outlined text-[18px]" data-icon="phone">phone</span> +1 (555) 123-4567</span>
+</div>
+</div>
+</div>
+<div class="relative z-10 w-full md:w-auto mt-stack-md md:mt-0">
+<button class="w-full md:w-auto px-stack-lg py-stack-sm bg-surface-container-lowest text-on-surface border border-outline rounded-lg font-label-md text-label-md font-semibold hover:bg-surface-container-low transition-colors shadow-sm">
+                    Edit Profile
+                </button>
+</div>
+</section>
+<!-- Stats Bento Grid -->
+<div class="grid grid-cols-1 md:grid-cols-3 gap-stack-lg mb-stack-xl">
+<!-- Stat Card 1 -->
+<div class="bg-surface-container-lowest rounded-[24px] p-stack-lg shadow-[0_4px_20px_rgba(0,0,0,0.05)] border border-outline-variant/30 flex flex-col gap-stack-md hover:scale-[1.02] hover:shadow-[0_8px_30px_rgba(0,0,0,0.08)] transition-all duration-300">
+<div class="w-12 h-12 bg-surface-container-low text-primary rounded-full flex items-center justify-center mb-stack-xs">
+<span class="material-symbols-outlined text-[24px]" data-icon="receipt_long">receipt_long</span>
+</div>
+<div>
+<p class="font-label-md text-label-md text-on-surface-variant mb-unit">Total Orders</p>
+<p class="font-display-lg text-display-lg text-on-background">142</p>
+</div>
+</div>
+<!-- Stat Card 2 -->
+<div class="bg-surface-container-lowest rounded-[24px] p-stack-lg shadow-[0_4px_20px_rgba(0,0,0,0.05)] border border-outline-variant/30 flex flex-col gap-stack-md hover:scale-[1.02] hover:shadow-[0_8px_30px_rgba(0,0,0,0.08)] transition-all duration-300">
+<div class="w-12 h-12 bg-surface-container-low text-primary rounded-full flex items-center justify-center mb-stack-xs">
+<span class="material-symbols-outlined text-[24px]" data-icon="favorite">favorite</span>
+</div>
+<div>
+<p class="font-label-md text-label-md text-on-surface-variant mb-unit">Saved Restaurants</p>
+<p class="font-display-lg text-display-lg text-on-background">12</p>
+</div>
+</div>
+<!-- Stat Card 3 (Hero Accent) -->
+<div class="bg-primary-container rounded-[24px] p-stack-lg shadow-[0_4px_20px_rgba(0,0,0,0.05)] border border-primary/20 flex flex-col gap-stack-md hover:scale-[1.02] hover:shadow-[0_8px_30px_rgba(255,92,0,0.2)] transition-all duration-300 relative overflow-hidden">
+<!-- Sparkle background effect -->
+<div class="absolute inset-0 opacity-20 pointer-events-none" style="background-image: radial-gradient(circle at 80% 20%, #ffffff 1px, transparent 2px); background-size: 20px 20px;"></div>
+<div class="w-12 h-12 bg-white/20 text-on-primary-container rounded-full flex items-center justify-center mb-stack-xs backdrop-blur-sm">
+<span class="material-symbols-outlined text-[24px] material-symbols-fill" data-icon="star">star</span>
+</div>
+<div class="relative z-10">
+<p class="font-label-md text-label-md text-on-primary-container/80 mb-unit">Blitz Points</p>
+<p class="font-display-lg text-display-lg text-on-primary-container">4,250</p>
+</div>
+</div>
+</div>
+<!-- Quick Links / Action Hub -->
+<h3 class="font-headline-md text-headline-md text-on-background font-bold mb-stack-md">Quick Actions</h3>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-stack-lg mb-stack-xl">
+<a class="bg-surface-container-lowest rounded-[24px] p-stack-lg shadow-[0_4px_20px_rgba(0,0,0,0.05)] border border-outline-variant/30 flex items-center justify-between group hover:border-primary/50 transition-colors duration-300" href="#">
+<div class="flex items-center gap-stack-md">
+<div class="w-12 h-12 bg-surface text-on-surface rounded-full flex items-center justify-center group-hover:bg-primary group-hover:text-on-primary transition-colors duration-300">
+<span class="material-symbols-outlined" data-icon="location_on">location_on</span>
+</div>
+<div>
+<h4 class="font-body-lg text-body-lg text-on-background font-semibold">Manage Addresses</h4>
+<p class="font-label-md text-label-md text-on-surface-variant">Add or edit delivery locations</p>
+</div>
+</div>
+<span class="material-symbols-outlined text-on-surface-variant group-hover:text-primary group-hover:translate-x-1 transition-all duration-300" data-icon="arrow_forward_ios">arrow_forward_ios</span>
+</a>
+<a class="bg-surface-container-lowest rounded-[24px] p-stack-lg shadow-[0_4px_20px_rgba(0,0,0,0.05)] border border-outline-variant/30 flex items-center justify-between group hover:border-primary/50 transition-colors duration-300" href="#">
+<div class="flex items-center gap-stack-md">
+<div class="w-12 h-12 bg-surface text-on-surface rounded-full flex items-center justify-center group-hover:bg-primary group-hover:text-on-primary transition-colors duration-300">
+<span class="material-symbols-outlined" data-icon="account_balance_wallet">account_balance_wallet</span>
+</div>
+<div>
+<h4 class="font-body-lg text-body-lg text-on-background font-semibold">Payment Methods</h4>
+<p class="font-label-md text-label-md text-on-surface-variant">Update cards and billing info</p>
+</div>
+</div>
+<span class="material-symbols-outlined text-on-surface-variant group-hover:text-primary group-hover:translate-x-1 transition-all duration-300" data-icon="arrow_forward_ios">arrow_forward_ios</span>
+</a>
+</div>
+</main>
+</body></html>

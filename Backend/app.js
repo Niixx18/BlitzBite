@@ -1,0 +1,64 @@
+const dns = require('dns');
+dns.setServers(['8.8.8.8', '8.8.4.4']);
+
+const express = require('express');
+const app = express();
+const http = require('http');
+const server = http.createServer(app);
+const { initSocket } = require('./config/socket');
+initSocket(server);
+
+const mongoose = require('mongoose');
+require('dotenv').config();
+
+console.log("CURRENT URI:", process.env.MONGODB_URI);
+
+app.use(express.json());
+
+// Test route
+app.post('/test', (req, res) => {
+    res.json({ message: 'test working' });
+});
+
+// Auth routes
+const authRoutes = require('./routes/auth');
+app.use('/api/auth', authRoutes);
+
+// Shop & Item routes
+const shopRoutes = require('./routes/shops');
+const itemRoutes = require('./routes/items');
+const cartRoutes = require('./routes/cart');
+const orderRoutes = require('./routes/orders');
+const searchRoutes = require('./routes/search');
+const paymentRoutes = require('./routes/payment');
+app.use('/api/shops', shopRoutes);
+app.use('/api/items', itemRoutes);
+app.use('/api/cart', cartRoutes);
+app.use('/api/orders', orderRoutes);
+app.use('/api/search', searchRoutes);
+app.use('/api/payment', paymentRoutes);
+
+const PORT = process.env.PORT || 3000;
+
+app.get('/', (req, res) => {
+    res.send('Server is working');
+});
+
+mongoose.connect(process.env.MONGODB_URI)
+.then(async () => {
+    console.log("MongoDB Connected Successfully");
+    try {
+        const db = mongoose.connection.db;
+        const result = await db.admin().ping();
+        console.log("MongoDB Ping Response:", result);
+    } catch (err) {
+        console.log("Ping failed:", err);
+    }
+
+    server.listen(PORT, () => {
+        console.log(`Server running on port ${PORT}`);
+    });
+})
+.catch((err) => {
+    console.error('Failed to connect to MongoDB', err);
+});

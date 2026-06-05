@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Active Delivery - BlitzBite Partner</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+          darkMode: "class",
+          theme: {
+            extend: {
+              "colors": {
+                      "on-primary-fixed": "#370e00",
+                      "on-surface": "#271812",
+                      "outline-variant": "#e4beb1",
+                      "on-primary": "#ffffff",
+                      "inverse-surface": "#3e2c26",
+                      "on-primary-fixed-variant": "#802a00",
+                      "tertiary-container": "#929393",
+                      "tertiary-fixed-dim": "#c6c6c7",
+                      "surface-tint": "#a73a00",
+                      "secondary-fixed-dim": "#c8c6c5",
+                      "on-error-container": "#93000a",
+                      "on-secondary": "#ffffff",
+                      "surface-variant": "#fadcd2",
+                      "tertiary": "#5d5f5f",
+                      "inverse-primary": "#ffb59a",
+                      "secondary-container": "#e5e2e1",
+                      "on-tertiary-container": "#2a2c2c",
+                      "surface-container-low": "#fff1ec",
+                      "surface-bright": "#fff8f6",
+                      "secondary": "#5f5e5e",
+                      "on-secondary-fixed": "#1c1b1b",
+                      "surface-dim": "#f1d4ca",
+                      "error-container": "#ffdad6",
+                      "secondary-fixed": "#e5e2e1",
+                      "primary-fixed-dim": "#ffb59a",
+                      "on-tertiary": "#ffffff",
+                      "on-secondary-container": "#656464",
+                      "on-background": "#271812",
+                      "primary": "#a73a00",
+                      "on-tertiary-fixed": "#1a1c1c",
+                      "error": "#ba1a1a",
+                      "on-tertiary-fixed-variant": "#454747",
+                      "surface-container-high": "#ffe2d8",
+                      "surface": "#fff8f6",
+                      "on-surface-variant": "#5b4137",
+                      "tertiary-fixed": "#e2e2e2",
+                      "background": "#fff8f6",
+                      "surface-container-lowest": "#ffffff",
+                      "surface-container": "#ffe9e2",
+                      "on-error": "#ffffff",
+                      "outline": "#8f7065",
+                      "on-primary-container": "#521800",
+                      "primary-fixed": "#ffdbce",
+                      "primary-container": "#ff5c00",
+                      "inverse-on-surface": "#ffede7",
+                      "surface-container-highest": "#fadcd2",
+                      "on-secondary-fixed-variant": "#474646"
+              },
+              "borderRadius": {
+                      "DEFAULT": "0.25rem",
+                      "lg": "0.5rem",
+                      "xl": "0.75rem",
+                      "full": "9999px"
+              },
+              "spacing": {
+                      "unit": "4px",
+                      "stack-sm": "8px",
+                      "stack-xs": "4px",
+                      "stack-xl": "48px",
+                      "margin-desktop": "64px",
+                      "stack-lg": "24px",
+                      "margin-mobile": "16px",
+                      "gutter": "16px",
+                      "stack-md": "16px"
+              },
+              "fontFamily": {
+                      "headline-lg-mobile": [
+                              "Geist"
+                      ],
+                      "headline-lg": [
+                              "Geist"
+                      ],
+                      "display-lg": [
+                              "Geist"
+                      ],
+                      "label-md": [
+                              "Geist"
+                      ],
+                      "headline-md": [
+                              "Geist"
+                      ],
+                      "body-lg": [
+                              "Geist"
+                      ],
+                      "label-sm": [
+                              "Geist"
+                      ],
+                      "body-md": [
+                              "Geist"
+                      ]
+              },
+              "fontSize": {
+                      "headline-lg-mobile": [
+                              "28px",
+                              {
+                                      "lineHeight": "34px",
+                                      "fontWeight": "600"
+                              }
+                      ],
+                      "headline-lg": [
+                              "32px",
+                              {
+                                      "lineHeight": "40px",
+                                      "letterSpacing": "-0.01em",
+                                      "fontWeight": "600"
+                              }
+                      ],
+                      "display-lg": [
+                              "48px",
+                              {
+                                      "lineHeight": "56px",
+                                      "letterSpacing": "-0.02em",
+                                      "fontWeight": "700"
+                              }
+                      ],
+                      "label-md": [
+                              "14px",
+                              {
+                                      "lineHeight": "20px",
+                                      "letterSpacing": "0.01em",
+                                      "fontWeight": "500"
+                              }
+                      ],
+                      "headline-md": [
+                              "24px",
+                              {
+                                      "lineHeight": "32px",
+                                      "fontWeight": "600"
+                              }
+                      ],
+                      "body-lg": [
+                              "18px",
+                              {
+                                      "lineHeight": "28px",
+                                      "fontWeight": "400"
+                              }
+                      ],
+                      "label-sm": [
+                              "12px",
+                              {
+                                      "lineHeight": "16px",
+                                      "fontWeight": "600"
+                              }
+                      ],
+                      "body-md": [
+                              "16px",
+                              {
+                                      "lineHeight": "24px",
+                                      "fontWeight": "400"
+                              }
+                      ]
+              }
+      },
+          },
+        }
+    </script>
+<style>
+        @import url('https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700&display=swap');
+        body { font-family: 'Geist', sans-serif; }
+        
+        /* Map specific styles */
+        .map-container {
+            height: calc(100vh - 64px); /* Fallback */
+            height: 100dvh;
+            width: 100vw;
+            position: absolute;
+            top: 0;
+            left: 0;
+            z-index: 0;
+        }
+
+        /* Overlay structural classes */
+        .overlay-layer {
+            position: relative;
+            z-index: 10;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            pointer-events: none; /* Let clicks pass through to map where transparent */
+        }
+
+        .pointer-events-auto {
+            pointer-events: auto;
+        }
+
+        /* Custom scrollbar for timeline */
+        ::-webkit-scrollbar {
+            width: 4px;
+        }
+        ::-webkit-scrollbar-track {
+            background: transparent;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #e4beb1;
+            border-radius: 4px;
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background text-on-background m-0 p-0 overflow-hidden relative w-full h-screen">
+<!-- Background Map Image -->
+<div class="map-container bg-surface-container">
+<!-- Using object-cover to simulate full map view -->
+<img alt="Map View" class="w-full h-full object-cover" data-alt="A clean, modern top-down map interface showing a city grid. The map uses a light-mode aesthetic with soft greys and subtle beige tones for landmasses and crisp white for roads. A bright, high-contrast orange route line signifies the active delivery path, weaving through the urban streets. The visual style is highly functional yet sophisticated, reminiscent of high-end navigation enterprise software." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAvzKyducGMis_d_MwIqhAP2k2OgcpohI5uTq_I2_zee3t0OHDGVZPMAnf9EElfGBvR8Tvgr5uJsmqjDIq2VdBeuKfWuD3rHYN8-G4SBy-9IfDGA5RG1I10CDpzwncdJX1FpZ69X3l7302fsfLcD2-jyjQd4dJgTUTufCXXpvLTlWXfUi4TOGgeNSHbWeNNR0IpuuyBjLFX376zbu6vH-GcWi8A0X6PMUrRbthdW5htUnR5vg5q6-8IxJqxXPHqhafxr8V_BsKBw2E"/>
+</div>
+<!-- UI Overlay Layer -->
+<div class="overlay-layer h-screen w-full flex flex-col justify-between">
+<!-- Top App Bar - Extracted from JSON & adapted for overlay -->
+<header class="pointer-events-auto bg-surface/90 backdrop-blur-md shadow-sm w-full top-0 sticky flex items-center justify-between px-margin-mobile py-stack-sm z-50">
+<div class="flex items-center gap-stack-sm">
+<!-- Back Button for active journey context -->
+<button class="p-2 rounded-full hover:bg-surface-variant transition-colors active:scale-95 text-on-surface">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 0;">arrow_back</span>
+</button>
+<h1 class="font-headline-md text-headline-md-mobile font-bold text-primary">BlitzBite Partner</h1>
+</div>
+<div class="flex items-center gap-stack-sm">
+<span class="font-label-sm text-label-sm px-3 py-1 bg-surface-container-high rounded-full text-on-surface-variant border border-outline-variant">
+                    Order #8492
+                </span>
+<div class="relative w-10 h-10 rounded-full overflow-hidden border-2 border-primary-container">
+<img alt="Partner Profile" class="w-full h-full object-cover" data-alt="A professional headshot of a delivery partner, smiling warmly. The lighting is bright and even, highlighting their features against a clean, neutral background. The aesthetic feels reliable and friendly, fitting the high-velocity precision vibe of the brand." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDwCFxnmog4nOLpmqdKIGY3mB1WSBmJhgVta53aaTzru_kcZ20raxcdE80zKFJY3i06iGIwoYX3u8eoRUh3tyhz9up7HYiitYMBNZ1FHo9VdD1_Jo4kTApf9KQ7igjYtyITNIr28zlFh6gpgnCOimx5sH0CjDdUEm0i4S9Ui4ZbdZyoH55i1BRssrOjPm2gMhvflI_-JxFUK85i5yzBl4fY9USpgMzzVX_E1JZWDExOiqRLhicXFehEDFXVoMJr-yjlZEngBz31DNw"/>
+<div class="absolute bottom-0 right-0 w-3 h-3 bg-green-500 rounded-full border-2 border-surface"></div>
+</div>
+</div>
+</header>
+<!-- Dynamic Status Card (Bottom Overlay) -->
+<main class="pointer-events-auto px-margin-mobile pb-stack-lg w-full max-w-2xl mx-auto z-40 mt-auto">
+<!-- Map Action Buttons (Floating above the card) -->
+<div class="flex justify-end gap-stack-sm mb-stack-sm">
+<button class="w-12 h-12 bg-surface rounded-full shadow-lg flex items-center justify-center text-primary hover:bg-surface-variant transition-colors active:scale-95">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 0;">my_location</span>
+</button>
+<button class="w-12 h-12 bg-surface rounded-full shadow-lg flex items-center justify-center text-primary hover:bg-surface-variant transition-colors active:scale-95">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 0;">layers</span>
+</button>
+</div>
+<!-- Main Delivery Status Card -->
+<div class="bg-surface rounded-xl shadow-lg border border-outline-variant overflow-hidden">
+<!-- ETA Header Section -->
+<div class="bg-primary text-on-primary px-gutter py-stack-md flex justify-between items-center">
+<div>
+<p class="font-label-sm text-label-sm opacity-90 uppercase tracking-wider mb-1">Estimated Drop-off</p>
+<h2 class="font-display-lg text-display-lg-mobile md:text-display-lg">12:45 <span class="font-headline-md text-headline-md opacity-80">PM</span></h2>
+</div>
+<div class="text-right">
+<span class="inline-flex items-center gap-1 font-label-md text-label-md bg-white/20 px-3 py-1.5 rounded-full backdrop-blur-sm">
+<span class="material-symbols-outlined text-sm" style="font-variation-settings: 'FILL' 1;">timer</span>
+                            8 min away
+                        </span>
+</div>
+</div>
+<!-- Customer Details & Quick Actions -->
+<div class="px-gutter py-stack-md border-b border-outline-variant flex justify-between items-center bg-surface-bright">
+<div class="flex items-center gap-stack-md">
+<div class="w-12 h-12 bg-surface-container rounded-full flex items-center justify-center text-primary">
+<span class="material-symbols-outlined text-2xl" style="font-variation-settings: 'FILL' 1;">person</span>
+</div>
+<div>
+<p class="font-headline-md text-headline-md-mobile text-on-surface">Alex Johnson</p>
+<p class="font-body-md text-body-md text-on-surface-variant">Meet at door • Hand to customer</p>
+</div>
+</div>
+<div class="flex gap-stack-sm">
+<button class="w-10 h-10 rounded-full bg-secondary-container text-on-secondary-container flex items-center justify-center hover:bg-surface-variant transition-colors active:scale-95">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">chat</span>
+</button>
+<button class="w-10 h-10 rounded-full bg-secondary-container text-on-secondary-container flex items-center justify-center hover:bg-surface-variant transition-colors active:scale-95">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">call</span>
+</button>
+</div>
+</div>
+<!-- Progress Timeline -->
+<div class="px-gutter py-stack-md bg-surface-lowest">
+<div class="relative pl-6 border-l-2 border-surface-variant ml-3 space-y-stack-md">
+<!-- Completed Step -->
+<div class="relative">
+<div class="absolute -left-[31px] top-1 w-4 h-4 rounded-full bg-surface border-2 border-tertiary-fixed-dim flex items-center justify-center">
+<span class="material-symbols-outlined text-[10px] text-tertiary-fixed-dim font-bold">check</span>
+</div>
+<p class="font-label-sm text-label-sm text-on-surface-variant uppercase tracking-wider mb-1">Pickup</p>
+<p class="font-body-md text-body-md text-tertiary">The Burger Joint - 123 Main St</p>
+</div>
+<!-- Active Step -->
+<div class="relative">
+<div class="absolute -left-[31px] top-1 w-4 h-4 rounded-full bg-primary shadow-[0_0_0_4px_rgba(255,92,0,0.2)]"></div>
+<p class="font-label-sm text-label-sm text-primary font-bold uppercase tracking-wider mb-1">Current Drop-off</p>
+<p class="font-headline-md text-headline-md-mobile text-on-surface">456 Elm Street, Apt 4B</p>
+<p class="font-body-md text-body-md text-on-surface-variant mt-1">Gate code: 8492#</p>
+</div>
+</div>
+</div>
+<!-- Primary Action Area -->
+<div class="p-gutter bg-surface-container-low border-t border-outline-variant">
+<button class="w-full bg-primary text-on-primary font-headline-md text-headline-md-mobile py-4 rounded-lg shadow-md hover:bg-primary-container hover:shadow-lg transition-all active:scale-[0.98] flex items-center justify-center gap-stack-sm">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">navigation</span>
+                        Navigate to Drop-off
+                    </button>
+<button class="w-full mt-stack-sm py-3 font-label-md text-label-md text-on-surface-variant border border-outline-variant rounded-lg hover:bg-surface-variant transition-colors flex items-center justify-center gap-stack-sm">
+<span class="material-symbols-outlined text-sm">support_agent</span>
+                        Report an Issue
+                    </button>
+</div>
+</div>
+</main>
+<!-- BottomNavBar explicitly suppressed as this is an active task screen -->
+</div>
+</body></html>

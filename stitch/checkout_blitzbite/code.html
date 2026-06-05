@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>BlitzBite - Checkout</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+          darkMode: "class",
+          theme: {
+            extend: {
+              "colors": {
+                      "surface-container": "#ffe9e2",
+                      "inverse-on-surface": "#ffede7",
+                      "surface-container-low": "#fff1ec",
+                      "surface-variant": "#fadcd2",
+                      "error": "#ba1a1a",
+                      "primary": "#a73a00",
+                      "surface-container-high": "#ffe2d8",
+                      "secondary-container": "#e5e2e1",
+                      "on-tertiary-fixed": "#1a1c1c",
+                      "tertiary-fixed": "#e2e2e2",
+                      "on-tertiary-container": "#2a2c2c",
+                      "surface-tint": "#a73a00",
+                      "on-primary-container": "#521800",
+                      "primary-fixed-dim": "#ffb59a",
+                      "on-secondary": "#ffffff",
+                      "on-background": "#271812",
+                      "inverse-primary": "#ffb59a",
+                      "surface": "#fff8f6",
+                      "on-surface": "#271812",
+                      "tertiary": "#5d5f5f",
+                      "surface-container-highest": "#fadcd2",
+                      "secondary": "#5f5e5e",
+                      "on-surface-variant": "#5b4137",
+                      "on-error": "#ffffff",
+                      "outline-variant": "#e4beb1",
+                      "outline": "#8f7065",
+                      "on-tertiary": "#ffffff",
+                      "tertiary-fixed-dim": "#c6c6c7",
+                      "primary-container": "#ff5c00",
+                      "inverse-surface": "#3e2c26",
+                      "on-error-container": "#93000a",
+                      "tertiary-container": "#929393",
+                      "on-secondary-container": "#656464",
+                      "on-secondary-fixed-variant": "#474646",
+                      "surface-dim": "#f1d4ca",
+                      "on-secondary-fixed": "#1c1b1b",
+                      "on-primary": "#ffffff",
+                      "primary-fixed": "#ffdbce",
+                      "surface-container-lowest": "#ffffff",
+                      "on-primary-fixed": "#370e00",
+                      "on-tertiary-fixed-variant": "#454747",
+                      "error-container": "#ffdad6",
+                      "surface-bright": "#fff8f6",
+                      "secondary-fixed": "#e5e2e1",
+                      "background": "#fff8f6",
+                      "secondary-fixed-dim": "#c8c6c5",
+                      "on-primary-fixed-variant": "#802a00"
+              },
+              "borderRadius": {
+                      "DEFAULT": "0.25rem",
+                      "lg": "0.5rem",
+                      "xl": "0.75rem",
+                      "full": "9999px"
+              },
+              "spacing": {
+                      "unit": "4px",
+                      "stack-md": "16px",
+                      "stack-sm": "8px",
+                      "margin-desktop": "64px",
+                      "gutter": "16px",
+                      "stack-xs": "4px",
+                      "margin-mobile": "16px",
+                      "stack-lg": "24px",
+                      "stack-xl": "48px"
+              },
+              "fontFamily": {
+                      "headline-md": [
+                              "Geist"
+                      ],
+                      "headline-lg-mobile": [
+                              "Geist"
+                      ],
+                      "display-lg": [
+                              "Geist"
+                      ],
+                      "body-lg": [
+                              "Geist"
+                      ],
+                      "label-md": [
+                              "Geist"
+                      ],
+                      "body-md": [
+                              "Geist"
+                      ],
+                      "label-sm": [
+                              "Geist"
+                      ],
+                      "headline-lg": [
+                              "Geist"
+                      ]
+              },
+              "fontSize": {
+                      "headline-md": [
+                              "24px",
+                              {
+                                      "lineHeight": "32px",
+                                      "fontWeight": "600"
+                              }
+                      ],
+                      "headline-lg-mobile": [
+                              "28px",
+                              {
+                                      "lineHeight": "34px",
+                                      "fontWeight": "600"
+                              }
+                      ],
+                      "display-lg": [
+                              "48px",
+                              {
+                                      "lineHeight": "56px",
+                                      "letterSpacing": "-0.02em",
+                                      "fontWeight": "700"
+                              }
+                      ],
+                      "body-lg": [
+                              "18px",
+                              {
+                                      "lineHeight": "28px",
+                                      "fontWeight": "400"
+                              }
+                      ],
+                      "label-md": [
+                              "14px",
+                              {
+                                      "lineHeight": "20px",
+                                      "letterSpacing": "0.01em",
+                                      "fontWeight": "500"
+                              }
+                      ],
+                      "body-md": [
+                              "16px",
+                              {
+                                      "lineHeight": "24px",
+                                      "fontWeight": "400"
+                              }
+                      ],
+                      "label-sm": [
+                              "12px",
+                              {
+                                      "lineHeight": "16px",
+                                      "fontWeight": "600"
+                              }
+                      ],
+                      "headline-lg": [
+                              "32px",
+                              {
+                                      "lineHeight": "40px",
+                                      "letterSpacing": "-0.01em",
+                                      "fontWeight": "600"
+                              }
+                      ]
+              }
+      },
+          },
+        }
+      </script>
+</head>
+<body class="bg-background text-on-background min-h-screen pb-safe">
+<!-- TopAppBar -->
+<header class="bg-surface dark:bg-inverse-surface border-b border-outline-variant dark:border-outline shadow-sm fixed top-0 w-full z-50 flex justify-between items-center px-margin-mobile md:px-margin-desktop h-16">
+<div class="flex items-center gap-4">
+<button aria-label="Go back" class="active:scale-95 transition-transform duration-150 p-2 -ml-2 rounded-full hover:bg-surface-variant dark:hover:bg-on-tertiary-container">
+<span class="material-symbols-outlined text-primary dark:text-primary-fixed-dim">arrow_back</span>
+</button>
+<h1 class="font-display-lg text-primary dark:text-primary-fixed-dim italic tracking-tighter text-2xl hidden md:block">BlitzBite</h1>
+<h1 class="font-headline-md text-headline-md text-on-surface ml-2 md:ml-4">Checkout</h1>
+</div>
+<div class="flex items-center gap-4 hidden md:flex">
+<!-- No Top Nav Links as per intent fallback, checkout is a transactional page. -->
+</div>
+<div class="flex items-center gap-2">
+<!-- Trailing Icons -->
+<button aria-label="Shopping Bag" class="active:scale-95 transition-transform duration-150 p-2 rounded-full hover:bg-surface-variant dark:hover:bg-on-tertiary-container text-primary dark:text-primary-fixed-dim">
+<span class="material-symbols-outlined">shopping_bag</span>
+</button>
+<button aria-label="Person" class="active:scale-95 transition-transform duration-150 p-2 rounded-full hover:bg-surface-variant dark:hover:bg-on-tertiary-container text-primary dark:text-primary-fixed-dim">
+<span class="material-symbols-outlined">person</span>
+</button>
+</div>
+</header>
+<!-- Main Content -->
+<main class="pt-24 pb-32 md:pb-24 px-margin-mobile md:px-margin-desktop max-w-7xl mx-auto">
+<div class="grid grid-cols-1 md:grid-cols-12 gap-gutter">
+<!-- Left Column: Order Details -->
+<div class="md:col-span-8 flex flex-col gap-stack-lg">
+<!-- Order Overview Header -->
+<div class="bg-surface-container-lowest rounded-xl p-6 shadow-[0_4px_20px_rgba(0,0,0,0.05)] border border-outline-variant/30 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
+<div>
+<h2 class="font-headline-md text-headline-md text-on-surface mb-1">Trattoria Bella</h2>
+<p class="font-body-md text-body-md text-on-surface-variant flex items-center gap-2">
+<span class="material-symbols-outlined text-primary text-sm" style="font-variation-settings: 'FILL' 1;">schedule</span>
+                            Estimated delivery: 25-35 mins
+                        </p>
+</div>
+</div>
+<!-- Delivery Address -->
+<section class="bg-surface-container-lowest rounded-xl p-6 shadow-[0_4px_20px_rgba(0,0,0,0.05)] border border-outline-variant/30">
+<div class="flex justify-between items-center mb-4">
+<h3 class="font-headline-md text-headline-md text-on-surface text-xl">Delivery Address</h3>
+<button class="font-label-md text-label-md text-primary hover:text-primary-container transition-colors">Edit</button>
+</div>
+<div class="flex gap-4 items-start">
+<div class="w-12 h-12 rounded-full bg-surface-variant flex items-center justify-center shrink-0">
+<span class="material-symbols-outlined text-primary" style="font-variation-settings: 'FILL' 1;">location_on</span>
+</div>
+<div>
+<p class="font-body-md text-body-md text-on-surface font-semibold">Home</p>
+<p class="font-body-md text-body-md text-on-surface-variant">123 Culinary Ave, Apt 4B<br/>Food District, NY 10001</p>
+</div>
+</div>
+</section>
+<!-- Delivery Instructions & Contact -->
+<div class="grid grid-cols-1 sm:grid-cols-2 gap-stack-md">
+<!-- Delivery Instructions -->
+<section class="bg-surface-container-lowest rounded-xl p-6 shadow-[0_4px_20px_rgba(0,0,0,0.05)] border border-outline-variant/30">
+<h3 class="font-headline-md text-headline-md text-on-surface text-xl mb-4">Delivery Instructions</h3>
+<textarea class="w-full bg-surface-container-low border-none rounded-lg p-3 font-body-md text-body-md text-on-surface placeholder:text-on-surface-variant/50 focus:ring-2 focus:ring-primary focus:bg-surface-container-lowest transition-all resize-none" placeholder="e.g., 'Leave at gate', 'Don't ring bell'" rows="3"></textarea>
+</section>
+<!-- Contact Details -->
+<section class="bg-surface-container-lowest rounded-xl p-6 shadow-[0_4px_20px_rgba(0,0,0,0.05)] border border-outline-variant/30 flex flex-col justify-between">
+<div>
+<div class="flex justify-between items-center mb-4">
+<h3 class="font-headline-md text-headline-md text-on-surface text-xl">Contact Details</h3>
+<button class="font-label-md text-label-md text-primary hover:text-primary-container transition-colors">Edit</button>
+</div>
+<div class="space-y-2">
+<p class="font-body-md text-body-md text-on-surface">Alex Mercer</p>
+<p class="font-body-md text-body-md text-on-surface-variant">+1 (555) 123-4567</p>
+</div>
+</div>
+</section>
+</div>
+<!-- Order Items -->
+<section class="bg-surface-container-lowest rounded-xl p-6 shadow-[0_4px_20px_rgba(0,0,0,0.05)] border border-outline-variant/30">
+<h3 class="font-headline-md text-headline-md text-on-surface text-xl mb-4">Order Summary</h3>
+<div class="space-y-6">
+<!-- Item 1 -->
+<div class="flex justify-between items-start gap-4 pb-4 border-b border-outline-variant/30 last:border-0 last:pb-0">
+<div class="flex gap-4">
+<div class="w-8 h-8 rounded bg-surface-variant flex items-center justify-center font-label-md text-label-md text-primary shrink-0">1x</div>
+<div>
+<h4 class="font-body-lg text-body-lg text-on-surface font-medium">Truffle Pappardelle</h4>
+<p class="font-body-md text-body-md text-on-surface-variant mt-1">Extra parmesan, no mushrooms</p>
+</div>
+</div>
+<p class="font-body-lg text-body-lg text-on-surface font-semibold whitespace-nowrap">$24.00</p>
+</div>
+<!-- Item 2 -->
+<div class="flex justify-between items-start gap-4 pb-4 border-b border-outline-variant/30 last:border-0 last:pb-0">
+<div class="flex gap-4">
+<div class="w-8 h-8 rounded bg-surface-variant flex items-center justify-center font-label-md text-label-md text-primary shrink-0">2x</div>
+<div>
+<h4 class="font-body-lg text-body-lg text-on-surface font-medium">Garlic Bread</h4>
+<p class="font-body-md text-body-md text-on-surface-variant mt-1">With marinara dip</p>
+</div>
+</div>
+<p class="font-body-lg text-body-lg text-on-surface font-semibold whitespace-nowrap">$12.00</p>
+</div>
+</div>
+</section>
+</div>
+<!-- Right Column: Sticky Sidebar / Bill Total -->
+<div class="md:col-span-4 relative">
+<div class="sticky top-24 bg-surface-container-lowest rounded-xl p-6 shadow-[0_8px_30px_rgba(0,0,0,0.08)] border border-outline-variant/30">
+<h3 class="font-headline-md text-headline-md text-on-surface text-xl mb-6">Total Bill</h3>
+<div class="space-y-4 font-body-md text-body-md text-on-surface-variant">
+<div class="flex justify-between">
+<span>Subtotal</span>
+<span>$36.00</span>
+</div>
+<div class="flex justify-between">
+<span>Delivery Fee</span>
+<span>$3.99</span>
+</div>
+<div class="flex justify-between">
+<span>Taxes &amp; Fees</span>
+<span>$4.50</span>
+</div>
+<div class="flex justify-between items-center text-primary cursor-pointer hover:underline">
+<span class="flex items-center gap-1"><span class="material-symbols-outlined text-sm">local_offer</span> Add promo code</span>
+</div>
+</div>
+<div class="mt-6 pt-4 border-t border-outline-variant/50">
+<div class="flex justify-between items-center">
+<span class="font-headline-md text-headline-md text-on-surface">Total</span>
+<span class="font-headline-md text-headline-md text-primary">$44.49</span>
+</div>
+</div>
+<button class="w-full mt-8 bg-primary hover:bg-primary-container text-on-primary font-label-md text-label-md py-4 px-6 rounded-lg transition-colors active:scale-[0.98] duration-150 flex justify-center items-center gap-2">
+                        Select Payment <span class="material-symbols-outlined">arrow_forward</span>
+</button>
+<p class="font-label-sm text-label-sm text-on-surface-variant text-center mt-4 opacity-70">If you cancel, you may be subject to a cancellation fee.</p>
+</div>
+</div>
+</div>
+</main>
+<!-- Suppress BottomNav for transactional screen -->
+</body></html>

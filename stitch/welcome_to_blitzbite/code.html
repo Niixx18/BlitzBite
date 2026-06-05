@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>BlitzBite - Splash Screen</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "primary-container": "#ff5c00",
+                        "on-primary": "#ffffff",
+                        "surface-bright": "#fff8f6",
+                        "primary-fixed": "#ffdbce",
+                        "inverse-surface": "#3e2c26",
+                        "error-container": "#ffdad6",
+                        "background": "#fff8f6",
+                        "on-secondary-fixed": "#1c1b1b",
+                        "surface-dim": "#f1d4ca",
+                        "primary": "#a73a00",
+                        "on-surface-variant": "#5b4137",
+                        "tertiary": "#5d5f5f",
+                        "surface-container-high": "#ffe2d8",
+                        "on-tertiary-fixed": "#1a1c1c",
+                        "on-secondary": "#ffffff",
+                        "on-surface": "#271812",
+                        "surface-container-highest": "#fadcd2",
+                        "tertiary-container": "#929393",
+                        "primary-fixed-dim": "#ffb59a",
+                        "secondary": "#5f5e5e",
+                        "on-error-container": "#93000a",
+                        "error": "#ba1a1a",
+                        "on-tertiary-fixed-variant": "#454747",
+                        "on-tertiary-container": "#2a2c2c",
+                        "on-error": "#ffffff",
+                        "secondary-container": "#e5e2e1",
+                        "on-background": "#271812",
+                        "outline-variant": "#e4beb1",
+                        "tertiary-fixed-dim": "#c6c6c7",
+                        "on-primary-fixed": "#370e00",
+                        "inverse-primary": "#ffb59a",
+                        "on-secondary-fixed-variant": "#474646",
+                        "on-primary-container": "#521800",
+                        "on-secondary-container": "#656464",
+                        "surface-variant": "#fadcd2",
+                        "secondary-fixed": "#e5e2e1",
+                        "surface-tint": "#a73a00",
+                        "surface-container": "#ffe9e2",
+                        "on-primary-fixed-variant": "#802a00",
+                        "inverse-on-surface": "#ffede7",
+                        "tertiary-fixed": "#e2e2e2",
+                        "surface": "#fff8f6",
+                        "outline": "#8f7065",
+                        "on-tertiary": "#ffffff",
+                        "secondary-fixed-dim": "#c8c6c5",
+                        "surface-container-low": "#fff1ec",
+                        "surface-container-lowest": "#ffffff"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "gutter": "16px",
+                        "stack-md": "16px",
+                        "unit": "4px",
+                        "stack-sm": "8px",
+                        "stack-xl": "48px",
+                        "margin-desktop": "64px",
+                        "margin-mobile": "16px",
+                        "stack-xs": "4px",
+                        "stack-lg": "24px"
+                    },
+                    "fontFamily": {
+                        "body-lg": ["Geist"],
+                        "body-md": ["Geist"],
+                        "label-sm": ["Geist"],
+                        "headline-md": ["Geist"],
+                        "headline-lg": ["Geist"],
+                        "label-md": ["Geist"],
+                        "display-lg": ["Geist"],
+                        "headline-lg-mobile": ["Geist"]
+                    },
+                    "fontSize": {
+                        "body-lg": ["18px", { "lineHeight": "28px", "fontWeight": "400" }],
+                        "body-md": ["16px", { "lineHeight": "24px", "fontWeight": "400" }],
+                        "label-sm": ["12px", { "lineHeight": "16px", "fontWeight": "600" }],
+                        "headline-md": ["24px", { "lineHeight": "32px", "fontWeight": "600" }],
+                        "headline-lg": ["32px", { "lineHeight": "40px", "letterSpacing": "-0.01em", "fontWeight": "600" }],
+                        "label-md": ["14px", { "lineHeight": "20px", "letterSpacing": "0.01em", "fontWeight": "500" }],
+                        "display-lg": ["48px", { "lineHeight": "56px", "letterSpacing": "-0.02em", "fontWeight": "700" }],
+                        "headline-lg-mobile": ["28px", { "lineHeight": "34px", "fontWeight": "600" }]
+                    }
+                }
+            }
+        }
+    </script>
+<style>body {
+    background-color: #fff8f6;
+    /* background */
+    color: #271812;
+    /* on-background */
+    font-family: "Geist", sans-serif;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh
+    }
+.splash-bg {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: url(https://lh3.googleusercontent.com/aida-public/AB6AXuD4Cs3yDLBJnvflzKWf6sCDl_PY-P-219B7j7XYxh6gHgD9D-4wBNaAG01nGvosPDYTGB7X-GXJsCoEjDbpe1zaXtSEG-9RVQpyZPfMaq6wtxl5AdTLS2FYrOMeEgnOUY-y7tR1wIbzkk3Mnq3beIMJ3H0z4EWpFFLGY-xzPchSlYn8nf7DKADHEgF_cK7qsuHNRZWr-c3mCGjMf71gJMvgKmMiM2cFZ71lM-EjcCmRsXLSZ0WUm_TfDl11LL2pjW9-8hrlcQ-3HyM);
+    background-size: cover;
+    background-position: center;
+    z-index: 1
+    }
+.splash-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(to bottom, rgba(255, 248, 246, 0.2), rgba(39, 24, 18, 0.8));
+    z-index: 2
+    }
+.content-container {
+    position: relative;
+    z-index: 3;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    height: 100vh;
+    padding: 48px 24px;
+    box-sizing: border-box
+    }
+.logo-area {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 20vh
+    }
+.brand-text {
+    font-size: 64px;
+    font-weight: 700;
+    letter-spacing: -0.04em;
+    color: #fff;
+    text-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
+    font-style: italic
+    }
+.sub-text {
+    font-size: 20px;
+    color: #ffdbce;
+    /* primary-fixed */
+    margin-top: 8px;
+    font-weight: 500
+    }
+.action-area {
+    width: 100%;
+    max-width: 400px;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    padding-bottom: 32px
+    }
+.btn-primary {
+    background-color: #ff5c00;
+    /* primary-container */
+    color: #fff;
+    /* on-primary */
+    padding: 16px 32px;
+    border-radius: 9999px;
+    font-size: 18px;
+    font-weight: 600;
+    text-align: center;
+    text-decoration: none;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    box-shadow: 0 8px 24px rgba(255, 92, 0, 0.4);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px
+    }
+.btn-primary:hover {
+    transform: translatey(-2px);
+    box-shadow: 0 12px 32px rgba(255, 92, 0, 0.5)
+    }
+.btn-secondary {
+    background-color: transparent;
+    color: #fff;
+    padding: 16px 32px;
+    border-radius: 9999px;
+    font-size: 16px;
+    font-weight: 500;
+    text-align: center;
+    text-decoration: none;
+    border: 1px solid rgba(255, 255, 255, 0.4);
+    transition: background-color 0.2s ease
+    }
+.btn-secondary:hover {
+    background-color: rgba(255, 255, 255, 0.1)
+    }</style>
+</head>
+<body>
+<!-- Background Image with Overlay -->
+<div class="splash-bg" data-alt="Dynamic high-speed photography of fresh, vibrant ingredients like tomatoes, basil, and chili peppers mid-air. The scene is brightly lit with high contrast, emphasizing freshness and velocity. The color palette incorporates vibrant oranges, deep reds, and fresh greens against a slightly blurred, neutral dark background. The aesthetic is modern, energetic, and perfectly suited for a high-end food delivery app splash screen."></div>
+<div class="splash-overlay"></div>
+<!-- Main Content -->
+<div class="content-container">
+<div class="logo-area">
+<!-- Simulated Icon/Logo -->
+<div class="w-24 h-24 bg-primary-container rounded-3xl rotate-12 flex items-center justify-center shadow-2xl mb-6">
+<span class="material-symbols-outlined text-on-primary" style="font-size: 48px; font-variation-settings: 'FILL' 1;">bolt</span>
+</div>
+<h1 class="brand-text">BlitzBite</h1>
+<p class="sub-text">Velocity Meets Flavor</p>
+</div>
+<div class="action-area">
+<a class="btn-primary" href="#">
+                Get Started
+                <span class="material-symbols-outlined">arrow_forward</span>
+</a>
+<a class="btn-secondary" href="#">
+                Log In
+            </a>
+</div>
+</div>
+<!-- No Navigation Shells per Semantic Logic for Splash Screens -->
+</body></html>

@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>BlitzBite - Categories</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+          darkMode: "class",
+          theme: {
+            extend: {
+              "colors": {
+                      "primary-container": "#ff5c00",
+                      "on-primary": "#ffffff",
+                      "surface-bright": "#fff8f6",
+                      "primary-fixed": "#ffdbce",
+                      "inverse-surface": "#3e2c26",
+                      "error-container": "#ffdad6",
+                      "background": "#fff8f6",
+                      "on-secondary-fixed": "#1c1b1b",
+                      "surface-dim": "#f1d4ca",
+                      "primary": "#a73a00",
+                      "on-surface-variant": "#5b4137",
+                      "tertiary": "#5d5f5f",
+                      "surface-container-high": "#ffe2d8",
+                      "on-tertiary-fixed": "#1a1c1c",
+                      "on-secondary": "#ffffff",
+                      "on-surface": "#271812",
+                      "surface-container-highest": "#fadcd2",
+                      "tertiary-container": "#929393",
+                      "primary-fixed-dim": "#ffb59a",
+                      "secondary": "#5f5e5e",
+                      "on-error-container": "#93000a",
+                      "error": "#ba1a1a",
+                      "on-tertiary-fixed-variant": "#454747",
+                      "on-tertiary-container": "#2a2c2c",
+                      "on-error": "#ffffff",
+                      "secondary-container": "#e5e2e1",
+                      "on-background": "#271812",
+                      "outline-variant": "#e4beb1",
+                      "tertiary-fixed-dim": "#c6c6c7",
+                      "on-primary-fixed": "#370e00",
+                      "inverse-primary": "#ffb59a",
+                      "on-secondary-fixed-variant": "#474646",
+                      "on-primary-container": "#521800",
+                      "on-secondary-container": "#656464",
+                      "surface-variant": "#fadcd2",
+                      "secondary-fixed": "#e5e2e1",
+                      "surface-tint": "#a73a00",
+                      "surface-container": "#ffe9e2",
+                      "on-primary-fixed-variant": "#802a00",
+                      "inverse-on-surface": "#ffede7",
+                      "tertiary-fixed": "#e2e2e2",
+                      "surface": "#fff8f6",
+                      "outline": "#8f7065",
+                      "on-tertiary": "#ffffff",
+                      "secondary-fixed-dim": "#c8c6c5",
+                      "surface-container-low": "#fff1ec",
+                      "surface-container-lowest": "#ffffff"
+              },
+              "borderRadius": {
+                      "DEFAULT": "0.25rem",
+                      "lg": "0.5rem",
+                      "xl": "0.75rem",
+                      "full": "9999px"
+              },
+              "spacing": {
+                      "gutter": "16px",
+                      "stack-md": "16px",
+                      "unit": "4px",
+                      "stack-sm": "8px",
+                      "stack-xl": "48px",
+                      "margin-desktop": "64px",
+                      "margin-mobile": "16px",
+                      "stack-xs": "4px",
+                      "stack-lg": "24px"
+              },
+              "fontFamily": {
+                      "body-lg": [
+                              "Geist"
+                      ],
+                      "body-md": [
+                              "Geist"
+                      ],
+                      "label-sm": [
+                              "Geist"
+                      ],
+                      "headline-md": [
+                              "Geist"
+                      ],
+                      "headline-lg": [
+                              "Geist"
+                      ],
+                      "label-md": [
+                              "Geist"
+                      ],
+                      "display-lg": [
+                              "Geist"
+                      ],
+                      "headline-lg-mobile": [
+                              "Geist"
+                      ]
+              },
+              "fontSize": {
+                      "body-lg": [
+                              "18px",
+                              {
+                                      "lineHeight": "28px",
+                                      "fontWeight": "400"
+                              }
+                      ],
+                      "body-md": [
+                              "16px",
+                              {
+                                      "lineHeight": "24px",
+                                      "fontWeight": "400"
+                              }
+                      ],
+                      "label-sm": [
+                              "12px",
+                              {
+                                      "lineHeight": "16px",
+                                      "fontWeight": "600"
+                              }
+                      ],
+                      "headline-md": [
+                              "24px",
+                              {
+                                      "lineHeight": "32px",
+                                      "fontWeight": "600"
+                              }
+                      ],
+                      "headline-lg": [
+                              "32px",
+                              {
+                                      "lineHeight": "40px",
+                                      "letterSpacing": "-0.01em",
+                                      "fontWeight": "600"
+                              }
+                      ],
+                      "label-md": [
+                              "14px",
+                              {
+                                      "lineHeight": "20px",
+                                      "letterSpacing": "0.01em",
+                                      "fontWeight": "500"
+                              }
+                      ],
+                      "display-lg": [
+                              "48px",
+                              {
+                                      "lineHeight": "56px",
+                                      "letterSpacing": "-0.02em",
+                                      "fontWeight": "700"
+                              }
+                      ],
+                      "headline-lg-mobile": [
+                              "28px",
+                              {
+                                      "lineHeight": "34px",
+                                      "fontWeight": "600"
+                              }
+                      ]
+              }
+      },
+          },
+        }
+      </script>
+<style>
+        body { font-family: 'Geist', sans-serif; }
+    </style>
+</head>
+<body class="bg-background text-on-background antialiased min-h-screen flex flex-col pt-[88px] pb-[80px] md:pb-0">
+<!-- TopNavBar -->
+<header class="bg-surface/80 dark:bg-inverse-surface/80 backdrop-blur-md fixed top-0 w-full z-50 bg-surface dark:bg-inverse-surface shadow-sm">
+<div class="flex justify-between items-center px-margin-mobile md:px-margin-desktop py-stack-md max-w-7xl mx-auto">
+<div class="flex items-center gap-6">
+<a class="font-display-lg text-primary dark:text-primary-container tracking-tighter italic" href="#">BlitzBite</a>
+<div class="hidden md:flex relative ml-4">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-on-surface-variant" data-icon="search">search</span>
+<input class="bg-surface-variant text-on-surface placeholder:text-on-surface-variant font-body-md text-body-md rounded-full py-2 pl-10 pr-4 border-none focus:ring-2 focus:ring-primary w-64 transition-all duration-300 focus:bg-surface focus:w-80" placeholder="Search categories..." type="text"/>
+</div>
+</div>
+<nav class="hidden md:flex items-center gap-8">
+<a class="font-label-md text-label-md text-on-surface-variant font-medium hover:text-primary transition-colors duration-200" href="#">Offers</a>
+<a class="font-label-md text-label-md text-on-surface-variant font-medium hover:text-primary transition-colors duration-200" href="#">Premium</a>
+<a class="font-label-md text-label-md text-on-surface-variant font-medium hover:text-primary transition-colors duration-200" href="#">Help</a>
+<div class="flex items-center gap-4 ml-4">
+<button class="text-primary dark:text-primary-fixed-dim hover:text-primary transition-colors duration-200">
+<span class="material-symbols-outlined" data-icon="shopping_cart">shopping_cart</span>
+</button>
+<button class="text-primary dark:text-primary-fixed-dim hover:text-primary transition-colors duration-200">
+<span class="material-symbols-outlined" data-icon="notifications">notifications</span>
+</button>
+<div class="w-10 h-10 rounded-full bg-surface-variant overflow-hidden border border-outline-variant cursor-pointer ml-2">
+<img alt="Customer Profile Avatar" class="w-full h-full object-cover" data-alt="A close up headshot of a smiling young professional man with short dark hair and a neat beard. He is wearing a simple grey t-shirt. The background is a soft, out-of-focus light grey. The lighting is bright and even, creating a clean and modern portrait suitable for a profile avatar in a light-themed application." src="https://lh3.googleusercontent.com/aida-public/AB6AXuD6qkkkRp1HwccNSLqqvS277P2qhq7TERWKC3DZgHImYNmgi48bdEW4GFaMZldUTlGQ14e4PNxmMu9DxFa6w8HntirxVpqO2nCmTs3MwR4KUoL1c4-SrYoTZgUycz3e2GEReujtH23OtDhFroWuN8y-eVXQ_JDdm4VrnYE0BtbpURo0m3sBG23C7gR5jL_Sj2XCGdtKfuCDd4n_NbkBuL6L1U1cvKdE3_kvfymAA635sH62KucGjXhCd_7HtbHWT-tmu8bM09IY6Yk"/>
+</div>
+</div>
+</nav>
+</div>
+<!-- Mobile Search Bar (Visible only on mobile) -->
+<div class="md:hidden px-margin-mobile pb-stack-md w-full bg-surface">
+<div class="relative w-full shadow-lg rounded-full">
+<span class="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-on-surface-variant" data-icon="search">search</span>
+<input class="w-full bg-surface-container-high text-on-surface placeholder:text-on-surface-variant font-body-md text-body-md rounded-full py-3 pl-12 pr-4 border-none focus:ring-2 focus:ring-primary transition-all duration-300 focus:bg-surface shadow-[0_4px_20px_rgba(0,0,0,0.08)]" placeholder="What are you craving?" type="text"/>
+</div>
+</div>
+</header>
+<!-- Main Content -->
+<main class="flex-grow w-full max-w-7xl mx-auto px-margin-mobile md:px-margin-desktop py-stack-xl pt-[140px] md:pt-[100px]">
+<header class="mb-stack-xl">
+<h1 class="font-headline-lg-mobile md:font-headline-lg text-headline-lg-mobile md:text-headline-lg text-on-surface mb-stack-sm">Explore Categories</h1>
+<p class="font-body-md text-body-md text-on-surface-variant">Find exactly what you're looking for, fast.</p>
+</header>
+<!-- Bento Grid Layout for Categories -->
+<div class="grid grid-cols-2 md:grid-cols-4 gap-gutter auto-rows-[160px] md:auto-rows-[200px]">
+<!-- Featured Category 1 (Spans 2 cols, 2 rows) -->
+<a class="col-span-2 row-span-2 relative rounded-2xl overflow-hidden group shadow-[0_4px_20px_rgba(0,0,0,0.05)] hover:scale-[1.02] hover:shadow-lg transition-all duration-300 border border-outline-variant" href="#">
+<img alt="Pizza" class="w-full h-full object-cover" data-alt="A high-resolution, overhead shot of a freshly baked margherita pizza resting on a rustic wooden board. The pizza has a perfectly blistered crust, rich red tomato sauce, melted pools of fresh mozzarella, and vibrant green basil leaves. The lighting is warm and directional, emphasizing the texture of the crust and the glossiness of the cheese, fitting a premium, high-contrast culinary aesthetic." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAfFfJsqJ8bPAzMEkebr5HD_paCxeTJyhqpBeWETOM3ylHizQ3Wbp2eBldPgMFZEHIBfn8xEKTHtQINn4j1OwPJqBbOVmHbNvdRUvpcEJOJDt8tYfpLXka5vG7uO3dWQUl1VFxZcO125PAfvWyvl1BELFAzTfbKGlUude1qo2XGY35PqiZ_KZ1gtTBPeNpfOWZr1P4SBUVNuJhAIPoHlCQHfTDmSqrdCB8bCXK9QiuCt9R3zuaz4vDOSCnbaF2LtJnRoDu1rlYlyp0"/>
+<div class="absolute inset-0 bg-gradient-to-t from-inverse-surface/90 via-inverse-surface/30 to-transparent"></div>
+<div class="absolute bottom-0 left-0 p-stack-md">
+<h2 class="font-headline-md text-headline-md text-surface-bright">Fast Food</h2>
+<p class="font-label-md text-label-md text-surface-variant opacity-90 mt-unit">Burgers, Pizza &amp; More</p>
+</div>
+</a>
+<!-- Standard Category -->
+<a class="relative rounded-2xl overflow-hidden group shadow-[0_4px_20px_rgba(0,0,0,0.05)] hover:scale-[1.02] hover:shadow-lg transition-all duration-300 border border-outline-variant bg-surface-container-high" href="#">
+<img alt="Pasta" class="w-full h-full object-cover opacity-80 group-hover:opacity-100 transition-opacity" data-alt="A close-up, appetizing view of a bowl of spaghetti carbonara. The pasta is perfectly coated in a creamy sauce with generous pieces of crispy pancetta and a sprinkle of black pepper. The dish is presented in a shallow white bowl against a clean, light surface. The high-definition lighting highlights the glossy texture of the sauce, aligning with a corporate modern yet vibrant food presentation." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCD_JKGqTbchKMljf0rjXkHXOMggYBCzA_4CXlM6-FyKJB75Eu7LqjeUxHzQy_W0qbPC3KrlOsEd9ngDXbgON5cScTCJ6-I2wVcRicd1Xme6wW3o0fe-s3mMQ8Yi09lhMWzu55duqErizb4eCJ-LNSAYqSLPZN7zWLXSCV51sAkL6vz5HslKx11GbqxvnRHik7_qRti_1O_LRt3z0wsOHqgow4OJwFdhMRGXWgZsnrct-i5JN09tUBaWrP9kpxz9dPyOxGw9vjhpSE"/>
+<div class="absolute inset-0 bg-gradient-to-t from-inverse-surface/80 to-transparent"></div>
+<div class="absolute bottom-0 left-0 p-stack-sm w-full text-center md:text-left">
+<h3 class="font-headline-md text-headline-md text-surface-bright text-lg md:text-xl">Italian</h3>
+</div>
+</a>
+<!-- Standard Category -->
+<a class="relative rounded-2xl overflow-hidden group shadow-[0_4px_20px_rgba(0,0,0,0.05)] hover:scale-[1.02] hover:shadow-lg transition-all duration-300 border border-outline-variant bg-surface-container-high" href="#">
+<img alt="Dessert" class="w-full h-full object-cover opacity-80 group-hover:opacity-100 transition-opacity" data-alt="A beautifully plated slice of rich chocolate layered cake on a pristine white dessert plate. The cake has smooth, glossy chocolate ganache dripping slightly down the side. A small garnish of fresh raspberries and a mint leaf sits nearby. The lighting is crisp and highlights the moist texture of the cake against a soft, light-neutral background, conveying a high-end, curated dessert experience." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBPiqbbhTA0rnCwedivz6iZrPSfOvnIHT0-MT-TeAGpy2xE8doKABA-vfKOxppGfwUEnzfCvaQDe-b8_aoPlUpwfYoEdKag0R4-g-z_5rZ245IPT_RNACsKQ_vNOGKD1An8O5p13EZx62tNm8e0Q4acZLjKlp64CUk4tDQQiN-qeeMc8LPH8mj9mflHPwhQu7QAVpfQVkxnXwCgnGiRzY0XtRPYnVSGIrHdfAcoPPB9N2ZeweWlLhVgu0ccXixK4d1Dfsux-ptHoNA"/>
+<div class="absolute inset-0 bg-gradient-to-t from-inverse-surface/80 to-transparent"></div>
+<div class="absolute bottom-0 left-0 p-stack-sm w-full text-center md:text-left">
+<h3 class="font-headline-md text-headline-md text-surface-bright text-lg md:text-xl">Desserts</h3>
+</div>
+</a>
+<!-- Featured Category 2 (Spans 2 cols, 1 row) -->
+<a class="col-span-2 row-span-1 relative rounded-2xl overflow-hidden group shadow-[0_4px_20px_rgba(0,0,0,0.05)] hover:scale-[1.02] hover:shadow-lg transition-all duration-300 border border-outline-variant" href="#">
+<img alt="Breakfast" class="w-full h-full object-cover" data-alt="A bright, inviting breakfast spread laid out on a light wooden table. The scene includes a steaming cup of artisan coffee with latte art, a flaky croissant, and a vibrant bowl of fresh fruit featuring berries and sliced kiwi. The natural morning light creates soft shadows and a crisp, high-definition look, perfect for a modern, appetizing breakfast category visual." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCeBZSyUGs-1cqp7UEJutr4w4f9eQGd1KOWlsdaxQTmHNNat8vXeOizTJa1zALh-bjWwvVW3uTdCLuvfvrYPBWsOIx--8zTpw2DUse9Iwae1sbdcGPLj47eDWZ203TEZfM84qzouQUwsaTwgVIZUDhAtvLthl8slaxbMXh58P6qXoTw8onPciwHlO2pWyvplVYA8ezjtDP33khUBAiEWYZ0HkEcLmz3FbNkz7YAhAvSBpH56bTLjFwSQxuKoUmH1uCrTISGCwetdbA"/>
+<div class="absolute inset-0 bg-gradient-to-r from-inverse-surface/90 via-inverse-surface/50 to-transparent"></div>
+<div class="absolute inset-y-0 left-0 p-stack-md flex flex-col justify-center w-2/3">
+<h2 class="font-headline-md text-headline-md text-surface-bright mb-unit">Breakfast</h2>
+<p class="font-label-md text-label-md text-surface-variant opacity-90 hidden md:block">Start your day right with fresh coffee and pastries.</p>
+</div>
+</a>
+<!-- Standard Category -->
+<a class="relative rounded-2xl overflow-hidden group shadow-[0_4px_20px_rgba(0,0,0,0.05)] hover:scale-[1.02] hover:shadow-lg transition-all duration-300 border border-outline-variant bg-surface-container-high flex flex-col items-center justify-center p-stack-md" href="#">
+<span class="material-symbols-outlined text-primary text-4xl mb-stack-sm" data-icon="local_drink" data-weight="fill" style="font-variation-settings: 'FILL' 1;">local_drink</span>
+<h3 class="font-headline-md text-headline-md text-on-surface text-center text-lg">Drinks</h3>
+</a>
+<!-- Standard Category -->
+<a class="relative rounded-2xl overflow-hidden group shadow-[0_4px_20px_rgba(0,0,0,0.05)] hover:scale-[1.02] hover:shadow-lg transition-all duration-300 border border-outline-variant bg-surface-container-high flex flex-col items-center justify-center p-stack-md" href="#">
+<span class="material-symbols-outlined text-primary text-4xl mb-stack-sm" data-icon="bakery_dining" data-weight="fill" style="font-variation-settings: 'FILL' 1;">bakery_dining</span>
+<h3 class="font-headline-md text-headline-md text-on-surface text-center text-lg">Bakery</h3>
+</a>
+</div>
+</main>
+<!-- BottomNavBar -->
+<nav class="fixed bottom-0 left-0 w-full flex justify-around items-center px-4 py-2 pb-safe bg-surface dark:bg-inverse-surface md:hidden rounded-t-xl shadow-[0_-4px_20px_rgba(0,0,0,0.05)] z-50">
+<a class="flex flex-col items-center justify-center bg-primary-container text-on-primary-container rounded-full px-4 py-1 hover:bg-primary-fixed/20 scale-110 transition-all duration-300" href="#">
+<span class="material-symbols-outlined mb-1" data-icon="explore">explore</span>
+<span class="font-label-sm text-label-sm">Explore</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant hover:bg-primary-fixed/20 transition-all duration-300 px-4 py-1 rounded-full" href="#">
+<span class="material-symbols-outlined mb-1" data-icon="search">search</span>
+<span class="font-label-sm text-label-sm">Search</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant hover:bg-primary-fixed/20 transition-all duration-300 px-4 py-1 rounded-full" href="#">
+<span class="material-symbols-outlined mb-1" data-icon="receipt_long">receipt_long</span>
+<span class="font-label-sm text-label-sm">Orders</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant hover:bg-primary-fixed/20 transition-all duration-300 px-4 py-1 rounded-full" href="#">
+<span class="material-symbols-outlined mb-1" data-icon="person">person</span>
+<span class="font-label-sm text-label-sm">Profile</span>
+</a>
+</nav>
+</body></html>

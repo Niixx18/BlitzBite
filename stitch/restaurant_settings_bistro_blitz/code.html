@@ -1,0 +1,442 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Restaurant Profile Settings - Bistro Blitz</title>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "on-primary-container": "#521800",
+                        "outline": "#8f7065",
+                        "surface-container-lowest": "#ffffff",
+                        "surface-container": "#ffe9e2",
+                        "on-error": "#ffffff",
+                        "background": "#fff8f6",
+                        "tertiary-fixed": "#e2e2e2",
+                        "on-secondary-fixed-variant": "#474646",
+                        "surface-container-highest": "#fadcd2",
+                        "inverse-on-surface": "#ffede7",
+                        "primary-container": "#ff5c00",
+                        "primary-fixed": "#ffdbce",
+                        "on-tertiary-fixed": "#1a1c1c",
+                        "error": "#ba1a1a",
+                        "on-surface-variant": "#5b4137",
+                        "surface": "#fff8f6",
+                        "surface-container-high": "#ffe2d8",
+                        "on-tertiary-fixed-variant": "#454747",
+                        "on-tertiary-container": "#2a2c2c",
+                        "secondary-container": "#e5e2e1",
+                        "inverse-primary": "#ffb59a",
+                        "tertiary": "#5d5f5f",
+                        "surface-variant": "#fadcd2",
+                        "primary": "#a73a00",
+                        "on-background": "#271812",
+                        "secondary-fixed": "#e5e2e1",
+                        "primary-fixed-dim": "#ffb59a",
+                        "on-tertiary": "#ffffff",
+                        "on-secondary-container": "#656464",
+                        "error-container": "#ffdad6",
+                        "surface-dim": "#f1d4ca",
+                        "surface-bright": "#fff8f6",
+                        "secondary": "#5f5e5e",
+                        "on-secondary-fixed": "#1c1b1b",
+                        "surface-container-low": "#fff1ec",
+                        "on-surface": "#271812",
+                        "on-primary-fixed": "#370e00",
+                        "on-secondary": "#ffffff",
+                        "tertiary-fixed-dim": "#c6c6c7",
+                        "surface-tint": "#a73a00",
+                        "secondary-fixed-dim": "#c8c6c5",
+                        "on-error-container": "#93000a",
+                        "tertiary-container": "#929393",
+                        "on-primary-fixed-variant": "#802a00",
+                        "outline-variant": "#e4beb1",
+                        "on-primary": "#ffffff",
+                        "inverse-surface": "#3e2c26"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "gutter": "16px",
+                        "margin-mobile": "16px",
+                        "stack-md": "16px",
+                        "unit": "4px",
+                        "stack-sm": "8px",
+                        "stack-xs": "4px",
+                        "stack-xl": "48px",
+                        "stack-lg": "24px",
+                        "margin-desktop": "64px"
+                    },
+                    "fontFamily": {
+                        "headline-lg-mobile": ["Geist"],
+                        "headline-lg": ["Geist"],
+                        "display-lg": ["Geist"],
+                        "label-md": ["Geist"],
+                        "headline-md": ["Geist"],
+                        "body-lg": ["Geist"],
+                        "label-sm": ["Geist"],
+                        "body-md": ["Geist"]
+                    },
+                    "fontSize": {
+                        "headline-lg-mobile": ["28px", {"lineHeight": "34px", "fontWeight": "600"}],
+                        "headline-lg": ["32px", {"lineHeight": "40px", "letterSpacing": "-0.01em", "fontWeight": "600"}],
+                        "display-lg": ["48px", {"lineHeight": "56px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                        "label-md": ["14px", {"lineHeight": "20px", "letterSpacing": "0.01em", "fontWeight": "500"}],
+                        "headline-md": ["24px", {"lineHeight": "32px", "fontWeight": "600"}],
+                        "body-lg": ["18px", {"lineHeight": "28px", "fontWeight": "400"}],
+                        "label-sm": ["12px", {"lineHeight": "16px", "fontWeight": "600"}],
+                        "body-md": ["16px", {"lineHeight": "24px", "fontWeight": "400"}]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .icon-fill {
+            font-variation-settings: 'FILL' 1, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        
+        /* Soft-Focus Form Input Styles */
+        .blitz-input {
+            @apply bg-surface-container-low border-2 border-transparent text-on-surface rounded-lg p-3 w-full transition-all duration-200 outline-none;
+        }
+        .blitz-input:focus {
+            @apply bg-surface-container-lowest border-primary;
+        }
+        
+        /* Toggle Switch */
+        .toggle-checkbox:checked {
+            @apply bg-primary border-primary;
+            right: 0;
+        }
+        .toggle-checkbox:checked + .toggle-label {
+            @apply bg-primary;
+        }
+        .toggle-checkbox:checked + .toggle-label:after {
+            transform: translateX(100%);
+            @apply border-white;
+        }
+    </style>
+</head>
+<body class="bg-background text-on-background font-body-md antialiased flex h-screen overflow-hidden">
+<!-- SIDE NAVIGATION (From JSON) -->
+<nav class="h-screen w-64 fixed left-0 top-0 flex flex-col py-stack-lg px-gutter border-r border-outline-variant bg-surface-container-low z-50">
+<!-- Header -->
+<div class="flex items-center gap-stack-sm mb-stack-xl px-unit">
+<div class="w-10 h-10 rounded-lg bg-primary-container flex items-center justify-center shrink-0">
+<span class="material-symbols-outlined text-on-primary-container icon-fill">restaurant</span>
+</div>
+<div class="flex flex-col">
+<span class="font-headline-md text-headline-md font-bold text-primary truncate">Bistro Blitz</span>
+<span class="font-label-sm text-label-sm text-on-surface-variant">Restaurant Admin</span>
+</div>
+</div>
+<!-- Main Tabs -->
+<ul class="flex flex-col gap-unit flex-1">
+<li>
+<a class="flex items-center gap-3 px-4 py-3 text-on-surface-variant hover:bg-surface-container-high rounded-lg transition-all hover:translate-x-1 duration-200 group" href="#">
+<span class="material-symbols-outlined text-[20px]">dashboard</span>
+<span class="font-label-md text-label-md">Dashboard</span>
+</a>
+</li>
+<li>
+<a class="flex items-center gap-3 px-4 py-3 text-on-surface-variant hover:bg-surface-container-high rounded-lg transition-all hover:translate-x-1 duration-200 group" href="#">
+<span class="material-symbols-outlined text-[20px]">receipt_long</span>
+<span class="font-label-md text-label-md">Orders</span>
+</a>
+</li>
+<li>
+<a class="flex items-center gap-3 px-4 py-3 text-on-surface-variant hover:bg-surface-container-high rounded-lg transition-all hover:translate-x-1 duration-200 group" href="#">
+<span class="material-symbols-outlined text-[20px]">restaurant_menu</span>
+<span class="font-label-md text-label-md">Menu</span>
+</a>
+</li>
+<li>
+<a class="flex items-center gap-3 px-4 py-3 text-on-surface-variant hover:bg-surface-container-high rounded-lg transition-all hover:translate-x-1 duration-200 group" href="#">
+<span class="material-symbols-outlined text-[20px]">monitoring</span>
+<span class="font-label-md text-label-md">Analytics</span>
+</a>
+</li>
+<li>
+<a class="flex items-center gap-3 px-4 py-3 text-on-surface-variant hover:bg-surface-container-high rounded-lg transition-all hover:translate-x-1 duration-200 group" href="#">
+<span class="material-symbols-outlined text-[20px]">payments</span>
+<span class="font-label-md text-label-md">Revenue</span>
+</a>
+</li>
+<!-- ACTIVE TAB -->
+<li>
+<a class="flex items-center gap-3 px-4 py-3 bg-primary-container text-on-primary-container rounded-lg font-bold transition-all group" href="#">
+<span class="material-symbols-outlined text-[20px] icon-fill">settings</span>
+<span class="font-label-md text-label-md">Settings</span>
+</a>
+</li>
+</ul>
+<!-- CTA & Footer -->
+<div class="mt-auto flex flex-col gap-stack-md pt-stack-md border-t border-outline-variant">
+<button class="w-full bg-primary text-on-primary font-label-md text-label-md py-3 rounded-lg hover:bg-surface-tint transition-colors flex items-center justify-center gap-2 shadow-sm">
+<span class="material-symbols-outlined text-[18px]">upgrade</span>
+                Upgrade Plan
+            </button>
+<ul class="flex flex-col gap-unit">
+<li>
+<a class="flex items-center gap-3 px-4 py-3 text-on-surface-variant hover:bg-surface-container-high rounded-lg transition-all hover:translate-x-1 duration-200 group" href="#">
+<span class="material-symbols-outlined text-[20px]">logout</span>
+<span class="font-label-md text-label-md">Logout</span>
+</a>
+</li>
+</ul>
+</div>
+</nav>
+<!-- MAIN CONTENT CANVAS -->
+<main class="flex-1 ml-64 flex flex-col h-screen overflow-y-auto bg-background">
+<!-- Sticky Header -->
+<header class="sticky top-0 z-40 bg-background/90 backdrop-blur-md border-b border-outline-variant px-margin-desktop py-stack-md flex justify-between items-center">
+<div>
+<h1 class="font-headline-lg text-headline-lg text-on-surface">Profile Settings</h1>
+<p class="font-body-md text-body-md text-on-surface-variant mt-1">Manage your restaurant identity, hours, and delivery preferences.</p>
+</div>
+<div class="flex items-center gap-stack-sm">
+<button class="px-6 py-2.5 rounded-lg border border-outline text-on-surface font-label-md text-label-md hover:bg-surface-container-low transition-colors">Discard</button>
+<button class="px-6 py-2.5 rounded-lg bg-primary text-on-primary font-label-md text-label-md hover:bg-surface-tint transition-colors shadow-sm flex items-center gap-2">
+<span class="material-symbols-outlined text-[18px]">save</span>
+                    Save Changes
+                </button>
+</div>
+</header>
+<!-- Content Layout (Bento-style Grid) -->
+<div class="p-margin-desktop grid grid-cols-12 gap-stack-lg max-w-[1280px] mx-auto w-full pb-32">
+<!-- COLUMN 1: Main Info & Gallery -->
+<div class="col-span-12 lg:col-span-7 flex flex-col gap-stack-lg">
+<!-- CARD: Basic Info -->
+<section class="bg-surface-container-lowest rounded-[24px] border border-outline-variant shadow-[0_4px_20px_rgba(0,0,0,0.02)] p-stack-lg">
+<div class="flex items-center gap-3 mb-stack-md border-b border-surface-container pt-2 pb-4">
+<span class="material-symbols-outlined text-primary text-[24px]">storefront</span>
+<h2 class="font-headline-md text-headline-md text-on-surface">Basic Information</h2>
+</div>
+<div class="flex flex-col gap-stack-md">
+<div class="grid grid-cols-2 gap-stack-md">
+<div class="flex flex-col gap-stack-xs">
+<label class="font-label-sm text-label-sm text-on-surface-variant ml-1">Restaurant Name</label>
+<input class="blitz-input font-body-md text-body-md" type="text" value="Bistro Blitz Downtown"/>
+</div>
+<div class="flex flex-col gap-stack-xs">
+<label class="font-label-sm text-label-sm text-on-surface-variant ml-1">Phone Number</label>
+<input class="blitz-input font-body-md text-body-md" type="tel" value="(555) 123-4567"/>
+</div>
+</div>
+<div class="flex flex-col gap-stack-xs">
+<label class="font-label-sm text-label-sm text-on-surface-variant ml-1">Short Description</label>
+<textarea class="blitz-input font-body-md text-body-md resize-none" rows="3">Modern urban eatery focusing on lightning-fast service without compromising high-end culinary standards. Famous for our 15-minute power lunches.</textarea>
+</div>
+<div class="flex flex-col gap-stack-xs">
+<label class="font-label-sm text-label-sm text-on-surface-variant ml-1">Cuisine Tags</label>
+<div class="flex flex-wrap gap-2 mt-1">
+<span class="bg-primary-container/50 text-on-primary-container px-3 py-1.5 rounded-full font-label-sm text-label-sm flex items-center gap-1 border border-primary/20">
+                                    Modern American <button class="hover:text-primary"><span class="material-symbols-outlined text-[14px]">close</span></button>
+</span>
+<span class="bg-primary-container/50 text-on-primary-container px-3 py-1.5 rounded-full font-label-sm text-label-sm flex items-center gap-1 border border-primary/20">
+                                    Fast Casual <button class="hover:text-primary"><span class="material-symbols-outlined text-[14px]">close</span></button>
+</span>
+<button class="px-3 py-1.5 rounded-full border border-dashed border-outline font-label-sm text-label-sm text-on-surface-variant hover:bg-surface-container-low transition-colors flex items-center gap-1">
+<span class="material-symbols-outlined text-[14px]">add</span> Add Tag
+                                </button>
+</div>
+</div>
+</div>
+</section>
+<!-- CARD: Gallery -->
+<section class="bg-surface-container-lowest rounded-[24px] border border-outline-variant shadow-[0_4px_20px_rgba(0,0,0,0.02)] p-stack-lg hover:shadow-[0_8px_30px_rgba(0,0,0,0.04)] transition-shadow duration-300 group">
+<div class="flex items-center justify-between mb-stack-md border-b border-surface-container pt-2 pb-4">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-primary text-[24px]">photo_library</span>
+<h2 class="font-headline-md text-headline-md text-on-surface">Gallery</h2>
+</div>
+<span class="font-label-sm text-label-sm text-on-surface-variant bg-surface-container-high px-2 py-1 rounded">3 of 10 limit</span>
+</div>
+<div class="grid grid-cols-3 gap-stack-sm">
+<!-- Upload Card -->
+<div class="aspect-square rounded-xl border-2 border-dashed border-outline-variant bg-surface-container-low hover:bg-surface-container transition-colors flex flex-col items-center justify-center gap-2 cursor-pointer text-on-surface-variant hover:text-primary group">
+<div class="w-10 h-10 rounded-full bg-surface-container-highest flex items-center justify-center group-hover:bg-primary-container group-hover:text-on-primary-container transition-colors">
+<span class="material-symbols-outlined">add_a_photo</span>
+</div>
+<span class="font-label-sm text-label-sm">Upload Photo</span>
+</div>
+<!-- Image Items -->
+<div class="aspect-square rounded-xl bg-surface-variant relative overflow-hidden group/img border border-outline-variant">
+<div class="absolute inset-0 bg-cover bg-center" data-alt="A modern restaurant interior featuring high-contrast design. Sleek black booths contrast with warm, vibrant orange ambient lighting. The atmosphere is energetic and professional, capturing a high-velocity culinary environment perfect for urban dining. High definition photography." style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuCphgRZNZM5OarWLlbD9uuHD1Jvg_ot30Cu7gD3-iW2K7AxpyvljGbwL883jyeJViO5n53x4JrffedbKSJdYC8C3u13aoV0m90dNztuJ_wwu6peRjqyXxMGs9tZy2EFmzG-V9IArYBEPF45quPihdKmVY_kkcAW_nZggAk47tjBbQiTXAJMjtjltJB7dQBP_gIevjnKTvuYLpWquJK5f_5IAwfHKANIoVtT_uPx6iXkbuFFjBzQsIJDnVQNlF-XT164g08LkaaS_IE');"></div>
+<div class="absolute inset-0 bg-black/50 opacity-0 group-hover/img:opacity-100 transition-opacity flex items-center justify-center gap-2 backdrop-blur-sm">
+<button class="w-8 h-8 rounded-full bg-surface-container-lowest text-on-surface flex items-center justify-center hover:bg-error-container hover:text-on-error-container transition-colors">
+<span class="material-symbols-outlined text-[18px]">delete</span>
+</button>
+</div>
+</div>
+<div class="aspect-square rounded-xl bg-surface-variant relative overflow-hidden group/img border border-outline-variant">
+<div class="absolute inset-0 bg-cover bg-center" data-alt="A beautifully plated gourmet dish on a minimalist white plate. The food features vibrant colors, emphasizing freshness and high-end culinary curation. The lighting is crisp and sophisticated, casting soft shadows that highlight the textures of the ingredients. Corporate modern aesthetic." style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuAozZ5cC_Ny_ROIphxHx6KowuKt4pYVTphiHydKbgtMv5ZTGQIG_84_s5vErcUlEyjMror7Wf3smS5lTmSh5UE8JCvgqcYLN3j4EvN68E9MUjZUvJw_--SnHUp0SpA6VTb1Lz-7RpESduU4nIOwiE8sQyAokdqJu9fCT_bw2bfEYL88s8IrTRvC3rwIffs9mGWGmUliCYSx_OQljgyxDCRkEvdBIER2M_4JqByviNTn_oG0u79RHfQj5JNww9dsIMuiJLxA7KBd7sE');"></div>
+<div class="absolute inset-0 bg-black/50 opacity-0 group-hover/img:opacity-100 transition-opacity flex items-center justify-center gap-2 backdrop-blur-sm">
+<button class="w-8 h-8 rounded-full bg-surface-container-lowest text-on-surface flex items-center justify-center hover:bg-error-container hover:text-on-error-container transition-colors">
+<span class="material-symbols-outlined text-[18px]">delete</span>
+</button>
+</div>
+</div>
+</div>
+</section>
+</div>
+<!-- COLUMN 2: Business Hours & Delivery -->
+<div class="col-span-12 lg:col-span-5 flex flex-col gap-stack-lg">
+<!-- CARD: Delivery Settings -->
+<section class="bg-surface-container-lowest rounded-[24px] border border-outline-variant shadow-[0_4px_20px_rgba(0,0,0,0.02)] p-stack-lg">
+<div class="flex items-center gap-3 mb-stack-md border-b border-surface-container pt-2 pb-4">
+<span class="material-symbols-outlined text-primary text-[24px]">local_shipping</span>
+<h2 class="font-headline-md text-headline-md text-on-surface">Delivery Logic</h2>
+</div>
+<div class="flex flex-col gap-stack-md">
+<div class="flex flex-col gap-stack-xs">
+<div class="flex justify-between items-end mb-1">
+<label class="font-label-sm text-label-sm text-on-surface-variant ml-1">Delivery Radius</label>
+<span class="font-label-md text-label-md text-primary font-bold">5.0 miles</span>
+</div>
+<input class="w-full h-2 bg-surface-container-high rounded-lg appearance-none cursor-pointer accent-primary" max="15" min="1" type="range" value="5"/>
+<div class="flex justify-between text-xs text-on-surface-variant px-1 mt-1">
+<span>1m</span>
+<span>15m</span>
+</div>
+</div>
+<div class="grid grid-cols-2 gap-stack-md mt-2">
+<div class="flex flex-col gap-stack-xs relative">
+<label class="font-label-sm text-label-sm text-on-surface-variant ml-1">Min. Order</label>
+<div class="relative">
+<span class="absolute left-3 top-1/2 -translate-y-1/2 text-on-surface-variant font-body-md">$</span>
+<input class="blitz-input pl-7 font-body-md text-body-md" type="number" value="15.00"/>
+</div>
+</div>
+<div class="flex flex-col gap-stack-xs relative">
+<label class="font-label-sm text-label-sm text-on-surface-variant ml-1">Base Fee</label>
+<div class="relative">
+<span class="absolute left-3 top-1/2 -translate-y-1/2 text-on-surface-variant font-body-md">$</span>
+<input class="blitz-input pl-7 font-body-md text-body-md" type="number" value="3.99"/>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- CARD: Business Hours -->
+<section class="bg-surface-container-lowest rounded-[24px] border border-outline-variant shadow-[0_4px_20px_rgba(0,0,0,0.02)] p-stack-lg flex-1">
+<div class="flex items-center justify-between mb-stack-md border-b border-surface-container pt-2 pb-4">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-primary text-[24px]">schedule</span>
+<h2 class="font-headline-md text-headline-md text-on-surface">Operating Hours</h2>
+</div>
+<button class="text-primary font-label-sm text-label-sm hover:underline">Apply to all</button>
+</div>
+<div class="flex flex-col gap-2">
+<!-- Day Row: Monday -->
+<div class="flex items-center gap-4 p-2 rounded-lg hover:bg-surface-container-low transition-colors">
+<div class="w-12 shrink-0">
+<span class="font-label-md text-label-md text-on-surface">Mon</span>
+</div>
+<div class="flex items-center gap-2 flex-1">
+<input class="blitz-input py-1.5 px-2 text-sm" type="time" value="10:00"/>
+<span class="text-on-surface-variant">-</span>
+<input class="blitz-input py-1.5 px-2 text-sm" type="time" value="22:00"/>
+</div>
+<div class="relative inline-block w-10 mr-2 align-middle select-none transition duration-200 ease-in">
+<input checked="" class="toggle-checkbox absolute block w-5 h-5 rounded-full bg-white border-4 appearance-none cursor-pointer z-10" id="mon" name="toggle" type="checkbox"/>
+<label class="toggle-label block overflow-hidden h-5 rounded-full bg-surface-container-high cursor-pointer" for="mon"></label>
+</div>
+</div>
+<!-- Day Row: Tuesday -->
+<div class="flex items-center gap-4 p-2 rounded-lg hover:bg-surface-container-low transition-colors">
+<div class="w-12 shrink-0">
+<span class="font-label-md text-label-md text-on-surface">Tue</span>
+</div>
+<div class="flex items-center gap-2 flex-1">
+<input class="blitz-input py-1.5 px-2 text-sm" type="time" value="10:00"/>
+<span class="text-on-surface-variant">-</span>
+<input class="blitz-input py-1.5 px-2 text-sm" type="time" value="22:00"/>
+</div>
+<div class="relative inline-block w-10 mr-2 align-middle select-none transition duration-200 ease-in">
+<input checked="" class="toggle-checkbox absolute block w-5 h-5 rounded-full bg-white border-4 appearance-none cursor-pointer z-10" id="tue" name="toggle" type="checkbox"/>
+<label class="toggle-label block overflow-hidden h-5 rounded-full bg-surface-container-high cursor-pointer" for="tue"></label>
+</div>
+</div>
+<!-- Day Row: Wednesday -->
+<div class="flex items-center gap-4 p-2 rounded-lg hover:bg-surface-container-low transition-colors">
+<div class="w-12 shrink-0">
+<span class="font-label-md text-label-md text-on-surface">Wed</span>
+</div>
+<div class="flex items-center gap-2 flex-1">
+<input class="blitz-input py-1.5 px-2 text-sm" type="time" value="10:00"/>
+<span class="text-on-surface-variant">-</span>
+<input class="blitz-input py-1.5 px-2 text-sm" type="time" value="22:00"/>
+</div>
+<div class="relative inline-block w-10 mr-2 align-middle select-none transition duration-200 ease-in">
+<input checked="" class="toggle-checkbox absolute block w-5 h-5 rounded-full bg-white border-4 appearance-none cursor-pointer z-10" id="wed" name="toggle" type="checkbox"/>
+<label class="toggle-label block overflow-hidden h-5 rounded-full bg-surface-container-high cursor-pointer" for="wed"></label>
+</div>
+</div>
+<!-- Day Row: Thursday -->
+<div class="flex items-center gap-4 p-2 rounded-lg hover:bg-surface-container-low transition-colors">
+<div class="w-12 shrink-0">
+<span class="font-label-md text-label-md text-on-surface">Thu</span>
+</div>
+<div class="flex items-center gap-2 flex-1">
+<input class="blitz-input py-1.5 px-2 text-sm" type="time" value="10:00"/>
+<span class="text-on-surface-variant">-</span>
+<input class="blitz-input py-1.5 px-2 text-sm" type="time" value="22:00"/>
+</div>
+<div class="relative inline-block w-10 mr-2 align-middle select-none transition duration-200 ease-in">
+<input checked="" class="toggle-checkbox absolute block w-5 h-5 rounded-full bg-white border-4 appearance-none cursor-pointer z-10" id="thu" name="toggle" type="checkbox"/>
+<label class="toggle-label block overflow-hidden h-5 rounded-full bg-surface-container-high cursor-pointer" for="thu"></label>
+</div>
+</div>
+<!-- Day Row: Friday -->
+<div class="flex items-center gap-4 p-2 rounded-lg hover:bg-surface-container-low transition-colors">
+<div class="w-12 shrink-0">
+<span class="font-label-md text-label-md text-on-surface font-bold text-primary">Fri</span>
+</div>
+<div class="flex items-center gap-2 flex-1">
+<input class="blitz-input py-1.5 px-2 text-sm border-primary/30" type="time" value="10:00"/>
+<span class="text-on-surface-variant">-</span>
+<input class="blitz-input py-1.5 px-2 text-sm border-primary/30" type="time" value="23:30"/>
+</div>
+<div class="relative inline-block w-10 mr-2 align-middle select-none transition duration-200 ease-in">
+<input checked="" class="toggle-checkbox absolute block w-5 h-5 rounded-full bg-white border-4 appearance-none cursor-pointer z-10" id="fri" name="toggle" type="checkbox"/>
+<label class="toggle-label block overflow-hidden h-5 rounded-full bg-surface-container-high cursor-pointer" for="fri"></label>
+</div>
+</div>
+<!-- Day Row: Weekend (Closed Example) -->
+<div class="flex items-center gap-4 p-2 rounded-lg bg-surface-container-low opacity-60 grayscale transition-all">
+<div class="w-12 shrink-0">
+<span class="font-label-md text-label-md text-on-surface-variant">Sat</span>
+</div>
+<div class="flex items-center justify-center flex-1 py-1.5">
+<span class="font-label-sm text-label-sm text-on-surface-variant uppercase tracking-wider">Closed</span>
+</div>
+<div class="relative inline-block w-10 mr-2 align-middle select-none transition duration-200 ease-in">
+<input class="toggle-checkbox absolute block w-5 h-5 rounded-full bg-white border-4 border-surface-container appearance-none cursor-pointer z-10" id="sat" name="toggle" type="checkbox"/>
+<label class="toggle-label block overflow-hidden h-5 rounded-full bg-surface-container-high cursor-pointer" for="sat"></label>
+</div>
+</div>
+</div>
+</section>
+</div>
+</div>
+</main>
+</body></html>

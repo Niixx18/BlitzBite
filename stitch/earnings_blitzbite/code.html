@@ -1,0 +1,355 @@
+<!DOCTYPE html>
+
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Partner Earnings Dashboard</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@100..900&amp;display=swap" rel="stylesheet"/>
+<style>
+        .material-symbols-outlined {
+            font-family: 'Material Symbols Outlined';
+            font-weight: normal;
+            font-style: normal;
+            font-size: 24px;
+            line-height: 1;
+            letter-spacing: normal;
+            text-transform: none;
+            display: inline-block;
+            white-space: nowrap;
+            word-wrap: normal;
+            direction: ltr;
+            -webkit-font-feature-settings: 'liga';
+            -webkit-font-smoothing: antialiased;
+        }
+    </style>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "on-primary-fixed": "#370e00",
+                        "on-surface": "#271812",
+                        "outline-variant": "#e4beb1",
+                        "on-primary": "#ffffff",
+                        "inverse-surface": "#3e2c26",
+                        "on-primary-fixed-variant": "#802a00",
+                        "tertiary-container": "#929393",
+                        "tertiary-fixed-dim": "#c6c6c7",
+                        "surface-tint": "#a73a00",
+                        "secondary-fixed-dim": "#c8c6c5",
+                        "on-error-container": "#93000a",
+                        "on-secondary": "#ffffff",
+                        "surface-variant": "#fadcd2",
+                        "tertiary": "#5d5f5f",
+                        "inverse-primary": "#ffb59a",
+                        "secondary-container": "#e5e2e1",
+                        "on-tertiary-container": "#2a2c2c",
+                        "surface-container-low": "#fff1ec",
+                        "surface-bright": "#fff8f6",
+                        "secondary": "#5f5e5e",
+                        "on-secondary-fixed": "#1c1b1b",
+                        "surface-dim": "#f1d4ca",
+                        "error-container": "#ffdad6",
+                        "secondary-fixed": "#e5e2e1",
+                        "primary-fixed-dim": "#ffb59a",
+                        "on-tertiary": "#ffffff",
+                        "on-secondary-container": "#656464",
+                        "on-background": "#271812",
+                        "primary": "#a73a00",
+                        "on-tertiary-fixed": "#1a1c1c",
+                        "error": "#ba1a1a",
+                        "on-tertiary-fixed-variant": "#454747",
+                        "surface-container-high": "#ffe2d8",
+                        "surface": "#fff8f6",
+                        "on-surface-variant": "#5b4137",
+                        "tertiary-fixed": "#e2e2e2",
+                        "background": "#fff8f6",
+                        "surface-container-lowest": "#ffffff",
+                        "surface-container": "#ffe9e2",
+                        "on-error": "#ffffff",
+                        "outline": "#8f7065",
+                        "on-primary-container": "#521800",
+                        "primary-fixed": "#ffdbce",
+                        "primary-container": "#ff5c00",
+                        "inverse-on-surface": "#ffede7",
+                        "surface-container-highest": "#fadcd2",
+                        "on-secondary-fixed-variant": "#474646"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "unit": "4px",
+                        "stack-sm": "8px",
+                        "stack-xs": "4px",
+                        "stack-xl": "48px",
+                        "margin-desktop": "64px",
+                        "stack-lg": "24px",
+                        "margin-mobile": "16px",
+                        "gutter": "16px",
+                        "stack-md": "16px"
+                    },
+                    "fontFamily": {
+                        "headline-lg-mobile": ["Geist"],
+                        "headline-lg": ["Geist"],
+                        "display-lg": ["Geist"],
+                        "label-md": ["Geist"],
+                        "headline-md": ["Geist"],
+                        "body-lg": ["Geist"],
+                        "label-sm": ["Geist"],
+                        "body-md": ["Geist"]
+                    },
+                    "fontSize": {
+                        "headline-lg-mobile": ["28px", { "lineHeight": "34px", "fontWeight": "600" }],
+                        "headline-lg": ["32px", { "lineHeight": "40px", "letterSpacing": "-0.01em", "fontWeight": "600" }],
+                        "display-lg": ["48px", { "lineHeight": "56px", "letterSpacing": "-0.02em", "fontWeight": "700" }],
+                        "label-md": ["14px", { "lineHeight": "20px", "letterSpacing": "0.01em", "fontWeight": "500" }],
+                        "headline-md": ["24px", { "lineHeight": "32px", "fontWeight": "600" }],
+                        "body-lg": ["18px", { "lineHeight": "28px", "fontWeight": "400" }],
+                        "label-sm": ["12px", { "lineHeight": "16px", "fontWeight": "600" }],
+                        "body-md": ["16px", { "lineHeight": "24px", "fontWeight": "400" }]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background text-on-background antialiased pb-24 md:pb-0 font-body-md text-body-md">
+<!-- TopAppBar -->
+<header class="bg-surface shadow-sm w-full top-0 sticky z-50 flex items-center justify-between px-margin-mobile md:px-margin-desktop py-stack-sm w-full transition-shadow duration-200" id="top-nav">
+<div class="flex items-center gap-4">
+<div class="w-10 h-10 rounded-full bg-surface-variant overflow-hidden border border-outline-variant shadow-sm">
+<img alt="Partner Profile Picture" class="w-full h-full object-cover" data-alt="A crisp, high-definition professional avatar of an urban food delivery courier. The lighting is bright studio white, set against a pristine, light-mode background with warm corporate tonal shifts. The subject reflects the brand's high-velocity and premium culinary aesthetic, utilizing high-contrast charcoal and vibrant orange accents in their attire." src="https://lh3.googleusercontent.com/aida-public/AB6AXuD_lVxs4WUwtPmNeozT4-qCwBBe80L20f06KqSXXY7RUCj-YZZjmY4IIdb8omeC4k-iUxmCsHYzvtBoCZDXRCLbsUM32ktERn0gVkB4_Pe8GseJqA4WIa4sNm9nJ3JFvC4YPMhvfUT1azkEhpP9WFYWqo33n8JJJCWix3qoGHzkuJKItyFDISUQNWuRY9FFyf0k0-BKcJs5mhlZ9NaPmVUwNjaBigTIl_pHCWBFjuzmob_IbIsaa8JS6A-cxLbLyz-lmXw4Kg8kjYw"/>
+</div>
+<span class="font-headline-md text-headline-md-mobile font-bold text-primary active:scale-95 transition-transform cursor-pointer">BlitzBite Partner</span>
+</div>
+<!-- Desktop Navigation Cluster -->
+<nav class="hidden md:flex items-center gap-stack-lg">
+<a class="font-label-md text-label-md text-on-surface-variant hover:bg-surface-variant transition-colors flex items-center gap-2 px-3 py-2 rounded-lg" href="#">
+<span class="material-symbols-outlined">delivery_dining</span> Deliveries
+            </a>
+<a class="font-label-md text-label-md text-primary font-bold bg-primary-container/10 flex items-center gap-2 px-3 py-2 rounded-lg" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">payments</span> Earnings
+            </a>
+<a class="font-label-md text-label-md text-on-surface-variant hover:bg-surface-variant transition-colors flex items-center gap-2 px-3 py-2 rounded-lg" href="#">
+<span class="material-symbols-outlined">history</span> History
+            </a>
+<a class="font-label-md text-label-md text-on-surface-variant hover:bg-surface-variant transition-colors flex items-center gap-2 px-3 py-2 rounded-lg" href="#">
+<span class="material-symbols-outlined">person</span> Profile
+            </a>
+</nav>
+<div class="flex items-center gap-2 bg-surface-container-high px-4 py-1.5 rounded-full border border-outline-variant shadow-sm cursor-pointer hover:bg-surface-variant transition-colors">
+<span class="w-2 h-2 rounded-full bg-primary animate-pulse"></span>
+<span class="font-label-sm text-label-sm text-on-surface-variant">Online</span>
+</div>
+</header>
+<!-- Main Canvas -->
+<main class="max-w-7xl mx-auto px-margin-mobile md:px-margin-desktop py-stack-lg flex flex-col gap-stack-lg">
+<!-- Today's Earnings Hero Card -->
+<section class="bg-primary text-on-primary rounded-xl p-stack-lg flex flex-col md:flex-row items-start md:items-center justify-between shadow-[0_8px_30px_rgba(167,58,0,0.15)] relative overflow-hidden group hover:scale-[1.01] transition-transform duration-300">
+<!-- Decorative Ambient Elements -->
+<div class="absolute -right-20 -top-20 w-64 h-64 bg-white/10 rounded-full blur-3xl pointer-events-none"></div>
+<div class="absolute -left-10 -bottom-10 w-32 h-32 bg-black/5 rounded-full blur-2xl pointer-events-none"></div>
+<div class="flex flex-col gap-stack-xs z-10">
+<h2 class="font-label-md text-label-md text-primary-fixed opacity-90">Today's Earnings</h2>
+<div class="font-display-lg text-display-lg tracking-tight">$142.50</div>
+<div class="font-body-md text-body-md text-primary-fixed opacity-90 mt-1 flex items-center gap-2">
+<span class="material-symbols-outlined text-[18px]">verified</span> 12 Deliveries completed
+                </div>
+</div>
+<button class="mt-stack-md md:mt-0 bg-on-primary text-primary font-label-md text-label-md px-6 py-3 rounded-full hover:bg-surface transition-colors shadow-md z-10 flex items-center gap-2 active:scale-95 duration-150">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">account_balance_wallet</span>
+                Cash Out
+            </button>
+</section>
+<!-- Bento Grid: Breakdown & Chart -->
+<section class="grid grid-cols-1 md:grid-cols-3 gap-stack-md">
+<!-- Earnings Breakdown -->
+<div class="bg-surface rounded-xl p-stack-md border border-outline-variant shadow-sm flex flex-col gap-stack-md hover:shadow-md transition-shadow duration-300">
+<h3 class="font-headline-md text-headline-md-mobile text-on-surface">Breakdown</h3>
+<div class="flex flex-col gap-stack-sm flex-1 justify-center">
+<div class="flex justify-between items-center py-2 border-b border-surface-variant group cursor-default">
+<div class="flex items-center gap-2 text-on-surface-variant font-body-md text-body-md group-hover:text-primary transition-colors">
+<span class="material-symbols-outlined text-tertiary group-hover:text-primary transition-colors">directions_car</span> Base Pay
+                        </div>
+<span class="font-label-md text-label-md text-on-surface">$85.00</span>
+</div>
+<div class="flex justify-between items-center py-2 border-b border-surface-variant group cursor-default">
+<div class="flex items-center gap-2 text-on-surface-variant font-body-md text-body-md group-hover:text-primary transition-colors">
+<span class="material-symbols-outlined text-tertiary group-hover:text-primary transition-colors">route</span> Distance
+                        </div>
+<span class="font-label-md text-label-md text-on-surface">$32.50</span>
+</div>
+<div class="flex justify-between items-center py-2 group cursor-default">
+<div class="flex items-center gap-2 text-on-surface-variant font-body-md text-body-md group-hover:text-primary transition-colors">
+<span class="material-symbols-outlined text-tertiary group-hover:text-primary transition-colors">volunteer_activism</span> Tips
+                        </div>
+<span class="font-label-md text-label-md text-primary">$25.00</span>
+</div>
+</div>
+</div>
+<!-- Weekly Overview Chart (CSS Representation) -->
+<div class="md:col-span-2 bg-surface rounded-xl p-stack-md border border-outline-variant shadow-sm flex flex-col gap-stack-md hover:shadow-md transition-shadow duration-300 min-h-[280px]">
+<div class="flex justify-between items-center">
+<h3 class="font-headline-md text-headline-md-mobile text-on-surface">Weekly Overview</h3>
+<div class="flex items-center gap-2 font-label-sm text-label-sm text-on-surface-variant bg-surface-variant px-3 py-1.5 rounded-full cursor-pointer hover:bg-outline-variant transition-colors">
+                        This Week <span class="material-symbols-outlined text-[16px]">expand_more</span>
+</div>
+</div>
+<div class="flex-1 flex items-end justify-between gap-2 mt-4 relative pt-8">
+<!-- Ambient Grid Lines -->
+<div class="absolute inset-0 flex flex-col justify-between pointer-events-none opacity-30 z-0">
+<div class="border-t border-outline-variant w-full h-0"></div>
+<div class="border-t border-outline-variant w-full h-0"></div>
+<div class="border-t border-outline-variant w-full h-0"></div>
+<div class="border-t border-outline-variant w-full h-0"></div>
+</div>
+<!-- Chart Bars -->
+<div class="flex flex-col items-center gap-2 flex-1 z-10 group cursor-pointer">
+<div class="w-full max-w-[40px] bg-secondary-container rounded-t-lg h-[35%] group-hover:bg-primary transition-colors relative">
+<div class="absolute -top-10 left-1/2 -translate-x-1/2 bg-inverse-surface text-inverse-on-surface font-label-sm text-label-sm px-2 py-1 rounded opacity-0 group-hover:opacity-100 transition-opacity shadow-md pointer-events-none">$45</div>
+</div>
+<span class="font-label-sm text-label-sm text-on-surface-variant group-hover:text-on-surface transition-colors">Mon</span>
+</div>
+<div class="flex flex-col items-center gap-2 flex-1 z-10 group cursor-pointer">
+<div class="w-full max-w-[40px] bg-secondary-container rounded-t-lg h-[55%] group-hover:bg-primary transition-colors relative">
+<div class="absolute -top-10 left-1/2 -translate-x-1/2 bg-inverse-surface text-inverse-on-surface font-label-sm text-label-sm px-2 py-1 rounded opacity-0 group-hover:opacity-100 transition-opacity shadow-md pointer-events-none">$75</div>
+</div>
+<span class="font-label-sm text-label-sm text-on-surface-variant group-hover:text-on-surface transition-colors">Tue</span>
+</div>
+<div class="flex flex-col items-center gap-2 flex-1 z-10 group cursor-pointer">
+<div class="w-full max-w-[40px] bg-secondary-container rounded-t-lg h-[45%] group-hover:bg-primary transition-colors relative">
+<div class="absolute -top-10 left-1/2 -translate-x-1/2 bg-inverse-surface text-inverse-on-surface font-label-sm text-label-sm px-2 py-1 rounded opacity-0 group-hover:opacity-100 transition-opacity shadow-md pointer-events-none">$60</div>
+</div>
+<span class="font-label-sm text-label-sm text-on-surface-variant group-hover:text-on-surface transition-colors">Wed</span>
+</div>
+<div class="flex flex-col items-center gap-2 flex-1 z-10 group cursor-pointer">
+<div class="w-full max-w-[40px] bg-primary rounded-t-lg h-[85%] relative shadow-[0_4px_20px_rgba(167,58,0,0.2)]">
+<div class="absolute -top-10 left-1/2 -translate-x-1/2 bg-inverse-surface text-inverse-on-surface font-label-sm text-label-sm px-2 py-1 rounded opacity-100 shadow-md pointer-events-none">$142</div>
+</div>
+<span class="font-label-sm text-label-sm text-primary font-bold">Thu</span>
+</div>
+<div class="flex flex-col items-center gap-2 flex-1 z-10 group cursor-pointer">
+<div class="w-full max-w-[40px] bg-secondary-container rounded-t-lg h-[15%] group-hover:bg-primary transition-colors relative">
+<div class="absolute -top-10 left-1/2 -translate-x-1/2 bg-inverse-surface text-inverse-on-surface font-label-sm text-label-sm px-2 py-1 rounded opacity-0 group-hover:opacity-100 transition-opacity shadow-md pointer-events-none">$20</div>
+</div>
+<span class="font-label-sm text-label-sm text-on-surface-variant group-hover:text-on-surface transition-colors">Fri</span>
+</div>
+<div class="flex flex-col items-center gap-2 flex-1 z-10 group cursor-pointer">
+<div class="w-full max-w-[40px] bg-secondary-container rounded-t-lg h-[5%] group-hover:bg-primary transition-colors"></div>
+<span class="font-label-sm text-label-sm text-on-surface-variant group-hover:text-on-surface transition-colors">Sat</span>
+</div>
+<div class="flex flex-col items-center gap-2 flex-1 z-10 group cursor-pointer">
+<div class="w-full max-w-[40px] bg-secondary-container rounded-t-lg h-[5%] group-hover:bg-primary transition-colors"></div>
+<span class="font-label-sm text-label-sm text-on-surface-variant group-hover:text-on-surface transition-colors">Sun</span>
+</div>
+</div>
+</div>
+</section>
+<!-- Recent Deliveries List -->
+<section class="flex flex-col gap-stack-md mt-stack-sm">
+<h3 class="font-headline-md text-headline-md-mobile text-on-surface">Recent Deliveries</h3>
+<div class="bg-surface rounded-xl border border-outline-variant shadow-sm overflow-hidden flex flex-col">
+<!-- Item 1 -->
+<div class="flex items-center justify-between p-stack-md border-b border-surface-variant hover:bg-surface-variant/40 transition-colors cursor-pointer group">
+<div class="flex items-center gap-4">
+<div class="w-12 h-12 rounded-xl bg-surface-container-high flex items-center justify-center text-primary group-hover:scale-105 transition-transform duration-200">
+<span class="material-symbols-outlined">fastfood</span>
+</div>
+<div class="flex flex-col">
+<span class="font-label-md text-label-md text-on-surface">Burger Joint #482</span>
+<span class="font-body-md text-body-md text-on-surface-variant text-[13px] mt-0.5">Today, 2:15 PM • 3.2 mi</span>
+</div>
+</div>
+<div class="flex flex-col items-end">
+<span class="font-label-md text-label-md text-on-surface">$12.50</span>
+<span class="font-label-sm text-label-sm text-primary flex items-center gap-1 mt-0.5"><span class="material-symbols-outlined text-[14px]">check_circle</span> Completed</span>
+</div>
+</div>
+<!-- Item 2 -->
+<div class="flex items-center justify-between p-stack-md border-b border-surface-variant hover:bg-surface-variant/40 transition-colors cursor-pointer group">
+<div class="flex items-center gap-4">
+<div class="w-12 h-12 rounded-xl bg-surface-container-high flex items-center justify-center text-primary group-hover:scale-105 transition-transform duration-200">
+<span class="material-symbols-outlined">local_pizza</span>
+</div>
+<div class="flex flex-col">
+<span class="font-label-md text-label-md text-on-surface">Mario's Pizzeria</span>
+<span class="font-body-md text-body-md text-on-surface-variant text-[13px] mt-0.5">Today, 1:30 PM • 1.5 mi</span>
+</div>
+</div>
+<div class="flex flex-col items-end">
+<span class="font-label-md text-label-md text-on-surface">$9.00</span>
+<span class="font-label-sm text-label-sm text-primary flex items-center gap-1 mt-0.5"><span class="material-symbols-outlined text-[14px]">check_circle</span> Completed</span>
+</div>
+</div>
+<!-- Item 3 -->
+<div class="flex items-center justify-between p-stack-md border-b border-surface-variant hover:bg-surface-variant/40 transition-colors cursor-pointer group">
+<div class="flex items-center gap-4">
+<div class="w-12 h-12 rounded-xl bg-surface-container-high flex items-center justify-center text-primary group-hover:scale-105 transition-transform duration-200">
+<span class="material-symbols-outlined">coffee</span>
+</div>
+<div class="flex flex-col">
+<span class="font-label-md text-label-md text-on-surface">Sunrise Cafe</span>
+<span class="font-body-md text-body-md text-on-surface-variant text-[13px] mt-0.5">Today, 11:45 AM • 2.1 mi</span>
+</div>
+</div>
+<div class="flex flex-col items-end">
+<span class="font-label-md text-label-md text-on-surface">$8.75</span>
+<span class="font-label-sm text-label-sm text-primary flex items-center gap-1 mt-0.5"><span class="material-symbols-outlined text-[14px]">check_circle</span> Completed</span>
+</div>
+</div>
+<!-- View All Action -->
+<div class="p-stack-sm text-center bg-surface-bright border-t border-surface-variant hover:bg-surface-variant transition-colors cursor-pointer group">
+<button class="font-label-md text-label-md text-primary group-hover:text-primary-container transition-colors py-1 flex items-center justify-center w-full gap-2">
+                        View All History <span class="material-symbols-outlined text-[18px]">arrow_forward</span>
+</button>
+</div>
+</div>
+</section>
+</main>
+<!-- BottomNavBar (Mobile Only) -->
+<nav class="md:hidden fixed bottom-0 left-0 w-full z-50 flex justify-around items-center px-margin-mobile py-stack-sm bg-surface shadow-[0_-4px_20px_rgba(0,0,0,0.05)] rounded-t-xl border-t border-outline-variant pb-6 pt-3">
+<a class="flex flex-col items-center justify-center text-on-surface-variant px-4 py-1 hover:bg-surface-container-high transition-colors active:scale-90 duration-150 rounded-lg group" href="#">
+<span class="material-symbols-outlined group-hover:text-primary transition-colors">delivery_dining</span>
+<span class="font-label-sm text-label-sm mt-1 group-hover:text-primary transition-colors">Deliveries</span>
+</a>
+<!-- Active Tab -->
+<a class="flex flex-col items-center justify-center bg-primary-container text-on-primary-container rounded-full px-5 py-1.5 active:scale-90 transition-transform duration-150 shadow-sm" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">payments</span>
+<span class="font-label-sm text-label-sm mt-0.5">Earnings</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant px-4 py-1 hover:bg-surface-container-high transition-colors active:scale-90 duration-150 rounded-lg group" href="#">
+<span class="material-symbols-outlined group-hover:text-primary transition-colors">history</span>
+<span class="font-label-sm text-label-sm mt-1 group-hover:text-primary transition-colors">History</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant px-4 py-1 hover:bg-surface-container-high transition-colors active:scale-90 duration-150 rounded-lg group" href="#">
+<span class="material-symbols-outlined group-hover:text-primary transition-colors">person</span>
+<span class="font-label-sm text-label-sm mt-1 group-hover:text-primary transition-colors">Profile</span>
+</a>
+</nav>
+<script>
+        // Simple scroll effect for TopAppBar shadow
+        window.addEventListener('scroll', () => {
+            const header = document.getElementById('top-nav');
+            if (window.scrollY > 10) {
+                header.classList.add('shadow-md');
+                header.classList.remove('shadow-sm');
+            } else {
+                header.classList.add('shadow-sm');
+                header.classList.remove('shadow-md');
+            }
+        });
+    </script>
+</body></html>

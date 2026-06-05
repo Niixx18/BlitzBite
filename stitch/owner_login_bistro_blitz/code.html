@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Bistro Blitz - Restaurant Owner Login</title>
+<!-- Fonts -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<!-- Material Symbols -->
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Tailwind CSS -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<!-- Tailwind Config from Design System -->
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "on-primary-container": "#521800",
+                        "outline": "#8f7065",
+                        "surface-container-lowest": "#ffffff",
+                        "surface-container": "#ffe9e2",
+                        "on-error": "#ffffff",
+                        "background": "#fff8f6",
+                        "tertiary-fixed": "#e2e2e2",
+                        "on-secondary-fixed-variant": "#474646",
+                        "surface-container-highest": "#fadcd2",
+                        "inverse-on-surface": "#ffede7",
+                        "primary-container": "#ff5c00",
+                        "primary-fixed": "#ffdbce",
+                        "on-tertiary-fixed": "#1a1c1c",
+                        "error": "#ba1a1a",
+                        "on-surface-variant": "#5b4137",
+                        "surface": "#fff8f6",
+                        "surface-container-high": "#ffe2d8",
+                        "on-tertiary-fixed-variant": "#454747",
+                        "on-tertiary-container": "#2a2c2c",
+                        "secondary-container": "#e5e2e1",
+                        "inverse-primary": "#ffb59a",
+                        "tertiary": "#5d5f5f",
+                        "surface-variant": "#fadcd2",
+                        "primary": "#a73a00",
+                        "on-background": "#271812",
+                        "secondary-fixed": "#e5e2e1",
+                        "primary-fixed-dim": "#ffb59a",
+                        "on-tertiary": "#ffffff",
+                        "on-secondary-container": "#656464",
+                        "error-container": "#ffdad6",
+                        "surface-dim": "#f1d4ca",
+                        "surface-bright": "#fff8f6",
+                        "secondary": "#5f5e5e",
+                        "on-secondary-fixed": "#1c1b1b",
+                        "surface-container-low": "#fff1ec",
+                        "on-surface": "#271812",
+                        "on-primary-fixed": "#370e00",
+                        "on-secondary": "#ffffff",
+                        "tertiary-fixed-dim": "#c6c6c7",
+                        "surface-tint": "#a73a00",
+                        "secondary-fixed-dim": "#c8c6c5",
+                        "on-error-container": "#93000a",
+                        "tertiary-container": "#929393",
+                        "on-primary-fixed-variant": "#802a00",
+                        "outline-variant": "#e4beb1",
+                        "on-primary": "#ffffff",
+                        "inverse-surface": "#3e2c26"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px",
+                        "3xl": "1.5rem"
+                    },
+                    "spacing": {
+                        "gutter": "16px",
+                        "margin-mobile": "16px",
+                        "stack-md": "16px",
+                        "unit": "4px",
+                        "stack-sm": "8px",
+                        "stack-xs": "4px",
+                        "stack-xl": "48px",
+                        "stack-lg": "24px",
+                        "margin-desktop": "64px"
+                    },
+                    "fontFamily": {
+                        "headline-lg-mobile": ["Geist", "sans-serif"],
+                        "headline-lg": ["Geist", "sans-serif"],
+                        "display-lg": ["Geist", "sans-serif"],
+                        "label-md": ["Geist", "sans-serif"],
+                        "headline-md": ["Geist", "sans-serif"],
+                        "body-lg": ["Geist", "sans-serif"],
+                        "label-sm": ["Geist", "sans-serif"],
+                        "body-md": ["Geist", "sans-serif"]
+                    },
+                    "fontSize": {
+                        "headline-lg-mobile": ["28px", { "lineHeight": "34px", "fontWeight": "600" }],
+                        "headline-lg": ["32px", { "lineHeight": "40px", "letterSpacing": "-0.01em", "fontWeight": "600" }],
+                        "display-lg": ["48px", { "lineHeight": "56px", "letterSpacing": "-0.02em", "fontWeight": "700" }],
+                        "label-md": ["14px", { "lineHeight": "20px", "letterSpacing": "0.01em", "fontWeight": "500" }],
+                        "headline-md": ["24px", { "lineHeight": "32px", "fontWeight": "600" }],
+                        "body-lg": ["18px", { "lineHeight": "28px", "fontWeight": "400" }],
+                        "label-sm": ["12px", { "lineHeight": "16px", "fontWeight": "600" }],
+                        "body-md": ["16px", { "lineHeight": "24px", "fontWeight": "400" }]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        body { font-family: 'Geist', sans-serif; }
+    </style>
+</head>
+<body class="bg-surface-container min-h-screen flex items-center justify-center p-gutter md:p-margin-desktop antialiased relative overflow-hidden">
+<!-- Decorative background elements -->
+<div class="absolute top-[-10%] left-[-10%] w-[40vw] h-[40vw] rounded-full bg-primary-fixed-dim/20 blur-[100px] pointer-events-none"></div>
+<div class="absolute bottom-[-10%] right-[-10%] w-[30vw] h-[30vw] rounded-full bg-surface-container-highest/60 blur-[80px] pointer-events-none"></div>
+<!-- Login Card Canvas -->
+<div class="w-full max-w-[440px] bg-surface rounded-3xl p-stack-lg md:p-stack-xl shadow-[0_8px_32px_rgba(0,0,0,0.06)] border border-outline-variant/30 relative z-10">
+<!-- Brand Header -->
+<div class="flex flex-col items-center mb-stack-xl text-center">
+<div class="w-16 h-16 bg-primary-container rounded-2xl flex items-center justify-center mb-stack-md shadow-sm transform transition-transform hover:scale-105">
+<span class="material-symbols-outlined text-on-primary-container text-[32px]" style="font-variation-settings: 'FILL' 1;">restaurant</span>
+</div>
+<h1 class="font-headline-lg-mobile md:font-headline-lg text-headline-lg-mobile md:text-headline-lg text-on-background mb-stack-xs">
+                Bistro Blitz
+            </h1>
+<p class="font-body-md text-body-md text-on-surface-variant">
+                Restaurant Owner Portal
+            </p>
+</div>
+<!-- Login Form -->
+<form class="flex flex-col gap-stack-md" onsubmit="event.preventDefault();">
+<!-- Email Field -->
+<div class="flex flex-col gap-stack-xs">
+<label class="font-label-md text-label-md text-on-background" for="email">Email Address</label>
+<div class="relative">
+<span class="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-on-surface-variant/50 pointer-events-none">mail</span>
+<input class="w-full h-[52px] pl-12 pr-4 bg-surface-container-highest border-none rounded-xl font-body-md text-body-md text-on-background placeholder:text-on-surface-variant/40 focus:bg-surface focus:ring-2 focus:ring-primary focus:outline-none transition-all duration-200" id="email" placeholder="admin@restaurant.com" required="" type="email"/>
+</div>
+</div>
+<!-- Password Field -->
+<div class="flex flex-col gap-stack-xs mt-stack-sm">
+<div class="flex justify-between items-center">
+<label class="font-label-md text-label-md text-on-background" for="password">Password</label>
+<a class="font-label-sm text-label-sm text-primary hover:text-primary-container transition-colors" href="#">Forgot Password?</a>
+</div>
+<div class="relative">
+<span class="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-on-surface-variant/50 pointer-events-none">lock</span>
+<input class="w-full h-[52px] pl-12 pr-12 bg-surface-container-highest border-none rounded-xl font-body-md text-body-md text-on-background placeholder:text-on-surface-variant/40 focus:bg-surface focus:ring-2 focus:ring-primary focus:outline-none transition-all duration-200" id="password" placeholder="••••••••" required="" type="password"/>
+<button class="absolute right-4 top-1/2 -translate-y-1/2 text-on-surface-variant/50 hover:text-on-background transition-colors focus:outline-none" type="button">
+<span class="material-symbols-outlined text-[20px]">visibility_off</span>
+</button>
+</div>
+</div>
+<!-- Submit Action -->
+<button class="w-full h-[52px] mt-stack-lg bg-primary text-on-primary font-label-md text-label-md rounded-xl shadow-sm hover:shadow-md hover:bg-primary-container hover:-translate-y-[1px] active:translate-y-[0px] active:scale-[0.98] transition-all duration-200 flex items-center justify-center gap-2" type="submit">
+                Sign In
+                <span class="material-symbols-outlined text-[20px]">arrow_forward</span>
+</button>
+</form>
+<!-- Footer Note -->
+<div class="mt-stack-xl text-center">
+<p class="font-body-md text-body-md text-on-surface-variant/70 text-sm">
+                Need to register your restaurant? <a class="font-label-md text-label-md text-primary hover:underline" href="#">Apply here</a>
+</p>
+</div>
+</div>
+</body></html>

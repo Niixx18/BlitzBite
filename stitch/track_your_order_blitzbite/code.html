@@ -1,0 +1,378 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>BlitzBite - Order Tracking</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700;900&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+          darkMode: "class",
+          theme: {
+            extend: {
+              "colors": {
+                      "tertiary-fixed": "#e2e2e2",
+                      "on-secondary": "#ffffff",
+                      "surface-container-highest": "#fadcd2",
+                      "primary-fixed-dim": "#ffb59a",
+                      "surface-dim": "#f1d4ca",
+                      "on-primary": "#ffffff",
+                      "secondary": "#5f5e5e",
+                      "error": "#ba1a1a",
+                      "error-container": "#ffdad6",
+                      "inverse-primary": "#ffb59a",
+                      "surface": "#fff8f6",
+                      "surface-bright": "#fff8f6",
+                      "on-error-container": "#93000a",
+                      "tertiary": "#5d5f5f",
+                      "on-background": "#271812",
+                      "inverse-surface": "#3e2c26",
+                      "on-tertiary-fixed-variant": "#454747",
+                      "on-secondary-fixed": "#1c1b1b",
+                      "tertiary-fixed-dim": "#c6c6c7",
+                      "on-tertiary": "#ffffff",
+                      "background": "#fff8f6",
+                      "on-primary-fixed-variant": "#802a00",
+                      "on-primary-fixed": "#370e00",
+                      "primary-fixed": "#ffdbce",
+                      "secondary-container": "#e5e2e1",
+                      "outline": "#8f7065",
+                      "secondary-fixed": "#e5e2e1",
+                      "surface-container-lowest": "#ffffff",
+                      "on-surface-variant": "#5b4137",
+                      "on-tertiary-fixed": "#1a1c1c",
+                      "inverse-on-surface": "#ffede7",
+                      "secondary-fixed-dim": "#c8c6c5",
+                      "surface-container-low": "#fff1ec",
+                      "on-surface": "#271812",
+                      "surface-variant": "#fadcd2",
+                      "primary": "#a73a00",
+                      "on-tertiary-container": "#2a2c2c",
+                      "surface-container": "#ffe9e2",
+                      "on-secondary-container": "#656464",
+                      "primary-container": "#ff5c00",
+                      "on-secondary-fixed-variant": "#474646",
+                      "outline-variant": "#e4beb1",
+                      "tertiary-container": "#929393",
+                      "surface-container-high": "#ffe2d8",
+                      "on-error": "#ffffff",
+                      "on-primary-container": "#521800",
+                      "surface-tint": "#a73a00"
+              },
+              "borderRadius": {
+                      "DEFAULT": "0.25rem",
+                      "lg": "0.5rem",
+                      "xl": "0.75rem",
+                      "full": "9999px"
+              },
+              "spacing": {
+                      "stack-xl": "48px",
+                      "unit": "4px",
+                      "stack-xs": "4px",
+                      "margin-mobile": "16px",
+                      "stack-md": "16px",
+                      "stack-lg": "24px",
+                      "margin-desktop": "64px",
+                      "gutter": "16px",
+                      "stack-sm": "8px"
+              },
+              "fontFamily": {
+                      "body-lg": [
+                              "Geist"
+                      ],
+                      "label-sm": [
+                              "Geist"
+                      ],
+                      "headline-lg-mobile": [
+                              "Geist"
+                      ],
+                      "body-md": [
+                              "Geist"
+                      ],
+                      "label-md": [
+                              "Geist"
+                      ],
+                      "headline-md": [
+                              "Geist"
+                      ],
+                      "headline-lg": [
+                              "Geist"
+                      ],
+                      "display-lg": [
+                              "Geist"
+                      ]
+              },
+              "fontSize": {
+                      "body-lg": [
+                              "18px",
+                              {
+                                      "lineHeight": "28px",
+                                      "fontWeight": "400"
+                              }
+                      ],
+                      "label-sm": [
+                              "12px",
+                              {
+                                      "lineHeight": "16px",
+                                      "fontWeight": "600"
+                              }
+                      ],
+                      "headline-lg-mobile": [
+                              "28px",
+                              {
+                                      "lineHeight": "34px",
+                                      "fontWeight": "600"
+                              }
+                      ],
+                      "body-md": [
+                              "16px",
+                              {
+                                      "lineHeight": "24px",
+                                      "fontWeight": "400"
+                              }
+                      ],
+                      "label-md": [
+                              "14px",
+                              {
+                                      "lineHeight": "20px",
+                                      "letterSpacing": "0.01em",
+                                      "fontWeight": "500"
+                              }
+                      ],
+                      "headline-md": [
+                              "24px",
+                              {
+                                      "lineHeight": "32px",
+                                      "fontWeight": "600"
+                              }
+                      ],
+                      "headline-lg": [
+                              "32px",
+                              {
+                                      "lineHeight": "40px",
+                                      "letterSpacing": "-0.01em",
+                                      "fontWeight": "600"
+                              }
+                      ],
+                      "display-lg": [
+                              "48px",
+                              {
+                                      "lineHeight": "56px",
+                                      "letterSpacing": "-0.02em",
+                                      "fontWeight": "700"
+                              }
+                      ]
+              }
+      },
+          },
+        }
+    </script>
+<style>
+        .map-bg {
+            background-color: #e5e5e5;
+            background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23d4d4d4' fill-opacity='0.4'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+        }
+        @keyframes pulse-ring {
+            0% { transform: scale(0.8); box-shadow: 0 0 0 0 rgba(255, 92, 0, 0.7); }
+            70% { transform: scale(1); box-shadow: 0 0 0 10px rgba(255, 92, 0, 0); }
+            100% { transform: scale(0.8); box-shadow: 0 0 0 0 rgba(255, 92, 0, 0); }
+        }
+        .animate-pulse-ring {
+            animation: pulse-ring 2s infinite cubic-bezier(0.66, 0, 0, 1);
+        }
+        
+        .progress-line-animated {
+            background: linear-gradient(90deg, #ff5c00 50%, #e4beb1 50%);
+            background-size: 200% 100%;
+            animation: progress-slide 2s linear infinite;
+        }
+        
+        @keyframes progress-slide {
+            0% { background-position: 100% 0; }
+            100% { background-position: 0 0; }
+        }
+
+        .glass-panel {
+            background: rgba(255, 248, 246, 0.85);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(228, 190, 177, 0.3);
+        }
+    </style>
+</head>
+<body class="bg-background text-on-background min-h-screen flex flex-col font-body-md overflow-hidden">
+<!-- TopNavBar -->
+<nav class="bg-surface/80 dark:bg-surface-dim/80 backdrop-blur-md border-b border-outline-variant/30 shadow-sm docked full-width top-0 sticky z-50">
+<div class="flex justify-between items-center w-full px-4 md:px-margin-desktop max-w-7xl mx-auto h-16">
+<div class="flex items-center gap-4">
+<span class="font-display-lg text-display-lg font-black text-primary dark:text-primary-fixed-dim tracking-tighter">BlitzBite</span>
+</div>
+<!-- Actions -->
+<div class="flex items-center gap-4">
+<div class="hidden md:flex items-center gap-2 text-on-surface-variant">
+<span class="material-symbols-outlined hover:bg-primary-container/10 p-2 rounded-full cursor-pointer transition-colors" data-icon="shopping_cart">shopping_cart</span>
+<span class="material-symbols-outlined hover:bg-primary-container/10 p-2 rounded-full cursor-pointer transition-colors" data-icon="notifications">notifications</span>
+<span class="material-symbols-outlined hover:bg-primary-container/10 p-2 rounded-full cursor-pointer transition-colors" data-icon="location_on">location_on</span>
+</div>
+<button class="bg-primary text-on-primary font-label-md text-label-md px-6 py-2 rounded-full hover:bg-primary/90 transition-colors shadow-sm">
+                    Sign In
+                </button>
+</div>
+</div>
+</nav>
+<!-- Main Content Area: Split View -->
+<main class="flex-1 flex flex-col md:flex-row relative">
+<!-- Left Panel: Order Details & Status -->
+<div class="w-full md:w-[400px] lg:w-[480px] bg-surface flex flex-col h-[409px] md:h-[calc(100vh-64px)] overflow-y-auto z-10 shadow-lg shrink-0">
+<!-- Status Header -->
+<div class="p-stack-lg border-b border-outline-variant/30 bg-surface-container-low">
+<div class="flex justify-between items-start mb-stack-sm">
+<div>
+<h1 class="font-headline-md text-headline-md text-on-background mb-1">Arriving in 15 mins</h1>
+<p class="font-body-md text-body-md text-on-surface-variant">Order #B839-2X</p>
+</div>
+<span class="bg-primary-container/20 text-primary-container font-label-sm text-label-sm px-3 py-1 rounded-full">
+                        Live Tracking
+                    </span>
+</div>
+<!-- Notification Pill -->
+<div class="mt-stack-md bg-white border border-outline-variant/50 rounded-lg p-3 flex items-center gap-3 shadow-sm">
+<span class="material-symbols-outlined text-primary" data-icon="restaurant">restaurant</span>
+<p class="font-label-md text-label-md text-on-surface">Chef is preparing your meal! Finishing up the truffle fries.</p>
+</div>
+</div>
+<!-- Progress Timeline -->
+<div class="p-stack-lg border-b border-outline-variant/30">
+<div class="relative pl-6">
+<!-- Vertical Line connecting steps -->
+<div class="absolute left-8 top-4 bottom-4 w-0.5 bg-secondary-container"></div>
+<!-- Active animated progress line -->
+<div class="absolute left-8 top-4 h-1/2 w-0.5 bg-primary progress-line-animated"></div>
+<!-- Step 1: Completed -->
+<div class="relative flex gap-4 mb-stack-lg opacity-60">
+<div class="w-5 h-5 rounded-full bg-primary flex items-center justify-center z-10 mt-1">
+<span class="material-symbols-outlined text-white text-[14px]" data-icon="check">check</span>
+</div>
+<div>
+<h3 class="font-label-md text-label-md text-on-background">Order Placed</h3>
+<p class="font-body-md text-body-md text-on-surface-variant text-sm">12:30 PM</p>
+</div>
+</div>
+<!-- Step 2: Active -->
+<div class="relative flex gap-4 mb-stack-lg">
+<div class="w-5 h-5 rounded-full bg-primary flex items-center justify-center z-10 mt-1 animate-pulse-ring">
+<span class="material-symbols-outlined text-white text-[14px]" data-icon="soup_kitchen">soup_kitchen</span>
+</div>
+<div>
+<h3 class="font-headline-sm text-headline-sm font-semibold text-on-background">In the Kitchen</h3>
+<p class="font-body-md text-body-md text-primary text-sm font-medium">Currently preparing</p>
+</div>
+</div>
+<!-- Step 3: Pending -->
+<div class="relative flex gap-4 mb-stack-lg opacity-40">
+<div class="w-5 h-5 rounded-full bg-surface border-2 border-outline-variant flex items-center justify-center z-10 mt-1">
+</div>
+<div>
+<h3 class="font-label-md text-label-md text-on-background">Out for Delivery</h3>
+<p class="font-body-md text-body-md text-on-surface-variant text-sm">Pending</p>
+</div>
+</div>
+<!-- Step 4: Pending -->
+<div class="relative flex gap-4 opacity-40">
+<div class="w-5 h-5 rounded-full bg-surface border-2 border-outline-variant flex items-center justify-center z-10 mt-1">
+</div>
+<div>
+<h3 class="font-label-md text-label-md text-on-background">Delivered</h3>
+<p class="font-body-md text-body-md text-on-surface-variant text-sm">Estimated 1:15 PM</p>
+</div>
+</div>
+</div>
+</div>
+<!-- Order Summary -->
+<div class="p-stack-lg flex-1">
+<div class="flex justify-between items-center mb-stack-md">
+<h2 class="font-headline-sm text-headline-sm font-semibold text-on-background">Order Summary</h2>
+<button class="text-primary font-label-md text-label-md hover:underline">View Receipt</button>
+</div>
+<div class="space-y-4">
+<div class="flex justify-between items-start">
+<div class="flex gap-3">
+<span class="bg-surface-container font-label-sm text-label-sm px-2 py-1 rounded h-fit text-on-surface-variant">1x</span>
+<div>
+<h4 class="font-label-md text-label-md text-on-background">Spicy Miso Ramen</h4>
+<p class="text-sm text-on-surface-variant mt-1">Extra chashu, soft boiled egg</p>
+</div>
+</div>
+<span class="font-label-md text-label-md text-on-background">$18.50</span>
+</div>
+<div class="flex justify-between items-start">
+<div class="flex gap-3">
+<span class="bg-surface-container font-label-sm text-label-sm px-2 py-1 rounded h-fit text-on-surface-variant">2x</span>
+<div>
+<h4 class="font-label-md text-label-md text-on-background">Truffle Edamame</h4>
+<p class="text-sm text-on-surface-variant mt-1">Sea salt</p>
+</div>
+</div>
+<span class="font-label-md text-label-md text-on-background">$14.00</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Right Panel: Map Area -->
+<div class="flex-1 relative bg-surface-container map-bg h-[614px] md:h-[calc(100vh-64px)]">
+<!-- Simulated Map Image Placeholder (Using data-location as per instructions, though usually map uses bg-image, we will use a div with bg-image and data-alt) -->
+<div class="absolute inset-0 w-full h-full bg-cover bg-center opacity-80 mix-blend-multiply" data-alt="A top-down aerial view of a modern urban city grid map. The streets are depicted in clean, minimalist light gray and white tones, reflecting a high-end corporate modern aesthetic. Small hints of green parks and geometric building blocks are visible, but the overall palette is subdued and bright to serve as a clean backdrop for bold UI elements. High-definition details with crisp edges." data-location="Urban City Center" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuBUsVbwBQf-PiE3NdYFzNiBNqKlxWk4fMYV3VfozYdDOHnhmQwHGDTIUkwxwUsl0wsNKXJIQs5u1M-XFxcy0U-d4NsllMd9AxvqeE2-E9N2v50x-vL18SlyXXBr8y5UHiHc8qZi4XfnZUaQKPbUQAwU1QIcrdiivrIKKPmMc3cLpo2l8jMCZKaRulfYZFHUdaLHGKSTc6yOWvZC6W1dQEKWoU-PZXHdvRYrGa5bbLeIMwzlBmovZikIE41frY-AtOD_5TP44R7Jl0M');">
+</div>
+<!-- Route Line Overlay (Simulated) -->
+<svg class="absolute inset-0 w-full h-full z-10" pointer-events="none" preserveaspectratio="none" viewbox="0 0 100 100">
+<path class="opacity-70" d="M 20,80 Q 40,60 60,50 T 80,20" fill="none" stroke="#ff5c00" stroke-dasharray="2,1" stroke-width="0.5"></path>
+</svg>
+<!-- Map Markers -->
+<!-- Restaurant Marker -->
+<div class="absolute top-[20%] left-[80%] -translate-x-1/2 -translate-y-1/2 z-20 flex flex-col items-center">
+<div class="bg-on-background text-white p-2 rounded-full shadow-lg border-2 border-white">
+<span class="material-symbols-outlined text-[20px]" data-icon="restaurant">restaurant</span>
+</div>
+<div class="bg-white px-2 py-1 rounded shadow-sm text-xs font-bold mt-1 text-on-background">Noodle Bar</div>
+</div>
+<!-- Courier Marker -->
+<div class="absolute top-[50%] left-[60%] -translate-x-1/2 -translate-y-1/2 z-20 flex flex-col items-center">
+<div class="bg-primary text-white p-3 rounded-full shadow-lg border-4 border-white animate-pulse-ring">
+<span class="material-symbols-outlined text-[24px]" data-icon="two_wheeler">two_wheeler</span>
+</div>
+</div>
+<!-- Destination Marker -->
+<div class="absolute top-[80%] left-[20%] -translate-x-1/2 -translate-y-1/2 z-20 flex flex-col items-center">
+<div class="bg-white text-on-background p-2 rounded-full shadow-lg border-2 border-outline-variant">
+<span class="material-symbols-outlined text-[20px]" data-icon="home">home</span>
+</div>
+<div class="bg-white px-2 py-1 rounded shadow-sm text-xs font-bold mt-1 text-on-background">Home</div>
+</div>
+<!-- Floating Delivery Partner Card -->
+<div class="absolute bottom-6 left-1/2 -translate-x-1/2 md:left-6 md:translate-x-0 w-[90%] md:w-[340px] z-30">
+<div class="glass-panel rounded-xl p-4 shadow-xl flex items-center justify-between">
+<div class="flex items-center gap-4">
+<div class="w-12 h-12 rounded-full overflow-hidden border-2 border-white shadow-sm shrink-0">
+<img alt="Delivery Partner" class="w-full h-full object-cover" data-alt="A portrait of a friendly, professional delivery driver wearing a clean uniform. The lighting is bright and modern, creating a trustworthy and efficient vibe. The background is slightly blurred to focus on the person, fitting a high-definition, corporate modern aesthetic." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBTN2YmUyFjgviAPAdK_BWD20KKJYPDyvj1sgfmxwtAgTgCvbqYp2D1ZtfbWChvJJ9-5uytv92ntLaRZOJmTMjXKHN62z_4yGa6I37z18SaBkVuYJHDCJ-H881BBujZ7mnoUE1XEmbstnxlGLFu4aAqEaYRgBJ_g49Zng24gb-tbAnWou2G-nEhQ6gfp9UmH0p8fnRXcegjLz4r_eRVlKMnkwZtS7Rym_HiOuZ1AY_zS7YUqNlocZe4OypiUhJr5w-2wMUjKJdoiio"/>
+</div>
+<div>
+<h3 class="font-label-md text-label-md text-on-background font-bold">Alex M.</h3>
+<div class="flex items-center text-sm text-on-surface-variant mt-0.5">
+<span class="material-symbols-outlined text-[16px] text-[#F59E0B] mr-1" data-icon="star" data-weight="fill">star</span>
+                                4.9 (1.2k deliveries)
+                            </div>
+</div>
+</div>
+<button class="w-10 h-10 rounded-full bg-surface-container-highest flex items-center justify-center text-on-background hover:bg-outline-variant transition-colors shrink-0">
+<span class="material-symbols-outlined" data-icon="call">call</span>
+</button>
+</div>
+</div>
+</div>
+</main>
+</body></html>

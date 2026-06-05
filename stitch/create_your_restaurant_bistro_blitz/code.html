@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Bistro Blitz - Initial Setup</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@100..900&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+          darkMode: "class",
+          theme: {
+            extend: {
+              "colors": {
+                      "on-primary-container": "#521800",
+                      "outline": "#8f7065",
+                      "surface-container-lowest": "#ffffff",
+                      "surface-container": "#ffe9e2",
+                      "on-error": "#ffffff",
+                      "background": "#fff8f6",
+                      "tertiary-fixed": "#e2e2e2",
+                      "on-secondary-fixed-variant": "#474646",
+                      "surface-container-highest": "#fadcd2",
+                      "inverse-on-surface": "#ffede7",
+                      "primary-container": "#ff5c00",
+                      "primary-fixed": "#ffdbce",
+                      "on-tertiary-fixed": "#1a1c1c",
+                      "error": "#ba1a1a",
+                      "on-surface-variant": "#5b4137",
+                      "surface": "#fff8f6",
+                      "surface-container-high": "#ffe2d8",
+                      "on-tertiary-fixed-variant": "#454747",
+                      "on-tertiary-container": "#2a2c2c",
+                      "secondary-container": "#e5e2e1",
+                      "inverse-primary": "#ffb59a",
+                      "tertiary": "#5d5f5f",
+                      "surface-variant": "#fadcd2",
+                      "primary": "#a73a00",
+                      "on-background": "#271812",
+                      "secondary-fixed": "#e5e2e1",
+                      "primary-fixed-dim": "#ffb59a",
+                      "on-tertiary": "#ffffff",
+                      "on-secondary-container": "#656464",
+                      "error-container": "#ffdad6",
+                      "surface-dim": "#f1d4ca",
+                      "surface-bright": "#fff8f6",
+                      "secondary": "#5f5e5e",
+                      "on-secondary-fixed": "#1c1b1b",
+                      "surface-container-low": "#fff1ec",
+                      "on-surface": "#271812",
+                      "on-primary-fixed": "#370e00",
+                      "on-secondary": "#ffffff",
+                      "tertiary-fixed-dim": "#c6c6c7",
+                      "surface-tint": "#a73a00",
+                      "secondary-fixed-dim": "#c8c6c5",
+                      "on-error-container": "#93000a",
+                      "tertiary-container": "#929393",
+                      "on-primary-fixed-variant": "#802a00",
+                      "outline-variant": "#e4beb1",
+                      "on-primary": "#ffffff",
+                      "inverse-surface": "#3e2c26"
+              },
+              "borderRadius": {
+                      "DEFAULT": "0.25rem",
+                      "lg": "0.5rem",
+                      "xl": "0.75rem",
+                      "full": "9999px"
+              },
+              "spacing": {
+                      "gutter": "16px",
+                      "margin-mobile": "16px",
+                      "stack-md": "16px",
+                      "unit": "4px",
+                      "stack-sm": "8px",
+                      "stack-xs": "4px",
+                      "stack-xl": "48px",
+                      "stack-lg": "24px",
+                      "margin-desktop": "64px"
+              },
+              "fontFamily": {
+                      "headline-lg-mobile": ["Geist"],
+                      "headline-lg": ["Geist"],
+                      "display-lg": ["Geist"],
+                      "label-md": ["Geist"],
+                      "headline-md": ["Geist"],
+                      "body-lg": ["Geist"],
+                      "label-sm": ["Geist"],
+                      "body-md": ["Geist"]
+              },
+              "fontSize": {
+                      "headline-lg-mobile": ["28px", { "lineHeight": "34px", "fontWeight": "600" }],
+                      "headline-lg": ["32px", { "lineHeight": "40px", "letterSpacing": "-0.01em", "fontWeight": "600" }],
+                      "display-lg": ["48px", { "lineHeight": "56px", "letterSpacing": "-0.02em", "fontWeight": "700" }],
+                      "label-md": ["14px", { "lineHeight": "20px", "letterSpacing": "0.01em", "fontWeight": "500" }],
+                      "headline-md": ["24px", { "lineHeight": "32px", "fontWeight": "600" }],
+                      "body-lg": ["18px", { "lineHeight": "28px", "fontWeight": "400" }],
+                      "label-sm": ["12px", { "lineHeight": "16px", "fontWeight": "600" }],
+                      "body-md": ["16px", { "lineHeight": "24px", "fontWeight": "400" }]
+              }
+            }
+          }
+        }
+    </script>
+<style>
+        body { font-family: 'Geist', sans-serif; }
+    </style>
+</head>
+<body class="bg-surface-container-lowest text-on-surface h-screen w-full overflow-hidden flex">
+<div class="hidden lg:flex w-1/2 relative bg-surface-container">
+<img alt="Restaurant Kitchen" class="absolute inset-0 w-full h-full object-cover" data-alt="A striking, high-definition photograph of a modern, bustling restaurant kitchen in action, viewed from a slight angle. The scene is illuminated by crisp, clean lighting that highlights the polished stainless steel surfaces and the vibrant colors of fresh ingredients being prepped. The aesthetic is corporate modern yet energetic, emphasizing speed and precision. Deep charcoal shadows contrast with pristine white plates and brilliant flashes of Blitz Orange from hot pans, conveying a sense of culinary excellence." src="https://lh3.googleusercontent.com/aida-public/AB6AXuC5LqlgBXpXeGgEa_t4kXUiK6jW4ZH5jHBFTP5Ogz0ip0mNCd-FsdDD2O9ZCm4hM1EaxGFh-d9aPFFc77IOFAwiwGQGfsNmmqUtA0uK2SWe_LNwNprIK6G2Ug0JFCkLLZnMVhk8as4YlBo2etIoOtx5qN7zmsTkvvEJn71u7VcSFfj1nDXB2VJL6-Au0W4GdyJOePlPZ2Qg7CCrq4-9pmsjnZHm3CAtVnTTmMbCCvKZtztQMSsHigMyVGyno2ZMADV6URfRP8GvwSg"/>
+<div class="absolute inset-0 bg-gradient-to-t from-background/90 via-background/40 to-transparent"></div>
+<div class="absolute bottom-margin-desktop left-margin-desktop">
+<h1 class="font-display-lg text-display-lg text-primary mb-stack-xs">Bistro Blitz</h1>
+<p class="font-headline-md text-headline-md text-on-surface-variant">Accelerate your culinary ambition.</p>
+</div>
+</div>
+<div class="w-full lg:w-1/2 h-full overflow-y-auto flex flex-col px-gutter py-stack-xl md:px-margin-desktop md:py-margin-desktop relative">
+<div class="flex items-center justify-between mb-stack-xl">
+<div class="lg:hidden">
+<span class="font-headline-md text-headline-md text-primary font-bold">Bistro Blitz</span>
+</div>
+<div class="flex items-center gap-stack-sm ml-auto">
+<span class="font-label-sm text-label-sm text-on-surface-variant uppercase tracking-wider">Step 1 of 3</span>
+<div class="flex gap-unit">
+<div class="h-2 w-8 bg-primary rounded-full"></div>
+<div class="h-2 w-8 bg-surface-variant rounded-full"></div>
+<div class="h-2 w-8 bg-surface-variant rounded-full"></div>
+</div>
+</div>
+</div>
+<div class="max-w-xl w-full mx-auto flex-1 flex flex-col justify-center">
+<div class="mb-stack-lg">
+<h2 class="font-headline-lg-mobile md:font-headline-lg text-headline-lg-mobile md:text-headline-lg text-on-surface mb-stack-xs">Create your restaurant profile</h2>
+<p class="font-body-md text-body-md text-on-surface-variant">Enter your basic details to set up your digital storefront.</p>
+</div>
+<form class="flex flex-col gap-stack-md" onsubmit="event.preventDefault();">
+<div class="flex flex-col gap-stack-xs">
+<label class="font-label-md text-label-md text-on-surface" for="restaurant-name">Restaurant Name</label>
+<input class="w-full bg-surface-container-low border-none rounded-lg px-stack-md py-stack-sm font-body-md text-body-md text-on-surface placeholder:text-outline focus:bg-surface-container-lowest focus:ring-2 focus:ring-primary focus:outline-none transition-colors shadow-sm" id="restaurant-name" placeholder="e.g. The Golden Spatula" type="text"/>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-stack-md">
+<div class="flex flex-col gap-stack-xs">
+<label class="font-label-md text-label-md text-on-surface" for="cuisine-type">Cuisine Type</label>
+<select class="w-full bg-surface-container-low border-none rounded-lg px-stack-md py-stack-sm font-body-md text-body-md text-on-surface focus:bg-surface-container-lowest focus:ring-2 focus:ring-primary focus:outline-none transition-colors shadow-sm appearance-none cursor-pointer" id="cuisine-type">
+<option disabled="" selected="" value="">Select cuisine</option>
+<option value="italian">Italian</option>
+<option value="japanese">Japanese</option>
+<option value="mexican">Mexican</option>
+<option value="american">American</option>
+<option value="other">Other</option>
+</select>
+</div>
+<div class="flex flex-col gap-stack-xs">
+<label class="font-label-md text-label-md text-on-surface" for="contact-number">Contact Number</label>
+<input class="w-full bg-surface-container-low border-none rounded-lg px-stack-md py-stack-sm font-body-md text-body-md text-on-surface placeholder:text-outline focus:bg-surface-container-lowest focus:ring-2 focus:ring-primary focus:outline-none transition-colors shadow-sm" id="contact-number" placeholder="(555) 000-0000" type="tel"/>
+</div>
+</div>
+<div class="flex flex-col gap-stack-xs">
+<label class="font-label-md text-label-md text-on-surface" for="business-address">Business Address</label>
+<input class="w-full bg-surface-container-low border-none rounded-lg px-stack-md py-stack-sm font-body-md text-body-md text-on-surface placeholder:text-outline focus:bg-surface-container-lowest focus:ring-2 focus:ring-primary focus:outline-none transition-colors shadow-sm" id="business-address" placeholder="123 Culinary Lane, City, State, ZIP" type="text"/>
+</div>
+<div class="flex flex-col gap-stack-xs mt-stack-sm">
+<label class="font-label-md text-label-md text-on-surface">Restaurant Logo</label>
+<div class="w-full border-2 border-dashed border-outline-variant rounded-xl p-stack-lg flex flex-col items-center justify-center gap-stack-sm cursor-pointer hover:bg-surface-container hover:border-primary/50 transition-colors group">
+<div class="w-12 h-12 rounded-full bg-surface-container-high flex items-center justify-center group-hover:bg-primary-container transition-colors">
+<span class="material-symbols-outlined text-on-surface-variant group-hover:text-primary transition-colors" data-icon="cloud_upload">cloud_upload</span>
+</div>
+<div class="text-center">
+<p class="font-label-md text-label-md text-primary">Click to upload <span class="text-on-surface-variant font-normal">or drag and drop</span></p>
+<p class="font-label-sm text-label-sm text-outline mt-unit">SVG, PNG, JPG or GIF (max. 800x400px)</p>
+</div>
+</div>
+</div>
+<div class="mt-stack-xl flex items-center justify-between pt-stack-md border-t border-surface-variant">
+<button class="font-label-md text-label-md text-on-surface-variant hover:text-on-surface px-stack-md py-stack-sm rounded-full transition-colors flex items-center gap-unit" type="button">
+<span class="material-symbols-outlined text-lg" data-icon="arrow_back">arrow_back</span>
+                        Back
+                    </button>
+<button class="bg-primary text-on-primary font-label-md text-label-md px-stack-lg py-stack-sm rounded-full hover:bg-primary-fixed-variant active:scale-95 transition-all shadow-md" type="submit">
+                        Create Restaurant
+                    </button>
+</div>
+</form>
+</div>
+</div>
+</body></html>

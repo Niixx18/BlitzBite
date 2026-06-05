@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Search - BlitzBite</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "primary-container": "#ff5c00",
+                        "on-primary": "#ffffff",
+                        "surface-bright": "#fff8f6",
+                        "primary-fixed": "#ffdbce",
+                        "inverse-surface": "#3e2c26",
+                        "error-container": "#ffdad6",
+                        "background": "#fff8f6",
+                        "on-secondary-fixed": "#1c1b1b",
+                        "surface-dim": "#f1d4ca",
+                        "primary": "#a73a00",
+                        "on-surface-variant": "#5b4137",
+                        "tertiary": "#5d5f5f",
+                        "surface-container-high": "#ffe2d8",
+                        "on-tertiary-fixed": "#1a1c1c",
+                        "on-secondary": "#ffffff",
+                        "on-surface": "#271812",
+                        "surface-container-highest": "#fadcd2",
+                        "tertiary-container": "#929393",
+                        "primary-fixed-dim": "#ffb59a",
+                        "secondary": "#5f5e5e",
+                        "on-error-container": "#93000a",
+                        "error": "#ba1a1a",
+                        "on-tertiary-fixed-variant": "#454747",
+                        "on-tertiary-container": "#2a2c2c",
+                        "on-error": "#ffffff",
+                        "secondary-container": "#e5e2e1",
+                        "on-background": "#271812",
+                        "outline-variant": "#e4beb1",
+                        "tertiary-fixed-dim": "#c6c6c7",
+                        "on-primary-fixed": "#370e00",
+                        "inverse-primary": "#ffb59a",
+                        "on-secondary-fixed-variant": "#474646",
+                        "on-primary-container": "#521800",
+                        "on-secondary-container": "#656464",
+                        "surface-variant": "#fadcd2",
+                        "secondary-fixed": "#e5e2e1",
+                        "surface-tint": "#a73a00",
+                        "surface-container": "#ffe9e2",
+                        "on-primary-fixed-variant": "#802a00",
+                        "inverse-on-surface": "#ffede7",
+                        "tertiary-fixed": "#e2e2e2",
+                        "surface": "#fff8f6",
+                        "outline": "#8f7065",
+                        "on-tertiary": "#ffffff",
+                        "secondary-fixed-dim": "#c8c6c5",
+                        "surface-container-low": "#fff1ec",
+                        "surface-container-lowest": "#ffffff"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px",
+                        "2xl": "1.5rem"
+                    },
+                    "spacing": {
+                        "gutter": "16px",
+                        "stack-md": "16px",
+                        "unit": "4px",
+                        "stack-sm": "8px",
+                        "stack-xl": "48px",
+                        "margin-desktop": "64px",
+                        "margin-mobile": "16px",
+                        "stack-xs": "4px",
+                        "stack-lg": "24px"
+                    },
+                    "fontFamily": {
+                        "body-lg": ["Geist"],
+                        "body-md": ["Geist"],
+                        "label-sm": ["Geist"],
+                        "headline-md": ["Geist"],
+                        "headline-lg": ["Geist"],
+                        "label-md": ["Geist"],
+                        "display-lg": ["Geist"],
+                        "headline-lg-mobile": ["Geist"]
+                    },
+                    "fontSize": {
+                        "body-lg": ["18px", { "lineHeight": "28px", "fontWeight": "400" }],
+                        "body-md": ["16px", { "lineHeight": "24px", "fontWeight": "400" }],
+                        "label-sm": ["12px", { "lineHeight": "16px", "fontWeight": "600" }],
+                        "headline-md": ["24px", { "lineHeight": "32px", "fontWeight": "600" }],
+                        "headline-lg": ["32px", { "lineHeight": "40px", "letterSpacing": "-0.01em", "fontWeight": "600" }],
+                        "label-md": ["14px", { "lineHeight": "20px", "letterSpacing": "0.01em", "fontWeight": "500" }],
+                        "display-lg": ["48px", { "lineHeight": "56px", "letterSpacing": "-0.02em", "fontWeight": "700" }],
+                        "headline-lg-mobile": ["28px", { "lineHeight": "34px", "fontWeight": "600" }]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        body {
+            background-color: theme('colors.background');
+            color: theme('colors.on-background');
+        }
+        .hide-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+        .hide-scrollbar {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+    </style>
+</head>
+<body class="antialiased min-h-screen flex flex-col pb-24 md:pb-0">
+<!-- TopNavBar (Web) -->
+<header class="hidden md:flex justify-between items-center px-margin-desktop py-stack-md max-w-7xl mx-auto bg-surface/80 backdrop-blur-md fixed top-0 w-full z-50 shadow-sm border-b-0 transition-all duration-300">
+<div class="flex items-center gap-stack-lg">
+<span class="font-display-lg text-primary tracking-tighter italic">BlitzBite</span>
+<nav class="flex gap-stack-md">
+<a class="text-on-surface-variant font-medium hover:text-primary transition-colors duration-200 font-label-md text-label-md" href="#">Offers</a>
+<a class="text-on-surface-variant font-medium hover:text-primary transition-colors duration-200 font-label-md text-label-md" href="#">Premium</a>
+<a class="text-on-surface-variant font-medium hover:text-primary transition-colors duration-200 font-label-md text-label-md" href="#">Help</a>
+</nav>
+</div>
+<div class="flex items-center gap-stack-sm text-primary">
+<button class="p-2 hover:bg-surface-variant rounded-full transition-colors">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 0;">shopping_cart</span>
+</button>
+<button class="p-2 hover:bg-surface-variant rounded-full transition-colors">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 0;">notifications</span>
+</button>
+<div class="w-10 h-10 rounded-full bg-secondary-container overflow-hidden ml-2 cursor-pointer border border-outline-variant">
+<img alt="Customer Profile Avatar" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDVKGyevWdIMTLMnjU2HclE65aOet76Lw7oNsolHAsFfy1rtDFlbRDZNsMVrJUqsWe58drR7JKskUUGp3gnVAlhm9okoK6cmjFoJCLyMZIN2TSIH53j2a_onkd3afSKajqrNoD6YuI8vUbPCfBfyziCRxhTPFFoPGQy8jX41UMjOO3ftjH7sqhQsRvCatqyXYESn4Q_3KXmJ2dMU7Dj9ajXmJyHvOKBQhp67nYGHogeO4T4H2gxIOnNi3Yw6rR-O6aAB-t14uX2nIQ"/>
+</div>
+</div>
+</header>
+<!-- Main Content Area -->
+<main class="flex-1 w-full max-w-7xl mx-auto px-margin-mobile md:px-margin-desktop pt-stack-md md:pt-[100px] flex flex-col gap-stack-xl">
+<!-- Search Header & Input -->
+<section class="flex flex-col gap-stack-md mt-stack-lg md:mt-0 relative z-40">
+<h1 class="font-headline-lg-mobile text-headline-lg-mobile md:font-headline-lg md:text-headline-lg text-on-surface">What are you craving?</h1>
+<div class="relative w-full group">
+<div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
+<span class="material-symbols-outlined text-on-surface-variant group-focus-within:text-primary transition-colors">search</span>
+</div>
+<input class="w-full pl-12 pr-4 py-4 bg-surface-container-lowest border border-outline-variant rounded-2xl font-body-lg text-body-lg text-on-surface focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent shadow-[0_4px_20px_rgba(0,0,0,0.05)] transition-all duration-300" id="main-search-input" placeholder="Search for restaurants, cuisines, or dishes" type="text"/>
+<div class="absolute inset-y-0 right-0 pr-4 flex items-center">
+<button aria-label="Filter search" class="bg-primary-container text-on-primary-container rounded-full p-2 hover:scale-105 transition-transform">
+<span class="material-symbols-outlined text-[20px]">tune</span>
+</button>
+</div>
+</div>
+<!-- Trending Tags -->
+<div class="flex flex-col gap-stack-sm mt-stack-sm">
+<span class="font-label-md text-label-md text-on-surface-variant">Trending right now</span>
+<div class="flex flex-wrap gap-2">
+<button class="px-4 py-2 bg-surface-container-high hover:bg-primary-fixed/50 text-on-surface font-label-md text-label-md rounded-full transition-colors border border-transparent hover:border-primary-container/30">Sushi</button>
+<button class="px-4 py-2 bg-surface-container-high hover:bg-primary-fixed/50 text-on-surface font-label-md text-label-md rounded-full transition-colors border border-transparent hover:border-primary-container/30">Vegan Burgers</button>
+<button class="px-4 py-2 bg-surface-container-high hover:bg-primary-fixed/50 text-on-surface font-label-md text-label-md rounded-full transition-colors border border-transparent hover:border-primary-container/30 flex items-center gap-1">
+<span class="material-symbols-outlined text-[16px] text-primary">local_fire_department</span> Spicy Thai
+                    </button>
+<button class="px-4 py-2 bg-surface-container-high hover:bg-primary-fixed/50 text-on-surface font-label-md text-label-md rounded-full transition-colors border border-transparent hover:border-primary-container/30">Healthy Bowls</button>
+</div>
+</div>
+</section>
+<!-- Bento Grid: Cuisines -->
+<section class="flex flex-col gap-stack-md">
+<h2 class="font-headline-md text-headline-md text-on-surface">Explore Categories</h2>
+<div class="grid grid-cols-2 md:grid-cols-4 gap-gutter auto-rows-[160px]">
+<!-- Large Featured Category -->
+<a class="col-span-2 row-span-2 relative rounded-2xl overflow-hidden group shadow-[0_4px_20px_rgba(0,0,0,0.05)] hover:shadow-lg hover:-translate-y-1 transition-all duration-300" href="#">
+<div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent z-10"></div>
+<img alt="Pizza Category" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" data-alt="A high-end, appetizing photograph of a freshly baked artisan pizza with a perfectly blistered crust, melted mozzarella, and fresh basil leaves. The lighting is warm and directional, emphasizing the glossy texture of the cheese and the rustic, charred edges of the dough. The overall aesthetic is vibrant and premium, aligning with a modern, high-contrast corporate food delivery app style. The composition is dynamic, drawing the eye directly to the center of the pie." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBblcHMtGNmT03hLwKqummum1-YdTe7wuiECOjRyeDqxnZeNtk9q3HQGfH-hOJEZokueIKgwppXygQbcV2JCXZHwiGP0YuIjd6cTU3VgtMsyZwf4cp5edlMGrA0udaczOYnBD8nMbgKEwUJZGf-AW3ioerJwqxr1wFD0BwI5gZ4Ko5Lbu7sYI-MBlkOyr1RS-ZbtsLfwaNq-CYEhKE5A6oGsnnqQttE0hEYdYPrBNS7HFzZc_Fduhp39Pj5V3wTpHByqgTAe5Ak2Bg"/>
+<div class="absolute bottom-0 left-0 p-stack-md z-20">
+<h3 class="font-headline-md text-headline-md text-white drop-shadow-md">Comfort Food</h3>
+<p class="font-body-md text-body-md text-white/90">Pizza, Burgers &amp; more</p>
+</div>
+</a>
+<!-- Standard Category 1 -->
+<a class="relative rounded-2xl overflow-hidden group shadow-[0_4px_20px_rgba(0,0,0,0.05)] hover:shadow-lg hover:-translate-y-1 transition-all duration-300" href="#">
+<div class="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent z-10"></div>
+<img alt="Sushi Category" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" data-alt="A crisp, high-definition close-up shot of elegant sushi rolls arranged meticulously on a dark, textured slate plate. The lighting is cool and sophisticated, highlighting the fresh, translucent textures of raw salmon and tuna against the dark background. The image evokes a sense of high-end culinary precision and speed. The modern, sleek aesthetic perfectly complements a premium delivery service interface." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAHGfh2bOHuaJddnTn4x8NP4124npjYPdNP4lV0rwEP5v3r_WXq_yhj6PHCOax3ufL3N9WEcX9FgH_Vu2xGHP_aCTMUch3vIJj7DnPkVYYNBmxqJ6obnRTwTHq_yjjM4mmbhgmFsOmX_Baxt5KgkcNRtSFqtI7bmg1Qq5sP-reBh1U01u1kePMQOvKUSL2cmcpHteS9NjyBkJqMrJDbtysVllflb57xdhy5klYB-UIIyzjmEOS7pt1reS3iGINTLip1vHA36TV2yq8"/>
+<div class="absolute bottom-0 left-0 p-stack-sm z-20 w-full flex justify-between items-end">
+<span class="font-label-md text-label-md text-white font-bold tracking-wide">Sushi</span>
+<div class="bg-primary-container/90 backdrop-blur-sm rounded-full p-1">
+<span class="material-symbols-outlined text-white text-[16px]">arrow_forward</span>
+</div>
+</div>
+</a>
+<!-- Standard Category 2 -->
+<a class="relative rounded-2xl overflow-hidden group shadow-[0_4px_20px_rgba(0,0,0,0.05)] hover:shadow-lg hover:-translate-y-1 transition-all duration-300" href="#">
+<div class="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent z-10"></div>
+<img alt="Healthy Category" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" data-alt="A bright, clean overhead shot of a vibrant salad bowl filled with fresh greens, sliced avocado, quinoa, and colorful cherry tomatoes. The lighting is high-key and natural, creating a fresh, energetic mood that appeals to health-conscious urban professionals. The colors pop intensely against a neutral background, embodying a crisp, corporate modern visual identity. The image feels fast, fresh, and highly appetizing." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBsMA-QdmPGtYGXklcaoeIpVDDoOmbQBpmsgS9xOGog2YC6NrlecsEfPbzGd0BNDG79k2CVReK24sl1_-cTcQl8MCDGsXu5oTLJFnXXWxqPoALJIQ-7NdBL93aVMvmYP9m9494X3SHLk4WTfbT1hRvw1XZRHtnyZnlAFjLMf01_LwnZqdU6t5LtSiZdGI2FwvikTigIZxx1vCOnRFNyVJAa5MPO3oOMquP0jNPfWnofVuQSO-_AvrlnJsAfzzu5Jy6RCTxoNrkz1zs"/>
+<div class="absolute bottom-0 left-0 p-stack-sm z-20 w-full flex justify-between items-end">
+<span class="font-label-md text-label-md text-white font-bold tracking-wide">Healthy</span>
+<div class="bg-primary-container/90 backdrop-blur-sm rounded-full p-1">
+<span class="material-symbols-outlined text-white text-[16px]">arrow_forward</span>
+</div>
+</div>
+</a>
+<!-- Standard Category 3 -->
+<a class="relative rounded-2xl overflow-hidden group shadow-[0_4px_20px_rgba(0,0,0,0.05)] hover:shadow-lg hover:-translate-y-1 transition-all duration-300" href="#">
+<div class="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent z-10"></div>
+<img alt="BBQ Category" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" data-alt="A mouth-watering, high-contrast image of smoky, glazed barbecue ribs glistening under warm, focused lighting. The dark, rich tones of the sauce contrast sharply with the vibrant orange highlights from the simulated fire ambiance in the background. The visual style is bold, energetic, and highly appetizing, designed to trigger immediate culinary desire. The photography perfectly aligns with a premium, high-velocity food brand." src="https://lh3.googleusercontent.com/aida-public/AB6AXuD-ztKWP0z-aCADv3CKiEp0x_AsFTvhVh273lbOj535FXQZqSn8TRdMYvDzIDumm70dDqDMGVdk75_BODF-t1gf1x2PzmXnSQtOfrp3BmZ_SQmOUPVk24CdvoKsXf_7uc8VWLlv3WMHd2LselomzmVQP4g1S197BkrEwM-VEZzWRCN0_nnFdw3j0Z77pjimJL2kZQ6pPasuX102U6I945L4ezdknkU0lR8Cj-ihpnk1HNBs6pf5TLidqTpPqZQoNspnhJGOQKpQMlI"/>
+<div class="absolute bottom-0 left-0 p-stack-sm z-20 w-full flex justify-between items-end">
+<span class="font-label-md text-label-md text-white font-bold tracking-wide">BBQ</span>
+<div class="bg-primary-container/90 backdrop-blur-sm rounded-full p-1">
+<span class="material-symbols-outlined text-white text-[16px]">arrow_forward</span>
+</div>
+</div>
+</a>
+<!-- Standard Category 4 -->
+<a class="relative rounded-2xl overflow-hidden group shadow-[0_4px_20px_rgba(0,0,0,0.05)] hover:shadow-lg hover:-translate-y-1 transition-all duration-300" href="#">
+<div class="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent z-10"></div>
+<img alt="Desserts Category" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" data-alt="A delectable, high-definition macro shot of a rich chocolate dessert with a glossy ganache finish, resting on a pristine white ceramic plate. The lighting highlights the smooth texture and intense dark brown color of the chocolate, contrasting with a subtle pop of bright red raspberry garnish. The aesthetic is sophisticated, decadent, and meticulously styled to represent premium restaurant quality." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDslouNwH73uKqpbGG956_WigI20tboVvXl5v46nZm50uwEG3SRgJu5YJdImmUHy7aKk5yJ5bNHHMyOjSaDq7OX8bKAcMvfrRd9aU9i3w4knuqsp7Thvo_P_MWV8MZgF1yacLh6g5QS6OB3Oz6TyWgXuD0WExvIkHLXqDJ9HLt6DContlfdlaROmAteizKNAVgHdDIaKBKEL8uR26id8FE8652mDzz43e346Ik5s86ihRLbAJdd47EddayGrJdeZ5r4B1BBisuagMg"/>
+<div class="absolute bottom-0 left-0 p-stack-sm z-20 w-full flex justify-between items-end">
+<span class="font-label-md text-label-md text-white font-bold tracking-wide">Desserts</span>
+<div class="bg-primary-container/90 backdrop-blur-sm rounded-full p-1">
+<span class="material-symbols-outlined text-white text-[16px]">arrow_forward</span>
+</div>
+</div>
+</a>
+</div>
+</section>
+</main>
+<!-- BottomNavBar (Mobile) -->
+<nav class="fixed bottom-0 left-0 w-full flex justify-around items-center px-4 py-2 pb-safe bg-surface shadow-[0_-4px_20px_rgba(0,0,0,0.05)] md:hidden z-50 rounded-t-xl border-t-0">
+<a class="flex flex-col items-center justify-center text-on-surface-variant hover:bg-primary-fixed/20 p-2 rounded-lg transition-colors" href="#">
+<span class="material-symbols-outlined text-[24px]">explore</span>
+<span class="font-label-sm text-label-sm mt-1">Explore</span>
+</a>
+<a class="flex flex-col items-center justify-center bg-primary-container text-on-primary-container rounded-full px-4 py-1 scale-110 transition-all duration-300" href="#">
+<span class="material-symbols-outlined text-[24px]" style="font-variation-settings: 'FILL' 1;">search</span>
+<span class="font-label-sm text-label-sm mt-1">Search</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant hover:bg-primary-fixed/20 p-2 rounded-lg transition-colors" href="#">
+<span class="material-symbols-outlined text-[24px]">receipt_long</span>
+<span class="font-label-sm text-label-sm mt-1">Orders</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant hover:bg-primary-fixed/20 p-2 rounded-lg transition-colors" href="#">
+<span class="material-symbols-outlined text-[24px]">person</span>
+<span class="font-label-sm text-label-sm mt-1">Profile</span>
+</a>
+</nav>
+<script>
+        // Simple micro-interaction for search input focus
+        const searchInput = document.getElementById('main-search-input');
+        const header = document.querySelector('header');
+
+        searchInput.addEventListener('focus', () => {
+            // Optional: Dim background slightly when searching
+            document.body.classList.add('bg-surface-container-low');
+        });
+
+        searchInput.addEventListener('blur', () => {
+            document.body.classList.remove('bg-surface-container-low');
+        });
+    </script>
+</body></html>

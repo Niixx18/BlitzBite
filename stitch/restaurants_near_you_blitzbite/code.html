@@ -1,0 +1,379 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>BlitzBite - Restaurant Listings</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+          darkMode: "class",
+          theme: {
+            extend: {
+              "colors": {
+                      "primary-container": "#ff5c00",
+                      "on-primary": "#ffffff",
+                      "surface-bright": "#fff8f6",
+                      "primary-fixed": "#ffdbce",
+                      "inverse-surface": "#3e2c26",
+                      "error-container": "#ffdad6",
+                      "background": "#fff8f6",
+                      "on-secondary-fixed": "#1c1b1b",
+                      "surface-dim": "#f1d4ca",
+                      "primary": "#a73a00",
+                      "on-surface-variant": "#5b4137",
+                      "tertiary": "#5d5f5f",
+                      "surface-container-high": "#ffe2d8",
+                      "on-tertiary-fixed": "#1a1c1c",
+                      "on-secondary": "#ffffff",
+                      "on-surface": "#271812",
+                      "surface-container-highest": "#fadcd2",
+                      "tertiary-container": "#929393",
+                      "primary-fixed-dim": "#ffb59a",
+                      "secondary": "#5f5e5e",
+                      "on-error-container": "#93000a",
+                      "error": "#ba1a1a",
+                      "on-tertiary-fixed-variant": "#454747",
+                      "on-tertiary-container": "#2a2c2c",
+                      "on-error": "#ffffff",
+                      "secondary-container": "#e5e2e1",
+                      "on-background": "#271812",
+                      "outline-variant": "#e4beb1",
+                      "tertiary-fixed-dim": "#c6c6c7",
+                      "on-primary-fixed": "#370e00",
+                      "inverse-primary": "#ffb59a",
+                      "on-secondary-fixed-variant": "#474646",
+                      "on-primary-container": "#521800",
+                      "on-secondary-container": "#656464",
+                      "surface-variant": "#fadcd2",
+                      "secondary-fixed": "#e5e2e1",
+                      "surface-tint": "#a73a00",
+                      "surface-container": "#ffe9e2",
+                      "on-primary-fixed-variant": "#802a00",
+                      "inverse-on-surface": "#ffede7",
+                      "tertiary-fixed": "#e2e2e2",
+                      "surface": "#fff8f6",
+                      "outline": "#8f7065",
+                      "on-tertiary": "#ffffff",
+                      "secondary-fixed-dim": "#c8c6c5",
+                      "surface-container-low": "#fff1ec",
+                      "surface-container-lowest": "#ffffff"
+              },
+              "borderRadius": {
+                      "DEFAULT": "0.25rem",
+                      "lg": "0.5rem",
+                      "xl": "0.75rem",
+                      "full": "9999px",
+                      "2xl": "1.5rem"
+              },
+              "spacing": {
+                      "gutter": "16px",
+                      "stack-md": "16px",
+                      "unit": "4px",
+                      "stack-sm": "8px",
+                      "stack-xl": "48px",
+                      "margin-desktop": "64px",
+                      "margin-mobile": "16px",
+                      "stack-xs": "4px",
+                      "stack-lg": "24px"
+              },
+              "fontFamily": {
+                      "body-lg": ["Geist"],
+                      "body-md": ["Geist"],
+                      "label-sm": ["Geist"],
+                      "headline-md": ["Geist"],
+                      "headline-lg": ["Geist"],
+                      "label-md": ["Geist"],
+                      "display-lg": ["Geist"],
+                      "headline-lg-mobile": ["Geist"]
+              },
+              "fontSize": {
+                      "body-lg": ["18px", {"lineHeight": "28px", "fontWeight": "400"}],
+                      "body-md": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                      "label-sm": ["12px", {"lineHeight": "16px", "fontWeight": "600"}],
+                      "headline-md": ["24px", {"lineHeight": "32px", "fontWeight": "600"}],
+                      "headline-lg": ["32px", {"lineHeight": "40px", "letterSpacing": "-0.01em", "fontWeight": "600"}],
+                      "label-md": ["14px", {"lineHeight": "20px", "letterSpacing": "0.01em", "fontWeight": "500"}],
+                      "display-lg": ["48px", {"lineHeight": "56px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                      "headline-lg-mobile": ["28px", {"lineHeight": "34px", "fontWeight": "600"}]
+              }
+      },
+          },
+        }
+    </script>
+<style>
+        body {
+            background-color: theme('colors.background');
+            color: theme('colors.on-background');
+        }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .icon-fill {
+            font-variation-settings: 'FILL' 1;
+        }
+        
+        /* Custom Scrollbar for Filters */
+        .filter-scroll::-webkit-scrollbar {
+            width: 4px;
+        }
+        .filter-scroll::-webkit-scrollbar-track {
+            background: transparent;
+        }
+        .filter-scroll::-webkit-scrollbar-thumb {
+            background-color: theme('colors.surface-variant');
+            border-radius: 4px;
+        }
+    </style>
+</head>
+<body class="antialiased min-h-screen pt-[88px] md:pt-[104px] pb-24 md:pb-8">
+<!-- TopNavBar -->
+<nav class="fixed top-0 w-full z-50 bg-surface/80 dark:bg-inverse-surface/80 backdrop-blur-md shadow-sm">
+<div class="flex justify-between items-center px-margin-mobile md:px-margin-desktop py-stack-md max-w-7xl mx-auto">
+<div class="flex items-center gap-8">
+<div class="font-display-lg text-primary dark:text-primary-container tracking-tighter italic">
+                    BlitzBite
+                </div>
+<!-- Desktop Search -->
+<div class="hidden md:flex items-center bg-surface-container rounded-full px-4 py-2 w-64 border border-transparent focus-within:border-primary focus-within:bg-surface-container-lowest transition-all">
+<span class="material-symbols-outlined text-on-surface-variant mr-2">search</span>
+<input class="bg-transparent border-none focus:ring-0 p-0 text-body-md text-on-surface w-full placeholder:text-on-surface-variant/70" placeholder="Search for 'Sushi'" type="text" value="Sushi"/>
+</div>
+</div>
+<!-- Desktop Nav Links -->
+<div class="hidden md:flex items-center gap-6">
+<a class="text-on-surface-variant font-medium font-label-md text-label-md hover:text-primary transition-colors duration-200" href="#">Offers</a>
+<a class="text-primary font-bold border-b-2 border-primary pb-1 font-label-md text-label-md hover:text-primary transition-colors duration-200 scale-95 transition-transform" href="#">Premium</a>
+<a class="text-on-surface-variant font-medium font-label-md text-label-md hover:text-primary transition-colors duration-200" href="#">Help</a>
+</div>
+<div class="flex items-center gap-4 text-primary dark:text-primary-fixed-dim">
+<button class="p-2 hover:bg-surface-variant rounded-full transition-colors relative">
+<span class="material-symbols-outlined">shopping_cart</span>
+<span class="absolute top-1 right-1 w-2 h-2 bg-error rounded-full"></span>
+</button>
+<button class="p-2 hover:bg-surface-variant rounded-full transition-colors hidden md:block">
+<span class="material-symbols-outlined">notifications</span>
+</button>
+<img alt="Customer Profile Avatar" class="w-10 h-10 rounded-full border-2 border-surface-variant cursor-pointer" src="https://lh3.googleusercontent.com/aida-public/AB6AXuA2I7myYohrcQUl9M0wE9ozGdQums0-NrX7be4qkqvQ9sc96OFok6CmRKm0QYuPyt7-6fBy_8mgbVDRT7uAHA6WTw3weii9AwllzWMpbgw7fSFSAhEq90C6yGKLewliSdetpxy_L1Q7BSDa4Si-dQ7xjZFfWfYnPe6LNV5eNyUQyItKq-J3lbjl84zAmTuszl8XhEzMhNyQqmuNDWPW4FK4lTgmxAD3SYQPg4LTC3gqv-XeEKDBjjXfx1oC5CcHUEGSRfw9uAakpDI"/>
+</div>
+</div>
+<!-- Mobile Search Bar (Pinned Below Nav) -->
+<div class="md:hidden px-margin-mobile pb-stack-sm bg-surface/95 backdrop-blur-md">
+<div class="flex items-center bg-surface-container rounded-full px-4 py-2 w-full border border-transparent focus-within:border-primary focus-within:bg-surface-container-lowest transition-all shadow-sm">
+<span class="material-symbols-outlined text-on-surface-variant mr-2">search</span>
+<input class="bg-transparent border-none focus:ring-0 p-0 font-body-md text-body-md text-on-surface w-full placeholder:text-on-surface-variant/70" placeholder="Search for 'Sushi'" type="text" value="Sushi"/>
+<button class="ml-2 text-primary p-1"><span class="material-symbols-outlined">tune</span></button>
+</div>
+</div>
+</nav>
+<!-- Main Content Container -->
+<main class="max-w-7xl mx-auto px-margin-mobile md:px-margin-desktop grid grid-cols-1 md:grid-cols-12 gap-gutter md:gap-stack-lg mt-stack-md md:mt-stack-lg">
+<!-- Page Header (Mobile Only) -->
+<div class="md:hidden col-span-1 mb-stack-sm">
+<h1 class="font-headline-lg-mobile text-headline-lg-mobile text-on-surface mb-unit">Results for "Sushi"</h1>
+<p class="font-body-md text-body-md text-on-surface-variant">42 places found in Downtown</p>
+</div>
+<!-- Sidebar Filters (Desktop) -->
+<aside class="hidden md:block md:col-span-3 lg:col-span-3 space-y-stack-lg sticky top-[120px] h-[calc(100vh-140px)] overflow-y-auto filter-scroll pr-4">
+<div>
+<h1 class="font-headline-md text-headline-md text-on-surface mb-unit">Results for "Sushi"</h1>
+<p class="font-body-md text-body-md text-on-surface-variant mb-stack-lg border-b border-outline-variant pb-stack-md">42 places found</p>
+</div>
+<!-- Quick Filters -->
+<div class="space-y-stack-sm">
+<h3 class="font-label-md text-label-md text-on-surface uppercase tracking-wider mb-stack-md">Sort By</h3>
+<label class="flex items-center gap-3 cursor-pointer group">
+<div class="relative flex items-center justify-center w-5 h-5">
+<input checked="" class="peer appearance-none w-5 h-5 border-2 border-outline rounded-full checked:border-primary transition-colors" name="sort" type="radio"/>
+<div class="absolute w-2.5 h-2.5 bg-primary rounded-full opacity-0 peer-checked:opacity-100 transition-opacity"></div>
+</div>
+<span class="font-body-md text-body-md text-on-surface group-hover:text-primary transition-colors">Recommended</span>
+</label>
+<label class="flex items-center gap-3 cursor-pointer group">
+<div class="relative flex items-center justify-center w-5 h-5">
+<input class="peer appearance-none w-5 h-5 border-2 border-outline rounded-full checked:border-primary transition-colors" name="sort" type="radio"/>
+<div class="absolute w-2.5 h-2.5 bg-primary rounded-full opacity-0 peer-checked:opacity-100 transition-opacity"></div>
+</div>
+<span class="font-body-md text-body-md text-on-surface group-hover:text-primary transition-colors">Delivery Time</span>
+</label>
+<label class="flex items-center gap-3 cursor-pointer group">
+<div class="relative flex items-center justify-center w-5 h-5">
+<input class="peer appearance-none w-5 h-5 border-2 border-outline rounded-full checked:border-primary transition-colors" name="sort" type="radio"/>
+<div class="absolute w-2.5 h-2.5 bg-primary rounded-full opacity-0 peer-checked:opacity-100 transition-opacity"></div>
+</div>
+<span class="font-body-md text-body-md text-on-surface group-hover:text-primary transition-colors">Rating: High to Low</span>
+</label>
+</div>
+<!-- Price -->
+<div class="pt-stack-md border-t border-outline-variant">
+<h3 class="font-label-md text-label-md text-on-surface uppercase tracking-wider mb-stack-md">Price</h3>
+<div class="flex gap-2">
+<button class="flex-1 py-2 rounded-lg border border-outline text-on-surface font-label-md text-label-md hover:border-primary hover:text-primary transition-colors">$</button>
+<button class="flex-1 py-2 rounded-lg bg-primary-container text-on-primary-container font-label-md text-label-md border border-primary-container shadow-sm">$$</button>
+<button class="flex-1 py-2 rounded-lg bg-primary-container text-on-primary-container font-label-md text-label-md border border-primary-container shadow-sm">$$$</button>
+<button class="flex-1 py-2 rounded-lg border border-outline text-on-surface font-label-md text-label-md hover:border-primary hover:text-primary transition-colors">$$$$</button>
+</div>
+</div>
+<!-- Dietary -->
+<div class="pt-stack-md border-t border-outline-variant">
+<h3 class="font-label-md text-label-md text-on-surface uppercase tracking-wider mb-stack-md">Dietary</h3>
+<div class="flex flex-wrap gap-2">
+<button class="px-4 py-2 rounded-full border border-outline text-on-surface font-label-md text-label-md hover:bg-surface-variant transition-colors flex items-center gap-2">
+<span class="material-symbols-outlined text-[18px]">eco</span> Veg
+                    </button>
+<button class="px-4 py-2 rounded-full border border-outline text-on-surface font-label-md text-label-md hover:bg-surface-variant transition-colors">Non-Veg</button>
+<button class="px-4 py-2 rounded-full border border-primary bg-primary-container/20 text-primary-container font-label-md text-label-md transition-colors flex items-center gap-2">
+<span class="material-symbols-outlined text-[18px] text-primary">verified</span> Halal
+                    </button>
+</div>
+</div>
+<!-- Offers -->
+<div class="pt-stack-md border-t border-outline-variant pb-stack-lg">
+<label class="flex items-center justify-between cursor-pointer group">
+<span class="font-label-md text-label-md text-on-surface font-bold flex items-center gap-2">
+<span class="material-symbols-outlined text-primary">local_offer</span> Great Offers
+                    </span>
+<div class="relative w-11 h-6 bg-surface-variant rounded-full peer-focus:outline-none transition-colors group-hover:bg-outline-variant">
+<input checked="" class="sr-only peer" type="checkbox"/>
+<div class="absolute top-[2px] left-[2px] bg-surface-container-lowest border-outline rounded-full h-5 w-5 transition-all peer-checked:translate-x-full peer-checked:bg-primary shadow-sm"></div>
+</div>
+</label>
+</div>
+</aside>
+<!-- Restaurant Grid -->
+<div class="col-span-1 md:col-span-9 lg:col-span-9">
+<!-- Applied Filters Pills (Mobile Scrollable) -->
+<div class="flex overflow-x-auto gap-2 pb-stack-sm mb-stack-md md:hidden no-scrollbar">
+<button class="shrink-0 px-4 py-1.5 bg-primary-container/20 border border-primary text-primary-container rounded-full font-label-sm text-label-sm flex items-center gap-1">
+                    Sushi <span class="material-symbols-outlined text-[14px]">close</span>
+</button>
+<button class="shrink-0 px-4 py-1.5 bg-surface-container border border-outline-variant text-on-surface rounded-full font-label-sm text-label-sm flex items-center gap-1">
+                    $$ - $$$ <span class="material-symbols-outlined text-[14px]">expand_more</span>
+</button>
+<button class="shrink-0 px-4 py-1.5 bg-surface-container border border-outline-variant text-on-surface rounded-full font-label-sm text-label-sm flex items-center gap-1">
+                    Sort: Recommended <span class="material-symbols-outlined text-[14px]">expand_more</span>
+</button>
+<button class="shrink-0 px-4 py-1.5 bg-surface-container border border-outline-variant text-on-surface rounded-full font-label-sm text-label-sm flex items-center gap-1">
+<span class="material-symbols-outlined text-[14px]">tune</span> Filters
+                </button>
+</div>
+<!-- Grid -->
+<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-stack-lg">
+<!-- Card 1 (Featured) -->
+<div class="group relative bg-surface-container-lowest rounded-2xl border border-outline-variant/50 overflow-hidden shadow-[0_4px_20px_rgba(0,0,0,0.05)] hover:shadow-lg transition-all duration-300 hover:scale-[1.02] cursor-pointer flex flex-col h-full">
+<div class="relative h-48 w-full overflow-hidden">
+<img class="object-cover w-full h-full group-hover:scale-105 transition-transform duration-500" data-alt="High quality close up photography of a premium sushi platter featuring fresh salmon nigiri, tuna rolls, and delicate garnishes. The food is presented on a minimalist black slate rectangular plate. The lighting is dramatic and directional, highlighting the glossy texture of the raw fish and the crisp white rice. The overall aesthetic is modern, high-end culinary, fitting a corporate modern food delivery platform interface." src="https://lh3.googleusercontent.com/aida-public/AB6AXuC479WsWfDx8yusr_UioeHlAn0v4SAxP-NhJjzZeZKuBjoSF9cvsrafM-geJotyDXx4BDXUSctdnqy4Gq3ITYhaDoe7f1MAHLGuFrFBls5VxRXZIXqF6_SrN9ycT8VBDCmbwbkKcaTP4RO8mEzx14RSXiSRsq2i4zNMqbeS3g_EH793JzYtJ24HNLD5XFgSgAq_lk2dhZj9gLa9G6dZMrcAo45B84zSxi09X3eKJA58VGsmHGOEqMoRmo4yDPpeEJKXG-ugnrvK8Ws"/>
+<div class="absolute top-3 left-3 flex gap-2">
+<span class="bg-surface-container-lowest/90 backdrop-blur-sm px-2 py-1 rounded font-label-sm text-label-sm text-on-surface shadow-sm">Promoted</span>
+</div>
+<button class="absolute top-3 right-3 p-1.5 bg-surface-container-lowest/50 backdrop-blur-md rounded-full text-on-surface hover:text-primary transition-colors">
+<span class="material-symbols-outlined icon-fill text-surface-variant">favorite</span>
+</button>
+<div class="absolute bottom-0 left-0 w-full bg-gradient-to-t from-black/70 to-transparent p-3">
+<span class="bg-primary px-2 py-1 rounded text-on-primary font-label-sm text-label-sm font-bold shadow-sm inline-flex items-center gap-1">
+<span class="material-symbols-outlined text-[14px]">local_offer</span> 20% OFF up to $5
+                            </span>
+</div>
+</div>
+<div class="p-stack-md flex-1 flex flex-col">
+<div class="flex justify-between items-start mb-unit">
+<h3 class="font-headline-md text-[20px] leading-[28px] font-semibold text-on-surface truncate pr-2">Sakura Premium Sushi</h3>
+<div class="flex items-center bg-primary text-on-primary px-1.5 py-0.5 rounded font-label-sm text-label-sm shadow-sm shrink-0">
+<span class="material-symbols-outlined text-[14px] icon-fill mr-0.5">star</span> 4.8
+                            </div>
+</div>
+<p class="font-body-md text-body-md text-on-surface-variant truncate mb-stack-sm">Japanese • Sushi • Asian Fusion</p>
+<div class="mt-auto flex items-center justify-between text-on-surface-variant font-label-sm text-label-sm border-t border-outline-variant/30 pt-stack-sm">
+<div class="flex items-center gap-1">
+<span class="material-symbols-outlined text-[16px]">schedule</span> 25-35 min
+                            </div>
+<div class="flex items-center gap-1">
+<span class="material-symbols-outlined text-[16px]">location_on</span> 1.2 km
+                            </div>
+<div class="font-bold">$$$</div>
+</div>
+</div>
+</div>
+<!-- Card 2 -->
+<div class="group relative bg-surface-container-lowest rounded-2xl border border-outline-variant/50 overflow-hidden shadow-[0_4px_20px_rgba(0,0,0,0.05)] hover:shadow-lg transition-all duration-300 hover:scale-[1.02] cursor-pointer flex flex-col h-full">
+<div class="relative h-48 w-full overflow-hidden">
+<img class="object-cover w-full h-full group-hover:scale-105 transition-transform duration-500" data-alt="A modern, high-definition photo of an elegant sushi roll sliced to reveal vibrant orange salmon and bright green avocado inside. The plate is a clean, matte white ceramic sitting on a warm wooden table. Soft, ambient natural light casts subtle shadows, enhancing the fresh and appetizing appearance of the food. The composition is tight and focused, conveying a sense of culinary precision and premium quality." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAp8J1a7xAX2WJq7OFsCr0PZEcn06tYPMaJCEdlNSmJnUZ9ACtUoNCWX6k3tJuoQ4uipqvXYAUFpolGwk4MxOcrfMDlzMM7o0Lzv4sV0Yb-swUjqhjpX73h1byrgS2MhmhmEq0i5GFDWnX8AkFnDxJBqG9K5mK6qGyGuWb7AzZ0sbQecScIZT6xGgGR1q6w453WyS1OkSkkE4ltbbjaky5garTEaaFamlRcpx9adn_cwhspCs-3iOfYUVDFKHzxyDR84mSqWwHrHZ4"/>
+<button class="absolute top-3 right-3 p-1.5 bg-surface-container-lowest/50 backdrop-blur-md rounded-full text-on-surface hover:text-primary transition-colors">
+<span class="material-symbols-outlined">favorite</span>
+</button>
+</div>
+<div class="p-stack-md flex-1 flex flex-col">
+<div class="flex justify-between items-start mb-unit">
+<h3 class="font-headline-md text-[20px] leading-[28px] font-semibold text-on-surface truncate pr-2">Oishii Rolls</h3>
+<div class="flex items-center bg-surface-variant text-on-surface px-1.5 py-0.5 rounded font-label-sm text-label-sm shrink-0">
+<span class="material-symbols-outlined text-[14px] icon-fill mr-0.5 text-primary">star</span> 4.5
+                            </div>
+</div>
+<p class="font-body-md text-body-md text-on-surface-variant truncate mb-stack-sm">Sushi • Rolls • Bowls</p>
+<div class="mt-auto flex items-center justify-between text-on-surface-variant font-label-sm text-label-sm border-t border-outline-variant/30 pt-stack-sm">
+<div class="flex items-center gap-1">
+<span class="material-symbols-outlined text-[16px]">schedule</span> 15-25 min
+                            </div>
+<div class="flex items-center gap-1 text-primary">
+<span class="material-symbols-outlined text-[16px]">bolt</span> Blitz
+                            </div>
+<div class="font-bold">$$</div>
+</div>
+</div>
+</div>
+<!-- Card 3 -->
+<div class="group relative bg-surface-container-lowest rounded-2xl border border-outline-variant/50 overflow-hidden shadow-[0_4px_20px_rgba(0,0,0,0.05)] hover:shadow-lg transition-all duration-300 hover:scale-[1.02] cursor-pointer flex flex-col h-full opacity-60">
+<div class="relative h-48 w-full overflow-hidden grayscale-[50%]">
+<img class="object-cover w-full h-full" data-alt="A photograph of a traditional wooden sushi boat filled with various nigiri and sashimi pieces. The image is styled to look slightly desaturated to indicate the restaurant is currently closed. The background is a blurred, dark moody restaurant interior. The lighting is dim, suggesting evening ambiance, fitting the corporate modern aesthetic of a sophisticated food delivery app interface." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBQj2O319eJq0d_QcONdLwL8a5z2hkpy5fhIPt4OiV1e96QTFaSk2VWZy0H9rv6zOBds3cl9FOUtPF759XDgK1MBgO6o3lWaGrwkquSj9rsi_xUqUY9xEITEhcVDQ_3Mll6Mr1CjplxpN_zj0sQiUB37CrkD5yRnuAV0vuCXC8qsmrL8Gkehai6PrgiYxYT14e7e3HuZme4vmD1bm8S4skC6VkBQVOVAqCdQdmhlXNkbKGKez9HpkdLFD1RudR2cyRod4ptjWrfE94"/>
+<div class="absolute inset-0 bg-surface/40 flex items-center justify-center backdrop-blur-[2px]">
+<span class="bg-surface-container-lowest px-4 py-2 rounded-full text-on-surface font-label-md text-label-md shadow-md border border-outline-variant">Opens at 5:00 PM</span>
+</div>
+</div>
+<div class="p-stack-md flex-1 flex flex-col">
+<div class="flex justify-between items-start mb-unit">
+<h3 class="font-headline-md text-[20px] leading-[28px] font-semibold text-on-surface truncate pr-2">Zen Sushi Bar</h3>
+<div class="flex items-center bg-surface-variant text-on-surface px-1.5 py-0.5 rounded font-label-sm text-label-sm shrink-0">
+<span class="material-symbols-outlined text-[14px] icon-fill mr-0.5 text-primary">star</span> 4.9
+                            </div>
+</div>
+<p class="font-body-md text-body-md text-on-surface-variant truncate mb-stack-sm">Authentic Japanese • Fine Dining</p>
+<div class="mt-auto flex items-center justify-between text-on-surface-variant font-label-sm text-label-sm border-t border-outline-variant/30 pt-stack-sm">
+<div class="flex items-center gap-1">
+<span class="material-symbols-outlined text-[16px]">location_on</span> 3.5 km
+                            </div>
+<div class="font-bold">$$$$</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Load More -->
+<div class="mt-stack-lg flex justify-center">
+<button class="px-8 py-3 rounded-full border border-outline text-on-surface font-label-md text-label-md hover:border-primary hover:text-primary transition-colors bg-surface-container-lowest shadow-sm">
+                    Load More Restaurants
+                </button>
+</div>
+</div>
+</main>
+<!-- BottomNavBar (Mobile Only) -->
+<nav class="fixed bottom-0 left-0 w-full flex justify-around items-center px-4 py-2 pb-safe bg-surface dark:bg-inverse-surface shadow-[0_-4px_20px_rgba(0,0,0,0.05)] rounded-t-xl z-50 md:hidden">
+<a class="flex flex-col items-center justify-center text-on-surface-variant hover:bg-primary-fixed/20 p-2 rounded-lg transition-colors" href="#">
+<span class="material-symbols-outlined">explore</span>
+<span class="font-label-sm text-label-sm mt-1">Explore</span>
+</a>
+<a class="flex flex-col items-center justify-center bg-primary-container text-on-primary-container rounded-full px-4 py-1 hover:bg-primary-fixed/20 transition-all duration-300 scale-110" href="#">
+<span class="material-symbols-outlined">search</span>
+<span class="font-label-sm text-label-sm mt-1">Search</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant hover:bg-primary-fixed/20 p-2 rounded-lg transition-colors" href="#">
+<span class="material-symbols-outlined">receipt_long</span>
+<span class="font-label-sm text-label-sm mt-1">Orders</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant hover:bg-primary-fixed/20 p-2 rounded-lg transition-colors" href="#">
+<span class="material-symbols-outlined">person</span>
+<span class="font-label-sm text-label-sm mt-1">Profile</span>
+</a>
+</nav>
+</body></html>

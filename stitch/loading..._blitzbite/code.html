@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>BlitzBite - Loading</title>
+<!-- Google Fonts: Geist -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700;900&amp;display=swap" rel="stylesheet"/>
+<!-- Material Symbols -->
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Tailwind CSS -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<!-- Tailwind Configuration -->
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "surface-container": "#ffe9e2",
+                        "secondary-fixed": "#e5e2e1",
+                        "on-tertiary-container": "#2a2c2c",
+                        "on-secondary": "#ffffff",
+                        "outline": "#8f7065",
+                        "on-secondary-container": "#656464",
+                        "outline-variant": "#e4beb1",
+                        "on-surface-variant": "#5b4137",
+                        "on-error-container": "#93000a",
+                        "surface-variant": "#fadcd2",
+                        "on-error": "#ffffff",
+                        "secondary": "#5f5e5e",
+                        "on-surface": "#271812",
+                        "background": "#fff8f6",
+                        "primary-fixed": "#ffdbce",
+                        "on-primary-fixed": "#370e00",
+                        "tertiary-container": "#929393",
+                        "surface-container-high": "#ffe2d8",
+                        "primary-container": "#ff5c00",
+                        "on-tertiary-fixed-variant": "#454747",
+                        "on-secondary-fixed": "#1c1b1b",
+                        "primary": "#a73a00",
+                        "surface-dim": "#f1d4ca",
+                        "inverse-surface": "#3e2c26",
+                        "primary-fixed-dim": "#ffb59a",
+                        "tertiary-fixed": "#e2e2e2",
+                        "on-tertiary-fixed": "#1a1c1c",
+                        "tertiary": "#5d5f5f",
+                        "on-primary-fixed-variant": "#802a00",
+                        "on-background": "#271812",
+                        "error": "#ba1a1a",
+                        "secondary-container": "#e5e2e1",
+                        "on-tertiary": "#ffffff",
+                        "error-container": "#ffdad6",
+                        "tertiary-fixed-dim": "#c6c6c7",
+                        "surface-container-highest": "#fadcd2",
+                        "on-secondary-fixed-variant": "#474646",
+                        "surface-container-low": "#fff1ec",
+                        "on-primary": "#ffffff",
+                        "surface-tint": "#a73a00",
+                        "surface-container-lowest": "#ffffff",
+                        "on-primary-container": "#521800",
+                        "surface-bright": "#fff8f6",
+                        "inverse-primary": "#ffb59a",
+                        "inverse-on-surface": "#ffede7",
+                        "surface": "#fff8f6",
+                        "secondary-fixed-dim": "#c8c6c5"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "stack-lg": "24px",
+                        "stack-xs": "4px",
+                        "gutter": "16px",
+                        "stack-sm": "8px",
+                        "stack-xl": "48px",
+                        "stack-md": "16px",
+                        "unit": "4px",
+                        "margin-mobile": "16px",
+                        "margin-desktop": "64px"
+                    },
+                    "fontFamily": {
+                        "label-md": ["Geist"],
+                        "body-lg": ["Geist"],
+                        "label-sm": ["Geist"],
+                        "headline-lg-mobile": ["Geist"],
+                        "body-md": ["Geist"],
+                        "headline-md": ["Geist"],
+                        "headline-lg": ["Geist"],
+                        "display-lg": ["Geist"]
+                    },
+                    "fontSize": {
+                        "label-md": ["14px", { "lineHeight": "20px", "letterSpacing": "0.01em", "fontWeight": "500" }],
+                        "body-lg": ["18px", { "lineHeight": "28px", "fontWeight": "400" }],
+                        "label-sm": ["12px", { "lineHeight": "16px", "fontWeight": "600" }],
+                        "headline-lg-mobile": ["28px", { "lineHeight": "34px", "fontWeight": "600" }],
+                        "body-md": ["16px", { "lineHeight": "24px", "fontWeight": "400" }],
+                        "headline-md": ["24px", { "lineHeight": "32px", "fontWeight": "600" }],
+                        "headline-lg": ["32px", { "lineHeight": "40px", "letterSpacing": "-0.01em", "fontWeight": "600" }],
+                        "display-lg": ["48px", { "lineHeight": "56px", "letterSpacing": "-0.02em", "fontWeight": "700" }]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        /* Premium Skeleton Shimmer Effect */
+        @keyframes shimmer {
+            0% { transform: translateX(-100%); }
+            100% { transform: translateX(100%); }
+        }
+        .skeleton-shimmer {
+            position: relative;
+            overflow: hidden;
+            background-color: theme('colors.surface-variant');
+        }
+        .skeleton-shimmer::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            right: 0;
+            bottom: 0;
+            left: 0;
+            transform: translateX(-100%);
+            background-image: linear-gradient(
+                90deg,
+                rgba(255, 248, 246, 0) 0%,
+                rgba(255, 248, 246, 0.4) 20%,
+                rgba(255, 248, 246, 0.8) 50%,
+                rgba(255, 248, 246, 0.4) 80%,
+                rgba(255, 248, 246, 0) 100%
+            );
+            animation: shimmer 1.8s infinite ease-in-out;
+        }
+        
+        /* Hide scrollbar for category circles */
+        .no-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+        .no-scrollbar {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+    </style>
+</head>
+<body class="bg-background text-on-background font-body-md text-body-md antialiased selection:bg-primary-container selection:text-on-primary-container">
+<!-- TopNavBar (Loaded state with skeleton search) -->
+<header class="bg-surface/90 backdrop-blur-md border-b border-outline-variant/30 shadow-sm docked full-width top-0 sticky z-50">
+<div class="flex justify-between items-center w-full px-4 md:px-margin-desktop max-w-7xl mx-auto h-16">
+<!-- Brand Logo -->
+<div class="flex items-center gap-2">
+<span class="font-display-lg text-display-lg font-black text-primary tracking-tighter cursor-pointer hover:opacity-80 transition-opacity">
+                    BlitzBite
+                </span>
+</div>
+<!-- Search Bar Skeleton -->
+<div class="hidden md:flex flex-1 max-w-xl mx-8 items-center bg-surface-container rounded-full h-12 px-4 shadow-[0px_4px_20px_rgba(0,0,0,0.02)] border border-outline-variant/50">
+<span class="material-symbols-outlined text-on-surface-variant/50 mr-3">search</span>
+<div class="h-4 w-48 rounded-md skeleton-shimmer"></div>
+</div>
+<!-- Trailing Actions -->
+<div class="flex items-center gap-1 md:gap-2">
+<button class="p-2 text-on-surface-variant hover:bg-primary-container/10 transition-colors rounded-full hidden sm:block active:scale-95 duration-100">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 0;">location_on</span>
+</button>
+<button class="p-2 text-on-surface-variant hover:bg-primary-container/10 transition-colors rounded-full active:scale-95 duration-100">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 0;">notifications</span>
+</button>
+<button class="p-2 text-on-surface-variant hover:bg-primary-container/10 transition-colors rounded-full active:scale-95 duration-100">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 0;">shopping_cart</span>
+</button>
+<button class="ml-2 px-4 py-2 bg-primary text-on-primary font-label-md text-label-md rounded-full hover:bg-primary/90 transition-colors active:scale-95 duration-100 hidden md:block shadow-sm">
+                    Sign In
+                </button>
+</div>
+</div>
+<!-- Mobile Search Bar Skeleton (Visible only on small screens) -->
+<div class="md:hidden w-full px-4 pb-4 pt-2">
+<div class="flex items-center bg-surface-container rounded-full h-12 px-4 shadow-sm border border-outline-variant/50">
+<span class="material-symbols-outlined text-on-surface-variant/50 mr-3">search</span>
+<div class="h-4 w-32 rounded-md skeleton-shimmer"></div>
+</div>
+</div>
+</header>
+<!-- Main Content Canvas -->
+<main class="w-full max-w-7xl mx-auto px-4 md:px-margin-desktop py-stack-md md:py-stack-lg flex flex-col gap-stack-xl md:gap-[56px]">
+<!-- Hero Banner Skeleton -->
+<section class="w-full">
+<div class="w-full h-[180px] md:h-[320px] rounded-[24px] skeleton-shimmer shadow-[0px_4px_20px_rgba(0,0,0,0.05)] border border-outline-variant/20"></div>
+</section>
+<!-- Cuisine Category Circles Skeleton -->
+<section class="w-full flex flex-col gap-stack-sm">
+<div class="w-32 h-6 md:h-8 rounded-md skeleton-shimmer mb-2"></div>
+<div class="flex gap-gutter overflow-x-auto no-scrollbar pb-4 pt-2 -mx-4 px-4 md:mx-0 md:px-0">
+<!-- 8 Skeleton Items -->
+<div class="flex flex-col items-center gap-3 shrink-0">
+<div class="w-20 h-20 md:w-24 md:h-24 rounded-full skeleton-shimmer shadow-sm"></div>
+<div class="w-14 h-3 rounded-sm skeleton-shimmer"></div>
+</div>
+<div class="flex flex-col items-center gap-3 shrink-0">
+<div class="w-20 h-20 md:w-24 md:h-24 rounded-full skeleton-shimmer shadow-sm"></div>
+<div class="w-16 h-3 rounded-sm skeleton-shimmer"></div>
+</div>
+<div class="flex flex-col items-center gap-3 shrink-0">
+<div class="w-20 h-20 md:w-24 md:h-24 rounded-full skeleton-shimmer shadow-sm"></div>
+<div class="w-12 h-3 rounded-sm skeleton-shimmer"></div>
+</div>
+<div class="flex flex-col items-center gap-3 shrink-0">
+<div class="w-20 h-20 md:w-24 md:h-24 rounded-full skeleton-shimmer shadow-sm"></div>
+<div class="w-16 h-3 rounded-sm skeleton-shimmer"></div>
+</div>
+<div class="flex flex-col items-center gap-3 shrink-0">
+<div class="w-20 h-20 md:w-24 md:h-24 rounded-full skeleton-shimmer shadow-sm"></div>
+<div class="w-14 h-3 rounded-sm skeleton-shimmer"></div>
+</div>
+<div class="flex flex-col items-center gap-3 shrink-0">
+<div class="w-20 h-20 md:w-24 md:h-24 rounded-full skeleton-shimmer shadow-sm"></div>
+<div class="w-16 h-3 rounded-sm skeleton-shimmer"></div>
+</div>
+<div class="flex flex-col items-center gap-3 shrink-0 hidden sm:flex">
+<div class="w-20 h-20 md:w-24 md:h-24 rounded-full skeleton-shimmer shadow-sm"></div>
+<div class="w-12 h-3 rounded-sm skeleton-shimmer"></div>
+</div>
+<div class="flex flex-col items-center gap-3 shrink-0 hidden md:flex">
+<div class="w-20 h-20 md:w-24 md:h-24 rounded-full skeleton-shimmer shadow-sm"></div>
+<div class="w-14 h-3 rounded-sm skeleton-shimmer"></div>
+</div>
+</div>
+</section>
+<!-- "Order it again" Cards Skeleton -->
+<section class="w-full flex flex-col gap-stack-md">
+<div class="w-48 h-8 md:h-10 rounded-md skeleton-shimmer mb-1"></div>
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-gutter">
+<!-- Skeleton Card 1 -->
+<div class="flex flex-row gap-4 p-4 rounded-[24px] bg-surface border border-outline-variant/40 shadow-[0px_4px_20px_rgba(0,0,0,0.03)] h-[120px]">
+<div class="w-24 h-full rounded-xl skeleton-shimmer shrink-0"></div>
+<div class="flex flex-col justify-between flex-1 py-1">
+<div class="flex flex-col gap-2">
+<div class="w-3/4 h-5 rounded-md skeleton-shimmer"></div>
+<div class="w-1/2 h-3 rounded-sm skeleton-shimmer"></div>
+</div>
+<div class="flex justify-between items-center mt-auto">
+<div class="w-16 h-4 rounded-md skeleton-shimmer"></div>
+<div class="w-8 h-8 rounded-full skeleton-shimmer"></div>
+</div>
+</div>
+</div>
+<!-- Skeleton Card 2 -->
+<div class="flex flex-row gap-4 p-4 rounded-[24px] bg-surface border border-outline-variant/40 shadow-[0px_4px_20px_rgba(0,0,0,0.03)] h-[120px]">
+<div class="w-24 h-full rounded-xl skeleton-shimmer shrink-0"></div>
+<div class="flex flex-col justify-between flex-1 py-1">
+<div class="flex flex-col gap-2">
+<div class="w-4/5 h-5 rounded-md skeleton-shimmer"></div>
+<div class="w-2/5 h-3 rounded-sm skeleton-shimmer"></div>
+</div>
+<div class="flex justify-between items-center mt-auto">
+<div class="w-14 h-4 rounded-md skeleton-shimmer"></div>
+<div class="w-8 h-8 rounded-full skeleton-shimmer"></div>
+</div>
+</div>
+</div>
+<!-- Skeleton Card 3 -->
+<div class="flex flex-row gap-4 p-4 rounded-[24px] bg-surface border border-outline-variant/40 shadow-[0px_4px_20px_rgba(0,0,0,0.03)] h-[120px]">
+<div class="w-24 h-full rounded-xl skeleton-shimmer shrink-0"></div>
+<div class="flex flex-col justify-between flex-1 py-1">
+<div class="flex flex-col gap-2">
+<div class="w-2/3 h-5 rounded-md skeleton-shimmer"></div>
+<div class="w-3/5 h-3 rounded-sm skeleton-shimmer"></div>
+</div>
+<div class="flex justify-between items-center mt-auto">
+<div class="w-20 h-4 rounded-md skeleton-shimmer"></div>
+<div class="w-8 h-8 rounded-full skeleton-shimmer"></div>
+</div>
+</div>
+</div>
+<!-- Skeleton Card 4 (Visible on larger screens to fill grid) -->
+<div class="flex flex-row gap-4 p-4 rounded-[24px] bg-surface border border-outline-variant/40 shadow-[0px_4px_20px_rgba(0,0,0,0.03)] h-[120px] hidden md:flex lg:hidden xl:flex">
+<div class="w-24 h-full rounded-xl skeleton-shimmer shrink-0"></div>
+<div class="flex flex-col justify-between flex-1 py-1">
+<div class="flex flex-col gap-2">
+<div class="w-3/4 h-5 rounded-md skeleton-shimmer"></div>
+<div class="w-1/2 h-3 rounded-sm skeleton-shimmer"></div>
+</div>
+<div class="flex justify-between items-center mt-auto">
+<div class="w-16 h-4 rounded-md skeleton-shimmer"></div>
+<div class="w-8 h-8 rounded-full skeleton-shimmer"></div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Extra padding at bottom for potential mobile nav overlap -->
+<div class="h-24 md:h-12 w-full"></div>
+</main>
+<!-- BottomNavBar (Mobile Only Shell) -->
+<nav class="md:hidden bg-surface dark:bg-surface-dim border-t border-outline-variant/20 shadow-lg docked full-width bottom-0 fixed rounded-t-xl fixed bottom-0 left-0 w-full z-50 flex justify-around items-center px-4 py-2 pb-safe">
+<button class="flex flex-col items-center justify-center bg-primary-container dark:bg-primary-container text-on-primary-container rounded-full px-6 py-1 active:scale-90 duration-200">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">home</span>
+<span class="font-label-sm text-label-sm mt-1">Home</span>
+</button>
+<button class="flex flex-col items-center justify-center text-on-surface-variant hover:text-primary transition-colors">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 0;">search</span>
+<span class="font-label-sm text-label-sm mt-1">Search</span>
+</button>
+<button class="flex flex-col items-center justify-center text-on-surface-variant hover:text-primary transition-colors">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 0;">receipt_long</span>
+<span class="font-label-sm text-label-sm mt-1">Orders</span>
+</button>
+<button class="flex flex-col items-center justify-center text-on-surface-variant hover:text-primary transition-colors">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 0;">account_circle</span>
+<span class="font-label-sm text-label-sm mt-1">Profile</span>
+</button>
+</nav>
+</body></html>
