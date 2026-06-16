@@ -192,17 +192,6 @@ http://localhost:5173
 
 ---
 
-## 📸 Screenshots
-
-Add screenshots after deployment:
-
-* Home Page
-* Restaurant Page
-* Cart Page
-* Checkout Page
-* Owner Dashboard
-* Order Tracking Page
-
 ---
 
 ## 🔮 Future Improvements
