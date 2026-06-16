@@ -1,7 +1,10 @@
 const dns = require('dns');
 dns.setServers(['8.8.8.8', '8.8.4.4']);
 
+const path = require('path');
+const fs = require('fs');
 const express = require('express');
+const cors = require('cors');
 const app = express();
 const http = require('http');
 const server = http.createServer(app);
@@ -13,7 +16,22 @@ require('dotenv').config();
 
 console.log("CURRENT URI:", process.env.MONGODB_URI);
 
+app.use(cors({
+    origin: process.env.FRONTEND_URL || 'http://localhost:5173',
+    credentials: true
+}));
+
 app.use(express.json());
+
+// Prevent API caching globally for all API routes
+app.use('/api', (req, res, next) => {
+    res.set({
+        'Cache-Control': 'no-store, no-cache, must-revalidate, proxy-revalidate',
+        'Pragma': 'no-cache',
+        'Expires': '0'
+    });
+    next();
+});
 
 // Test route
 app.post('/test', (req, res) => {
@@ -40,9 +58,21 @@ app.use('/api/payment', paymentRoutes);
 
 const PORT = process.env.PORT || 3000;
 
-app.get('/', (req, res) => {
-    res.send('Server is working');
-});
+// Serve static files from the React frontend app in production
+const frontendDistPath = path.join(__dirname, '../Frontend/dist');
+if (fs.existsSync(frontendDistPath)) {
+    app.use(express.static(frontendDistPath));
+    app.get('/*splat', (req, res, next) => {
+        if (req.path.startsWith('/api')) {
+            return next();
+        }
+        res.sendFile(path.join(frontendDistPath, 'index.html'));
+    });
+} else {
+    app.get('/', (req, res) => {
+        res.send('Server is working');
+    });
+}
 
 mongoose.connect(process.env.MONGODB_URI)
 .then(async () => {

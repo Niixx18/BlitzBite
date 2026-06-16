@@ -85,12 +85,31 @@ export default function OrderCard({ order, showCustomer = false }) {
 
       {/* Address & Payment Info Card */}
       <div className="bg-surface border border-outline-variant/25 rounded-2xl p-4 space-y-2.5 text-xs">
-        <p className="leading-relaxed">
+        <div className="leading-relaxed">
           <strong className="text-on-surface-variant/80">Address: </strong>
-          <span className="text-on-surface font-medium">
-            {order.deliveryAddress?.street}, {order.deliveryAddress?.city}, {order.deliveryAddress?.state} {order.deliveryAddress?.zipCode}
+          <span className="text-on-surface font-medium block mt-1 whitespace-pre-line">
+            {order.deliveryAddress?.fullName ? (
+              <>
+                <span className="font-extrabold">{order.deliveryAddress.fullName} ({order.deliveryAddress.phoneNumber})</span>
+                <br />
+                {order.deliveryAddress.flatNo}, {order.deliveryAddress.street}
+                {order.deliveryAddress.landmark ? `, Landmark: ${order.deliveryAddress.landmark}` : ''}
+                <br />
+                {order.deliveryAddress.city}, {order.deliveryAddress.state} - {order.deliveryAddress.pincode || order.deliveryAddress.zipCode}
+                {order.deliveryAddress.deliveryInstructions && (
+                  <>
+                    <br />
+                    <span className="italic text-on-surface-variant/75 text-[11px] block mt-1 bg-surface-container/60 p-2 rounded-lg">
+                      Instruction: {order.deliveryAddress.deliveryInstructions}
+                    </span>
+                  </>
+                )}
+              </>
+            ) : (
+              `${order.deliveryAddress?.street || ''}, ${order.deliveryAddress?.city || ''}, ${order.deliveryAddress?.state || ''} ${order.deliveryAddress?.zipCode || ''}`
+            )}
           </span>
-        </p>
+        </div>
         <div className="flex justify-between items-center text-[10px] font-bold uppercase tracking-wider text-on-surface-variant/70">
           <span>Payment: {order.paymentMethod.toUpperCase()}</span>
           {order.notes && <span className="normal-case font-normal text-on-surface-variant/80 truncate max-w-[150px]">Note: {order.notes}</span>}

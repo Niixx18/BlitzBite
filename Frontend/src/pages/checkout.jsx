@@ -34,13 +34,27 @@ export default function CheckoutPage() {
   const [submitError, setSubmitError] = useState('');
   const [success, setSuccess] = useState(false);
   const [form, setForm] = useState({
+    fullName: '',
+    phoneNumber: '',
+    flatNo: '',
+    street: '',
+    landmark: '',
+    city: '',
+    state: '',
+    pincode: '',
+    deliveryInstructions: '',
+    paymentMethod: 'razorpay',
+    notes: '',
+  });
+
+  const [errors, setErrors] = useState({
+    fullName: '',
+    phoneNumber: '',
+    flatNo: '',
     street: '',
     city: '',
     state: '',
-    zipCode: '',
-    country: 'India',
-    paymentMethod: 'razorpay',
-    notes: '',
+    pincode: '',
   });
 
   useEffect(() => {
@@ -52,16 +66,17 @@ export default function CheckoutPage() {
   // Pre-fill address from user profile on first load
   const [addressPrefilled, setAddressPrefilled] = useState(false);
   useEffect(() => {
-    if ((user?.id || user?._id) && !addressPrefilled && user.address) {
+    if ((user?.id || user?._id) && !addressPrefilled) {
       const timer = setTimeout(() => {
         setAddressPrefilled(true);
         setForm((cur) => ({
           ...cur,
+          fullName: cur.fullName || `${user.firstName || ''} ${user.lastName || ''}`.trim(),
+          phoneNumber: cur.phoneNumber || user.phone || '',
           street: cur.street || user.address?.street || '',
           city: cur.city || user.address?.city || '',
           state: cur.state || user.address?.state || '',
-          zipCode: cur.zipCode || user.address?.zipCode || '',
-          country: cur.country || user.address?.country || 'India',
+          pincode: cur.pincode || user.address?.zipCode || '',
         }));
       }, 0);
       return () => clearTimeout(timer);
@@ -79,18 +94,81 @@ export default function CheckoutPage() {
     return { subtotal, deliveryFee, tax, totalAmount };
   }, [items]);
 
+  const validateField = (name, value) => {
+    let error = '';
+    const optionalFields = ['landmark', 'deliveryInstructions', 'notes'];
+    if (optionalFields.includes(name)) return;
+
+    if (!value) {
+      error = 'This field is required';
+    } else if (name === 'phoneNumber') {
+      if (!/^\d{10}$/.test(value)) {
+        error = 'Phone number must be a valid 10-digit number';
+      }
+    } else if (name === 'pincode') {
+      if (!/^\d{6}$/.test(value)) {
+        error = 'Pincode must be a valid 6-digit number';
+      }
+    }
+    setErrors(prev => ({ ...prev, [name]: error }));
+  };
+
   const handleChange = (e) => {
     const { name, value } = e.target;
     setForm((cur) => ({ ...cur, [name]: value }));
+    validateField(name, value);
+  };
+
+  const handleValidation = () => {
+    const newErrors = {};
+    let isValid = true;
+
+    const requiredFields = ['fullName', 'phoneNumber', 'flatNo', 'street', 'city', 'state', 'pincode'];
+    requiredFields.forEach(field => {
+      if (!form[field]) {
+        newErrors[field] = 'This field is required';
+        isValid = false;
+      }
+    });
+
+    if (form.phoneNumber && !/^\d{10}$/.test(form.phoneNumber)) {
+      newErrors.phoneNumber = 'Phone number must be a valid 10-digit number';
+      isValid = false;
+    }
+
+    if (form.pincode && !/^\d{6}$/.test(form.pincode)) {
+      newErrors.pincode = 'Pincode must be a valid 6-digit number';
+      isValid = false;
+    }
+
+    setErrors(newErrors);
+    return isValid;
   };
 
   const deliveryAddress = useMemo(() => ({
+    fullName: form.fullName,
+    phoneNumber: form.phoneNumber,
+    flatNo: form.flatNo,
     street: form.street,
+    landmark: form.landmark,
     city: form.city,
     state: form.state,
-    zipCode: form.zipCode,
-    country: form.country,
-  }), [form.street, form.city, form.state, form.zipCode, form.country]);
+    pincode: form.pincode,
+    deliveryInstructions: form.deliveryInstructions,
+    // Add legacy fields for backward compatibility with existing order APIs
+    zipCode: form.pincode,
+    country: 'India',
+  }), [
+    form.fullName,
+    form.phoneNumber,
+    form.flatNo,
+    form.street,
+    form.landmark,
+    form.city,
+    form.state,
+    form.pincode,
+    form.deliveryInstructions,
+  ]);
 
   // ── COD payment ──────────────────────────────────────────────────
   const handleCodSubmit = useCallback(async () => {
@@ -173,11 +251,15 @@ export default function CheckoutPage() {
       });
       rzp.open();
     });
-  }, [user, deliveryAddress, form.notes, dispatch]);
+  }, [user, deliveryAddress, form.notes, form.paymentMethod, dispatch]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     setSubmitError('');
+    if (!handleValidation()) {
+      setSubmitError('Please fix the validation errors in the delivery address.');
+      return;
+    }
     if (items.length === 0) { setSubmitError('Your cart is empty.'); return; }
 
     setSubmitting(true);
@@ -295,18 +377,103 @@ export default function CheckoutPage() {
               {/* Delivery Address Section */}
               <Section title="📍 Delivery Address">
                 <div className="grid grid-cols-1 gap-4">
-                  <label className="grid gap-1.5">
-                    <span className="text-xs font-extrabold text-on-surface-variant/70 uppercase tracking-wider">Street Address</span>
-                    <input
-                      required
-                      name="street"
-                      value={form.street}
-                      onChange={handleChange}
-                      placeholder="e.g. 123 Main St, Apartment 4B"
-                      className="w-full bg-surface-container-high border-2 border-transparent focus:border-primary focus:bg-white rounded-xl py-2.5 px-4 text-sm text-on-surface font-semibold placeholder:text-on-surface-variant/30 outline-none transition-all"
-                    />
-                  </label>
+                  {/* Full Name & Phone Number */}
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <label className="grid gap-1.5">
+                      <span className="text-xs font-extrabold text-on-surface-variant/70 uppercase tracking-wider">Full Name</span>
+                      <input
+                        required
+                        name="fullName"
+                        value={form.fullName}
+                        onChange={handleChange}
+                        placeholder="e.g. Adarsh Kumar"
+                        className={`w-full bg-surface-container-high border-2 focus:bg-white rounded-xl py-2.5 px-4 text-sm text-on-surface font-semibold placeholder:text-on-surface-variant/30 outline-none transition-all ${
+                          errors.fullName ? 'border-rose-500' : 'border-transparent focus:border-primary'
+                        }`}
+                      />
+                      {errors.fullName && <p className="text-rose-500 text-[10px] font-bold mt-1">⚠️ {errors.fullName}</p>}
+                    </label>
 
+                    <label className="grid gap-1.5">
+                      <span className="text-xs font-extrabold text-on-surface-variant/70 uppercase tracking-wider">Phone Number</span>
+                      <input
+                        required
+                        type="tel"
+                        name="phoneNumber"
+                        value={form.phoneNumber}
+                        onChange={handleChange}
+                        placeholder="e.g. 9876543210"
+                        className={`w-full bg-surface-container-high border-2 focus:bg-white rounded-xl py-2.5 px-4 text-sm text-on-surface font-semibold placeholder:text-on-surface-variant/30 outline-none transition-all ${
+                          errors.phoneNumber ? 'border-rose-500' : 'border-transparent focus:border-primary'
+                        }`}
+                      />
+                      {errors.phoneNumber && <p className="text-rose-500 text-[10px] font-bold mt-1">⚠️ {errors.phoneNumber}</p>}
+                    </label>
+                  </div>
+
+                  {/* House/Flat No. & Street Address */}
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <label className="grid gap-1.5">
+                      <span className="text-xs font-extrabold text-on-surface-variant/70 uppercase tracking-wider">House/Flat No.</span>
+                      <input
+                        required
+                        name="flatNo"
+                        value={form.flatNo}
+                        onChange={handleChange}
+                        placeholder="e.g. Flat 405, Block B"
+                        className={`w-full bg-surface-container-high border-2 focus:bg-white rounded-xl py-2.5 px-4 text-sm text-on-surface font-semibold placeholder:text-on-surface-variant/30 outline-none transition-all ${
+                          errors.flatNo ? 'border-rose-500' : 'border-transparent focus:border-primary'
+                        }`}
+                      />
+                      {errors.flatNo && <p className="text-rose-500 text-[10px] font-bold mt-1">⚠️ {errors.flatNo}</p>}
+                    </label>
+
+                    <label className="grid gap-1.5">
+                      <span className="text-xs font-extrabold text-on-surface-variant/70 uppercase tracking-wider">Street/Area</span>
+                      <input
+                        required
+                        name="street"
+                        value={form.street}
+                        onChange={handleChange}
+                        placeholder="e.g. Fraser Road"
+                        className={`w-full bg-surface-container-high border-2 focus:bg-white rounded-xl py-2.5 px-4 text-sm text-on-surface font-semibold placeholder:text-on-surface-variant/30 outline-none transition-all ${
+                          errors.street ? 'border-rose-500' : 'border-transparent focus:border-primary'
+                        }`}
+                      />
+                      {errors.street && <p className="text-rose-500 text-[10px] font-bold mt-1">⚠️ {errors.street}</p>}
+                    </label>
+                  </div>
+
+                  {/* Landmark & Pincode */}
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <label className="grid gap-1.5">
+                      <span className="text-xs font-extrabold text-on-surface-variant/70 uppercase tracking-wider">Landmark (Optional)</span>
+                      <input
+                        name="landmark"
+                        value={form.landmark}
+                        onChange={handleChange}
+                        placeholder="e.g. Near Maurya Hotel"
+                        className="w-full bg-surface-container-high border-2 border-transparent focus:border-primary focus:bg-white rounded-xl py-2.5 px-4 text-sm text-on-surface font-semibold placeholder:text-on-surface-variant/30 outline-none transition-all"
+                      />
+                    </label>
+
+                    <label className="grid gap-1.5">
+                      <span className="text-xs font-extrabold text-on-surface-variant/70 uppercase tracking-wider">Pincode</span>
+                      <input
+                        required
+                        name="pincode"
+                        value={form.pincode}
+                        onChange={handleChange}
+                        placeholder="e.g. 800001"
+                        className={`w-full bg-surface-container-high border-2 focus:bg-white rounded-xl py-2.5 px-4 text-sm text-on-surface font-semibold placeholder:text-on-surface-variant/30 outline-none transition-all ${
+                          errors.pincode ? 'border-rose-500' : 'border-transparent focus:border-primary'
+                        }`}
+                      />
+                      {errors.pincode && <p className="text-rose-500 text-[10px] font-bold mt-1">⚠️ {errors.pincode}</p>}
+                    </label>
+                  </div>
+
+                  {/* City & State */}
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                     <label className="grid gap-1.5">
                       <span className="text-xs font-extrabold text-on-surface-variant/70 uppercase tracking-wider">City</span>
@@ -316,9 +483,13 @@ export default function CheckoutPage() {
                         value={form.city}
                         onChange={handleChange}
                         placeholder="e.g. Patna"
-                        className="w-full bg-surface-container-high border-2 border-transparent focus:border-primary focus:bg-white rounded-xl py-2.5 px-4 text-sm text-on-surface font-semibold placeholder:text-on-surface-variant/30 outline-none transition-all"
+                        className={`w-full bg-surface-container-high border-2 focus:bg-white rounded-xl py-2.5 px-4 text-sm text-on-surface font-semibold placeholder:text-on-surface-variant/30 outline-none transition-all ${
+                          errors.city ? 'border-rose-500' : 'border-transparent focus:border-primary'
+                        }`}
                       />
+                      {errors.city && <p className="text-rose-500 text-[10px] font-bold mt-1">⚠️ {errors.city}</p>}
                     </label>
+
                     <label className="grid gap-1.5">
                       <span className="text-xs font-extrabold text-on-surface-variant/70 uppercase tracking-wider">State</span>
                       <input
@@ -327,34 +498,27 @@ export default function CheckoutPage() {
                         value={form.state}
                         onChange={handleChange}
                         placeholder="e.g. Bihar"
-                        className="w-full bg-surface-container-high border-2 border-transparent focus:border-primary focus:bg-white rounded-xl py-2.5 px-4 text-sm text-on-surface font-semibold placeholder:text-on-surface-variant/30 outline-none transition-all"
+                        className={`w-full bg-surface-container-high border-2 focus:bg-white rounded-xl py-2.5 px-4 text-sm text-on-surface font-semibold placeholder:text-on-surface-variant/30 outline-none transition-all ${
+                          errors.state ? 'border-rose-500' : 'border-transparent focus:border-primary'
+                        }`}
                       />
+                      {errors.state && <p className="text-rose-500 text-[10px] font-bold mt-1">⚠️ {errors.state}</p>}
                     </label>
                   </div>
 
-                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                    <label className="grid gap-1.5">
-                      <span className="text-xs font-extrabold text-on-surface-variant/70 uppercase tracking-wider">ZIP Code</span>
-                      <input
-                        required
-                        name="zipCode"
-                        value={form.zipCode}
-                        onChange={handleChange}
-                        placeholder="e.g. 800001"
-                        className="w-full bg-surface-container-high border-2 border-transparent focus:border-primary focus:bg-white rounded-xl py-2.5 px-4 text-sm text-on-surface font-semibold placeholder:text-on-surface-variant/30 outline-none transition-all"
-                      />
-                    </label>
-                    <label className="grid gap-1.5">
-                      <span className="text-xs font-extrabold text-on-surface-variant/70 uppercase tracking-wider">Country</span>
-                      <input
-                        required
-                        name="country"
-                        value={form.country}
-                        onChange={handleChange}
-                        className="w-full bg-surface-container-high border-2 border-transparent focus:border-primary focus:bg-white rounded-xl py-2.5 px-4 text-sm text-on-surface font-semibold placeholder:text-on-surface-variant/30 outline-none transition-all"
-                      />
-                    </label>
-                  </div>
+                  {/* Delivery Instructions */}
+                  <label className="grid gap-1.5">
+                    <span className="text-xs font-extrabold text-on-surface-variant/70 uppercase tracking-wider">Delivery Instructions (Optional)</span>
+                    <textarea
+                      name="deliveryInstructions"
+                      value={form.deliveryInstructions}
+                      onChange={handleChange}
+                      rows="2"
+                      maxLength="500"
+                      placeholder="e.g. Ring bell, leave near the security post..."
+                      className="w-full bg-surface-container-high border-2 border-transparent focus:border-primary focus:bg-white rounded-xl py-2.5 px-4 text-sm text-on-surface font-semibold placeholder:text-on-surface-variant/30 outline-none transition-all resize-none"
+                    />
+                  </label>
                 </div>
               </Section>
 
@@ -362,7 +526,7 @@ export default function CheckoutPage() {
               <Section title="💳 Payment Options">
                 <div className="grid grid-cols-1 gap-3">
                   {[
-                    { value: 'razorpay', label: '🏦 Online Payment (Razorpay - Card/UPI/Wallets)', recommended: true },
+                    { value: 'razorpay', label: '⚡ Online Payment (UPI, Cards, Netbanking, Wallets)', recommended: true },
                     { value: 'cod', label: '💵 Cash on Delivery (COD)', recommended: false },
                   ].map(({ value, label, recommended }) => (
                     <label
@@ -396,10 +560,10 @@ export default function CheckoutPage() {
                 </div>
 
                 {form.paymentMethod === 'razorpay' && (
-                  <div className="mt-4 p-3.5 bg-primary-container/10 border border-primary/20 rounded-xl text-xs text-on-surface-variant leading-relaxed flex items-start gap-3">
+                  <div className="mt-4 p-3.5 bg-primary-container/10 border border-primary/20 rounded-xl text-xs text-on-surface-variant leading-relaxed flex items-start gap-3 animate-fade-in-up">
                     <span className="material-symbols-outlined text-primary text-lg select-none">lock</span>
                     <p>
-                      Transactions are secured via <strong className="text-primary">Razorpay</strong>. Clicking below opens a secure checkout modal supporting card payments, netbanking, and UPI.
+                      Secure checkout via <strong className="text-primary">Razorpay</strong>. Choose UPI (Google Pay, PhonePe, Paytm), Credit/Debit Cards, Netbanking, or Wallets at the next step.
                     </p>
                   </div>
                 )}
@@ -475,7 +639,7 @@ export default function CheckoutPage() {
                       <span>Processing...</span>
                     </span>
                   ) : form.paymentMethod === 'razorpay' ? (
-                    '🔒 Pay and Confirm'
+                    '⚡ Pay Securely'
                   ) : (
                     'Confirm COD Order'
                   )}
@@ -483,7 +647,7 @@ export default function CheckoutPage() {
 
                 <p className="text-center text-[10px] text-on-surface-variant/65 mt-3 leading-relaxed">
                   {form.paymentMethod === 'razorpay'
-                    ? 'Payment is handled securely via the Razorpay gateway overlay.'
+                    ? 'Payment is handled securely via the Razorpay gateway.'
                     : 'Amount is payable in cash/digital transfer at time of delivery.'}
                 </p>
               </Section>

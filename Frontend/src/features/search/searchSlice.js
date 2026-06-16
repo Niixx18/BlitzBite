@@ -18,6 +18,7 @@ export const performSearch = createAsyncThunk(
       if (maxPrice) params.set('maxPrice', maxPrice);
       if (spiceLevel) params.set('spiceLevel', spiceLevel);
       if (isAvailable !== '') params.set('isAvailable', isAvailable);
+      params.set('t', Date.now().toString());
 
       const res = await fetch(`/api/search?${params.toString()}`);
       if (!res.ok) {

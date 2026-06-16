@@ -189,7 +189,7 @@ export default function OwnerOrdersPage() {
             </p>
           </div>
           <Link
-            to="/owner-dashboard"
+            to="/"
             className="flex items-center gap-1.5 bg-surface-container text-on-surface-variant hover:text-primary font-bold text-xs px-4 py-2.5 rounded-full border border-outline-variant/30 hover:border-primary/30 transition-all"
           >
             <span className="material-symbols-outlined text-sm">arrow_back</span>
@@ -231,7 +231,7 @@ export default function OwnerOrdersPage() {
                 ? 'No orders yet. Share your restaurant link to start receiving orders.'
                 : `No orders with status "${filter.replace(/-/g, ' ')}".`}
               cta="Go to Dashboard"
-              ctaTo="/owner-dashboard"
+              ctaTo="/"
             />
           ) : (
             <div className="space-y-5">

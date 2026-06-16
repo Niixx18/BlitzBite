@@ -14,5 +14,6 @@ router.post('/refresh-token', authController.refreshToken);
 router.post('/logout', authController.logout);
 router.post('/send-otp', authController.sendOTP);
 router.post('/verify-otp', authController.verifyOTP);
+router.delete('/delete-account', protect, authController.deleteAccount);
 
 module.exports = router;

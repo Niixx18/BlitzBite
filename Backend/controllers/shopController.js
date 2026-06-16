@@ -103,13 +103,14 @@ exports.updateShop = async (req, res) => {
   }
 };
 
+
 exports.deleteShop = async (req, res) => {
   try {
     const shop = await Shop.findById(req.params.id);
     if (!shop) return res.status(404).json({ message: 'Shop not found' });
     if (shop.owner.toString() !== req.user.id) return res.status(403).json({ message: 'Not authorized to delete this shop' });
 
-    await shop.remove();
+    await shop.deleteOne();
     res.json({ message: 'Shop deleted' });
   } catch (err) {
     res.status(500).json({ message: err.message });

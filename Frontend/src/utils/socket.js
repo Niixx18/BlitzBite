@@ -1,8 +1,9 @@
 import { io } from 'socket.io-client';
 
-// In development, target the backend port 8000 directly.
-// In production, it can fallback to the current origin host.
-const socketUrl = 'http://localhost:8000';
+// Use configured environment variable or fallback based on environment
+const socketUrl = import.meta.env.VITE_SOCKET_URL || 
+                  import.meta.env.VITE_API_BASE_URL || 
+                  (import.meta.env.DEV ? 'http://localhost:8000' : window.location.origin);
 
 export const socket = io(socketUrl, {
   autoConnect: false, // We connect explicitly when user logs in or page mounts

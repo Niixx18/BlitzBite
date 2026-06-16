@@ -1,4 +1,8 @@
-import { BrowserRouter, Routes, Route } from 'react-router-dom'
+import { useEffect } from 'react'
+import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom'
+import { useSelector, useDispatch } from 'react-redux'
+import { fetchCurrentUser } from './features/auth/authSlice'
+
 import SignIn from './pages/signin'
 import SignUp from './pages/signup'
 import ForgotPassword from './pages/forgot-password'
@@ -18,18 +22,50 @@ import CreateShop from './pages/create-shop'
 import Restaurant from './pages/restaurant'
 import Nav from './components/Nav'
 import SearchPage from './pages/search'
+import AuthLanding from './pages/auth-landing'
 
-function App() {
-  return (
-    <BrowserRouter>
-      <Nav />
+function AppContent() {
+  const { user, status } = useSelector((state) => state.auth);
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    if (status === 'idle') {
+      dispatch(fetchCurrentUser());
+    }
+  }, [dispatch, status]);
+
+  if (status === 'loading' || status === 'idle') {
+    return (
+      <div className="min-h-screen bg-background flex flex-col items-center justify-center gap-3">
+        <span className="material-symbols-outlined text-5xl text-primary animate-spin select-none">local_dining</span>
+        <p className="text-sm font-bold text-on-surface-variant font-sans">Loading BlitzBite…</p>
+      </div>
+    );
+  }
+
+  const isAuthenticated = !!user;
+
+  if (!isAuthenticated) {
+    return (
       <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/signin" element={<SignIn />} />
-        <Route path="/signup" element={<SignUp />} />
         <Route path="/forgot-password" element={<ForgotPassword />} />
         <Route path="/reset-password/:token" element={<ResetPassword />} />
-        <Route path="/owner-dashboard" element={<OwnerDashboard />} />
+        <Route path="/signin" element={<AuthLanding mode="signin" />} />
+        <Route path="/signup" element={<AuthLanding mode="signup" />} />
+        <Route path="/" element={<AuthLanding mode="signin" />} />
+        {/* Fallback to signin landing for any other routes if not logged in */}
+        <Route path="*" element={<Navigate to="/" replace />} />
+      </Routes>
+    );
+  }
+
+  // Authenticated application experience
+  return (
+    <>
+      <Nav />
+      <Routes>
+        <Route path="/" element={user?.userType === 'restaurant' ? <OwnerDashboard /> : <Home />} />
+        <Route path="/owner-dashboard" element={<Navigate to="/" replace />} />
         <Route path="/dashboard" element={<UserDashboard />} />
         <Route path="/orders" element={<MyOrdersPage />} />
         <Route path="/orders/:id/track" element={<OrderTrackingPage />} />
@@ -40,12 +76,26 @@ function App() {
         <Route path="/shop/create" element={<CreateEditPage />} />
         <Route path="/shop/:id/edit" element={<CreateEditPage />} />
         <Route path="/shop/:shopId/add-food" element={<AddFoodPage />} />
+        <Route path="/shop/:shopId/food/:itemId/edit" element={<AddFoodPage />} />
         <Route path="/create-shop" element={<CreateShop />} />
         <Route path="/restaurant/:id" element={<Restaurant />} />
         <Route path="/search" element={<SearchPage />} />
+        {/* If user is already authenticated, redirect auth routes to home */}
+        <Route path="/signin" element={<Navigate to="/" replace />} />
+        <Route path="/signup" element={<Navigate to="/" replace />} />
+        <Route path="*" element={<Navigate to="/" replace />} />
       </Routes>
+    </>
+  );
+}
+
+function App() {
+  return (
+    <BrowserRouter>
+      <AppContent />
     </BrowserRouter>
   )
 }
 
 export default App
+

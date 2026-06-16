@@ -1,5 +1,15 @@
 {
-  "dependencies": {
-    "bcryptjs": "^3.0.3"
+  "name": "blitzbite-root",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "install:backend": "npm install --prefix Backend",
+    "install:frontend": "npm install --prefix Frontend",
+    "install-all": "npm run install:backend && npm run install:frontend",
+    "build:frontend": "npm run build --prefix Frontend",
+    "build": "npm run build:frontend",
+    "start": "npm start --prefix Backend",
+    "dev:backend": "npm run dev --prefix Backend",
+    "dev:frontend": "npm run dev --prefix Frontend"
   }
 }

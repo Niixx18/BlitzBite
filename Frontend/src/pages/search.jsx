@@ -534,7 +534,9 @@ function ItemResultCard({ item, quantityInCart, onAddToCart, onUpdateQuantity })
   };
 
   return (
-    <div className="bg-surface-container-lowest rounded-[24px] border border-outline-variant/50 overflow-hidden shadow-sm transition-all duration-300 bento-hover hover:border-primary/30 flex flex-col h-full justify-between">
+    <div className={`bg-surface-container-lowest rounded-[24px] border border-outline-variant/50 overflow-hidden shadow-sm transition-all duration-300 bento-hover hover:border-primary/30 flex flex-col h-full justify-between ${
+      !item.isAvailable ? 'opacity-60 grayscale-10' : ''
+    }`}>
       
       {/* Image header */}
       <div className="relative h-40 bg-surface-container-high shrink-0 overflow-hidden">
@@ -635,7 +637,8 @@ function ItemResultCard({ item, quantityInCart, onAddToCart, onUpdateQuantity })
               </span>
               <button
                 onClick={() => onUpdateQuantity(item._id, quantityInCart, 1)}
-                className="w-6 h-6 flex items-center justify-center text-on-surface hover:bg-surface-container-high rounded-md transition-colors cursor-pointer"
+                disabled={!item.isAvailable}
+                className="w-6 h-6 flex items-center justify-center text-on-surface hover:bg-surface-container-high rounded-md transition-colors cursor-pointer disabled:opacity-40 disabled:cursor-not-allowed"
               >
                 <span className="material-symbols-outlined text-xs">add</span>
               </button>

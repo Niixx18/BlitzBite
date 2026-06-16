@@ -46,8 +46,23 @@ function StatusToggle({ isOnline, onToggle }) {
 }
 
 /* ─── Active Delivery Card ─────────────────────────────── */
-function ActiveDeliveryCard({ order, onStatusChange, onUpdate, selectedStatus, updateLoading, onSendOtp, otpLoading }) {
-  const options = STATUS_TRANSITION_MAP[order.orderStatus] || [];
+function ActiveDeliveryCard({
+  order,
+  onStatusChange,
+  onUpdate,
+  selectedStatus,
+  updateLoading,
+  onSendOtp,
+  otpLoading,
+  otpValue = '',
+  onOtpValueChange,
+  onVerifyOtp,
+  verifyLoading = false
+}) {
+  let options = STATUS_TRANSITION_MAP[order.orderStatus] || [];
+  if (order.orderStatus === 'out-for-delivery' && !order.otpVerified) {
+    options = options.filter(s => s !== 'delivered');
+  }
 
   return (
     <div className="relative overflow-hidden rounded-[24px] border-2 border-primary/30 bg-gradient-to-br from-primary/5 to-surface-container-lowest p-5 shadow-md space-y-4 animate-slide-up">
@@ -119,7 +134,7 @@ function ActiveDeliveryCard({ order, onStatusChange, onUpdate, selectedStatus, u
       )}
 
       {/* OTP Button */}
-      {order.orderStatus === 'out-for-delivery' && (
+      {order.orderStatus === 'out-for-delivery' && !order.otpVerified && (
         <button
           type="button"
           onClick={() => onSendOtp(order._id)}
@@ -129,6 +144,34 @@ function ActiveDeliveryCard({ order, onStatusChange, onUpdate, selectedStatus, u
           <span className="material-symbols-outlined text-sm">key</span>
           {otpLoading ? 'Sending OTP…' : 'Send Delivery OTP to Customer'}
         </button>
+      )}
+
+      {/* OTP Verification Form */}
+      {order.orderStatus === 'out-for-delivery' && order.otpSentAt && !order.otpVerified && (
+        <div className="bg-surface border border-outline-variant/35 rounded-xl p-4 space-y-3">
+          <div className="flex items-center gap-2">
+            <span className="material-symbols-outlined text-sm text-primary">verified_user</span>
+            <p className="text-xs font-black text-on-surface">Enter Customer Delivery OTP</p>
+          </div>
+          <div className="flex gap-2">
+            <input
+              type="text"
+              maxLength={6}
+              placeholder="6-digit OTP"
+              value={otpValue}
+              onChange={(e) => onOtpValueChange(e.target.value.replace(/\D/g, ''))}
+              className="flex-1 bg-surface-container border border-outline-variant/30 rounded-xl px-4 py-2 text-sm text-center font-bold tracking-widest outline-none focus:border-primary focus:bg-white transition-all font-mono"
+            />
+            <button
+              type="button"
+              onClick={() => onVerifyOtp(order._id)}
+              disabled={otpValue.length !== 6 || verifyLoading}
+              className="bg-emerald-600 hover:bg-emerald-700 text-white font-black text-xs px-5 py-2 rounded-xl shadow-sm transition-all disabled:opacity-50 disabled:cursor-not-allowed cursor-pointer"
+            >
+              {verifyLoading ? 'Verifying…' : 'Verify & Deliver'}
+            </button>
+          </div>
+        </div>
       )}
 
       {/* Status Update */}
@@ -210,6 +253,8 @@ export default function DeliveryOrdersPage() {
   const [statusUpdateLoading, setStatusUpdateLoading] = useState({});
   const [acceptLoading, setAcceptLoading] = useState({});
   const [otpLoading, setOtpLoading] = useState({});
+  const [otpInputs, setOtpInputs] = useState({});
+  const [verifyLoading, setVerifyLoading] = useState({});
   const [isOnline, setIsOnline] = useState(true);
 
   /* ── Socket registration (identical to original) ── */
@@ -344,6 +389,49 @@ export default function DeliveryOrdersPage() {
     }
   };
 
+  const handleOtpInputChange = (orderId, val) => {
+    setOtpInputs(prev => ({ ...prev, [orderId]: val }));
+  };
+
+  const verifyDeliveryOtp = async (orderId) => {
+    const otp = otpInputs[orderId];
+    if (!otp || otp.trim().length !== 6) {
+      showToast('Please enter a valid 6-digit OTP', 'error');
+      return;
+    }
+    setVerifyLoading(prev => ({ ...prev, [orderId]: true }));
+    setOrderError(null);
+    try {
+      const token = localStorage.getItem('token');
+      const res = await fetch(`/api/orders/${orderId}/delivery-otp/verify`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify({ otp: otp.trim() }),
+      });
+      if (!res.ok) {
+        const data = await res.json().catch(() => null);
+        throw new Error(data?.message || 'OTP verification failed');
+      }
+      const data = await res.json();
+      setOrders(prev => prev.map(o => (o._id === orderId ? data.order : o)));
+      showToast('OTP verified successfully! Order marked as delivered.', 'success');
+      // Clear input state
+      setOtpInputs(prev => {
+        const copy = { ...prev };
+        delete copy[orderId];
+        return copy;
+      });
+    } catch (err) {
+      setOrderError(err.message);
+      showToast(err.message, 'error');
+    } finally {
+      setVerifyLoading(prev => ({ ...prev, [orderId]: false }));
+    }
+  };
+
   /* ── Guards ── */
   if (loading) {
     return (
@@ -456,6 +544,10 @@ export default function DeliveryOrdersPage() {
                   updateLoading={statusUpdateLoading[order._id]}
                   onSendOtp={sendDeliveryOtp}
                   otpLoading={otpLoading[order._id]}
+                  otpValue={otpInputs[order._id] || ''}
+                  onOtpValueChange={(val) => handleOtpInputChange(order._id, val)}
+                  onVerifyOtp={verifyDeliveryOtp}
+                  verifyLoading={verifyLoading[order._id] || false}
                 />
               ))}
             </div>
@@ -507,7 +599,10 @@ export default function DeliveryOrdersPage() {
           ) : (
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               {orders.map(order => {
-                const options = STATUS_TRANSITION_MAP[order.orderStatus] || [];
+                let options = STATUS_TRANSITION_MAP[order.orderStatus] || [];
+                if (order.orderStatus === 'out-for-delivery' && !order.otpVerified) {
+                  options = options.filter(s => s !== 'delivered');
+                }
                 return (
                   <div key={order._id} className="space-y-3">
                     <OrderCard order={order} showCustomer />
@@ -524,7 +619,7 @@ export default function DeliveryOrdersPage() {
                             Live Navigation
                           </Link>
 
-                          {order.orderStatus === 'out-for-delivery' && (
+                          {order.orderStatus === 'out-for-delivery' && !order.otpVerified && (
                             <button
                               type="button"
                               onClick={() => sendDeliveryOtp(order._id)}
@@ -535,6 +630,34 @@ export default function DeliveryOrdersPage() {
                             </button>
                           )}
                         </div>
+
+                        {/* OTP Verification Form */}
+                        {order.orderStatus === 'out-for-delivery' && order.otpSentAt && !order.otpVerified && (
+                          <div className="bg-surface border border-outline-variant/35 rounded-xl p-4 mt-3 space-y-3 animate-slide-up">
+                            <div className="flex items-center gap-2">
+                              <span className="material-symbols-outlined text-sm text-primary">verified_user</span>
+                              <p className="text-xs font-black text-on-surface">Enter Customer Delivery OTP</p>
+                            </div>
+                            <div className="flex gap-2">
+                              <input
+                                type="text"
+                                maxLength={6}
+                                placeholder="6-digit OTP"
+                                value={otpInputs[order._id] || ''}
+                                onChange={(e) => handleOtpInputChange(order._id, e.target.value.replace(/\D/g, ''))}
+                                className="flex-1 bg-surface-container border border-outline-variant/30 rounded-xl px-4 py-2 text-sm text-center font-bold tracking-widest outline-none focus:border-primary focus:bg-white transition-all font-mono"
+                              />
+                              <button
+                                type="button"
+                                onClick={() => verifyDeliveryOtp(order._id)}
+                                disabled={(otpInputs[order._id] || '').length !== 6 || verifyLoading[order._id]}
+                                className="bg-emerald-600 hover:bg-emerald-700 text-white font-black text-xs px-5 py-2 rounded-xl shadow-sm transition-all disabled:opacity-50 disabled:cursor-not-allowed cursor-pointer"
+                              >
+                                {verifyLoading[order._id] ? 'Verifying…' : 'Verify & Deliver'}
+                              </button>
+                            </div>
+                          </div>
+                        )}
 
                         {/* Status Update */}
                         <div className="pt-3 border-t border-outline-variant/20 flex flex-col sm:flex-row sm:items-center gap-3 justify-between">

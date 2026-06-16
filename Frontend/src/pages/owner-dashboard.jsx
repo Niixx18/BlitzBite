@@ -1,5 +1,8 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useCallback } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
+import { logout } from '../features/auth/authSlice';
+import { clearCartState } from '../features/cart/cartSlice';
 import { useCurrentUser } from '../hooks/useCurrentUser';
 import OwnerItemCard from '../components/OwnerItemCard';
 import StatCard from '../components/dashboard/StatCard';
@@ -7,6 +10,7 @@ import DashboardSection from '../components/dashboard/DashboardSection';
 import EmptyState from '../components/dashboard/EmptyState';
 import Toast, { useToast } from '../components/dashboard/Toast';
 import { SkeletonRow } from '../components/dashboard/SkeletonCard';
+import ProfileCard from '../components/ProfileCard';
 
 /* ─── Helpers ──────────────────────────────────────────── */
 const ORDER_STATUS_STEPS = ['placed', 'accepted', 'preparing', 'out-for-delivery', 'delivered'];
@@ -80,7 +84,7 @@ function MiniOrderRow({ order }) {
 }
 
 /* ─── Shop Card ────────────────────────────────────────── */
-function ShopCard({ shop, items, loadingItems }) {
+function ShopCard({ shop, items, loadingItems, onItemDelete }) {
   const [expanded, setExpanded] = useState(false);
   const itemList = items || [];
 
@@ -176,7 +180,7 @@ function ShopCard({ shop, items, loadingItems }) {
           ) : (
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
               {itemList.map(item => (
-                <OwnerItemCard key={item._id} item={item} />
+                <OwnerItemCard key={item._id} item={item} onDelete={onItemDelete} />
               ))}
             </div>
           )}
@@ -190,7 +194,17 @@ function ShopCard({ shop, items, loadingItems }) {
 export default function OwnerDashboard() {
   const { user, loading, error } = useCurrentUser();
   const navigate = useNavigate();
+  const dispatch = useDispatch();
   const { toast, showToast, clearToast } = useToast();
+
+  const handleLogout = () => {
+    dispatch(logout());
+    dispatch(clearCartState());
+    localStorage.removeItem('token');
+    localStorage.removeItem('cart');
+    sessionStorage.removeItem('cart');
+    navigate('/signin');
+  };
 
   const [shops, setShops] = useState([]);
   const [itemsByShop, setItemsByShop] = useState({});
@@ -227,32 +241,33 @@ export default function OwnerDashboard() {
   }, [user]);
 
   /* ── Fetch items (identical to original) ── */
-  useEffect(() => {
-    const fetchItems = async () => {
-      if (shops.length === 0) { setItemsByShop({}); return; }
-      setLoadingItems(true);
-      setItemsError(null);
-      try {
-        const token = localStorage.getItem('token');
-        const results = await Promise.all(
-          shops.map(async shop => {
-            const res = await fetch(`/api/items?shop=${shop._id}`, {
-              headers: token ? { Authorization: `Bearer ${token}` } : {},
-            });
-            if (!res.ok) throw new Error('Failed to load items');
-            const data = await res.json();
-            return { shopId: shop._id, items: data.items || [] };
-          })
-        );
-        setItemsByShop(results.reduce((acc, e) => { acc[e.shopId] = e.items; return acc; }, {}));
-      } catch (err) {
-        setItemsError(err.message);
-      } finally {
-        setLoadingItems(false);
-      }
-    };
-    fetchItems();
+  const fetchItems = useCallback(async () => {
+    if (shops.length === 0) { setItemsByShop({}); return; }
+    setLoadingItems(true);
+    setItemsError(null);
+    try {
+      const token = localStorage.getItem('token');
+      const results = await Promise.all(
+        shops.map(async shop => {
+          const res = await fetch(`/api/items?shop=${shop._id}&t=${Date.now()}`, {
+            headers: token ? { Authorization: `Bearer ${token}` } : {},
+          });
+          if (!res.ok) throw new Error('Failed to load items');
+          const data = await res.json();
+          return { shopId: shop._id, items: data.items || [] };
+        })
+      );
+      setItemsByShop(results.reduce((acc, e) => { acc[e.shopId] = e.items; return acc; }, {}));
+    } catch (err) {
+      setItemsError(err.message);
+    } finally {
+      setLoadingItems(false);
+    }
   }, [shops]);
+
+  useEffect(() => {
+    fetchItems();
+  }, [fetchItems]);
 
   /* ── Fetch recent orders for metrics ── */
   useEffect(() => {
@@ -400,9 +415,13 @@ export default function OwnerDashboard() {
 
           {/* Quick Actions Panel — 1/3 */}
           <div className="space-y-6">
+            <DashboardSection title="My Profile">
+              <ProfileCard user={user} onLogout={handleLogout} />
+            </DashboardSection>
+
             <DashboardSection title="Quick Actions">
               <div className="grid grid-cols-2 gap-3">
-                <QuickAction icon="add_circle" label="Add Menu Item" to={shops[0] ? `/shop/${shops[0]._id}/add-food` : '/owner-dashboard'} accent="primary" />
+                <QuickAction icon="add_circle" label="Add Menu Item" to={shops[0] ? `/shop/${shops[0]._id}/add-food` : '/'} accent="primary" />
                 <QuickAction icon="receipt_long" label="View Orders" to="/owner-orders" accent="default" />
                 <QuickAction icon="storefront" label="Create Shop" to="/create-shop" accent="default" />
                 <QuickAction icon="bar_chart" label="All Orders" to="/owner-orders" accent="green" />
@@ -470,6 +489,7 @@ export default function OwnerDashboard() {
                   shop={shop}
                   items={itemsByShop[shop._id]}
                   loadingItems={loadingItems}
+                  onItemDelete={fetchItems}
                 />
               ))}
             </div>

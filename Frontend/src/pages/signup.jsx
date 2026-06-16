@@ -150,7 +150,7 @@ export default function SignUp() {
 
       // Route according to userType
       setTimeout(() => {
-        if (role === 'restaurant') navigate('/owner-dashboard');
+        if (role === 'restaurant') navigate('/');
         else if (role === 'delivery') navigate('/delivery-orders');
         else navigate('/');
       }, 600);

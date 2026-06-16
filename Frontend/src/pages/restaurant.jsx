@@ -91,7 +91,7 @@ export default function Restaurant() {
   useEffect(() => {
     const fetchItems = async () => {
       try {
-        const res = await fetch(`/api/items?shop=${id}`);
+        const res = await fetch(`/api/items?shop=${id}&t=${Date.now()}`);
         const data = await res.json();
         setItems(data.items || []);
       } catch (err) {
@@ -257,7 +257,7 @@ export default function Restaurant() {
               alt={shop.name}
               className="w-full h-full object-cover group-hover:scale-[1.01] transition-transform duration-500 opacity-80"
             />
-            <div className="absolute inset-0 bg-gradient-to-t from-on-background/95 via-on-background/40 to-transparent"></div>
+            <div className="absolute inset-0 bg-linear-to-t from-on-background/95 via-on-background/40 to-transparent"></div>
           </div>
           <div className="absolute bottom-0 left-0 w-full p-6 md:p-8 flex flex-col md:flex-row gap-6 md:items-end justify-between">
             <div className="space-y-2.5">
@@ -343,7 +343,7 @@ export default function Restaurant() {
                   <h2 className="text-xl font-extrabold text-on-surface tracking-tight">
                     {category}
                   </h2>
-                  <div className="flex-1 h-[1px] bg-outline-variant/30" />
+                  <div className="flex-1 h-px bg-outline-variant/30" />
                   <span className="text-xs font-semibold text-on-surface-variant bg-surface-container px-2.5 py-1 rounded-full">
                     {categoryItems.length} {categoryItems.length === 1 ? 'item' : 'items'}
                   </span>
@@ -360,7 +360,9 @@ export default function Restaurant() {
                     return (
                       <div
                         key={item._id}
-                        className="bg-surface-container-lowest rounded-[24px] border border-outline-variant/50 overflow-hidden shadow-sm hover:shadow-md transition-all duration-300 bento-hover hover:border-primary/30 flex flex-col justify-between"
+                        className={`bg-surface-container-lowest rounded-[24px] border border-outline-variant/50 overflow-hidden shadow-sm hover:shadow-md transition-all duration-300 bento-hover hover:border-primary/30 flex flex-col justify-between ${
+                          !item.isAvailable ? 'opacity-60 grayscale-10' : ''
+                        }`}
                       >
                         {/* Image & Badges top container */}
                         <div className="relative h-48 bg-surface-container-high shrink-0 overflow-hidden border-b border-outline-variant/20">
@@ -467,7 +469,8 @@ export default function Restaurant() {
                                 </span>
                                 <button
                                   onClick={() => handleUpdateQuantity(item._id, quantityInCart, 1)}
-                                  className="w-8 h-8 flex items-center justify-center text-on-surface hover:bg-surface-container-high rounded-lg transition-colors cursor-pointer"
+                                  disabled={!item.isAvailable}
+                                  className="w-8 h-8 flex items-center justify-center text-on-surface hover:bg-surface-container-high rounded-lg transition-colors cursor-pointer disabled:opacity-40 disabled:cursor-not-allowed"
                                 >
                                   <span className="material-symbols-outlined text-base">add</span>
                                 </button>

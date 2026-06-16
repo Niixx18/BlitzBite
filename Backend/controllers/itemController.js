@@ -78,23 +78,33 @@ const authorizeItemOwner = async (req, res, next) => {
 
 exports.updateItem = async (req, res) => {
   try {
-    const item = req.item;
     const uploadedImages = await uploadItemImages(req.files);
     const updates = ['name', 'description', 'price', 'currency', 'category', 'isAvailable', 'tags', 'metadata'];
+    const updatesObject = {};
+    
     updates.forEach((field) => {
       if (req.body[field] !== undefined) {
-        item[field] = req.body[field];
+        updatesObject[field] = req.body[field];
       }
     });
 
     if (uploadedImages) {
-      item.images = uploadedImages;
+      updatesObject.images = uploadedImages;
     } else if (req.body.images !== undefined) {
-      item.images = req.body.images;
+      updatesObject.images = req.body.images;
     }
 
-    await item.save();
-    res.json({ item });
+    const updatedItem = await Item.findByIdAndUpdate(
+      req.params.id,
+      { $set: updatesObject },
+      { new: true, runValidators: true }
+    );
+
+    if (!updatedItem) {
+      return res.status(404).json({ message: 'Item not found' });
+    }
+
+    res.json({ item: updatedItem });
   } catch (err) {
     res.status(500).json({ message: err.message });
   }
@@ -102,7 +112,7 @@ exports.updateItem = async (req, res) => {
 
 exports.deleteItem = async (req, res) => {
   try {
-    await req.item.remove();
+    await req.item.deleteOne();
     res.json({ message: 'Item deleted' });
   } catch (err) {
     res.status(500).json({ message: err.message });

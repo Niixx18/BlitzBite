@@ -205,88 +205,90 @@ export default function Home() {
         </section>
 
         {/* Restaurant Grid */}
-        <section className="space-y-stack-md">
-          <div className="flex justify-between items-center mb-4">
-            <h2 className="text-xl font-extrabold text-on-background">
-              {activeCategory === 'All' ? 'Restaurants Near You' : `${activeCategory} Restaurants`}
-            </h2>
-            {!loadingShops && shops.length > 0 && (
-              <span className="text-xs text-on-surface-variant font-medium bg-surface-container-high px-3 py-1 rounded-full">
-                {shops.length} found
-              </span>
-            )}
-          </div>
+        {user?.userType !== 'restaurant' && (
+          <section className="space-y-stack-md">
+            <div className="flex justify-between items-center mb-4">
+              <h2 className="text-xl font-extrabold text-on-background">
+                {activeCategory === 'All' ? 'Restaurants Near You' : `${activeCategory} Restaurants`}
+              </h2>
+              {!loadingShops && shops.length > 0 && (
+                <span className="text-xs text-on-surface-variant font-medium bg-surface-container-high px-3 py-1 rounded-full">
+                  {shops.length} found
+                </span>
+              )}
+            </div>
 
-          {loadingShops && (
+            {loadingShops && (
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                {[1, 2, 3, 4, 5, 6].map((i) => (
+                  <div key={i} className="h-72 rounded-[24px] bg-surface-container-high animate-pulse" />
+                ))}
+              </div>
+            )}
+
+            {!loadingShops && shops.length === 0 && (
+              <div className="text-center py-12 text-on-surface-variant border border-outline-variant/35 rounded-[24px] bg-surface-container-low">
+                <span className="material-symbols-outlined text-5xl opacity-40">restaurant_menu</span>
+                <p className="text-base font-bold mt-2">No restaurants found</p>
+                <p className="text-xs mt-1">Try selecting a different cuisine filter.</p>
+              </div>
+            )}
+
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-              {[1, 2, 3, 4, 5, 6].map((i) => (
-                <div key={i} className="h-72 rounded-[24px] bg-surface-container-high animate-pulse" />
+              {shops.map((shop) => (
+                <Link
+                  key={shop._id}
+                  to={`/restaurant/${shop._id}`}
+                  className="bg-surface-container-lowest rounded-[24px] border border-outline-variant/50 overflow-hidden shadow-sm transition-all duration-300 bento-hover hover:border-primary/30 flex flex-col"
+                >
+                  <div className="relative h-48 overflow-hidden bg-surface-container-high shrink-0">
+                    {shop.featuredImage ? (
+                      <img
+                        src={shop.featuredImage}
+                        alt={shop.name}
+                        className="w-full h-full object-cover"
+                      />
+                    ) : (
+                      <div className="w-full h-full flex items-center justify-center text-4xl bg-surface-container-high">
+                        🍴
+                      </div>
+                    )}
+                    {/* Status badge */}
+                    <span className={`absolute top-3 left-3 text-[10px] font-bold px-2.5 py-1 rounded-md uppercase tracking-wider backdrop-blur-md border ${shop.isOpen ? 'bg-emerald-600/90 text-white border-emerald-500/30' : 'bg-rose-600/90 text-white border-rose-500/30'}`}>
+                      {shop.isOpen ? '● Open' : '● Closed'}
+                    </span>
+                    {/* Rating badge */}
+                    {shop.rating > 0 && (
+                      <span className="absolute top-3 right-3 bg-inverse-surface/90 text-amber-400 text-xs font-bold px-2 py-1 rounded-md flex items-center gap-1 backdrop-blur-md border border-outline/25">
+                        ⭐ {shop.rating.toFixed(1)}
+                      </span>
+                    )}
+                  </div>
+
+                  <div className="p-5 flex flex-col flex-1 justify-between">
+                    <div className="space-y-1.5">
+                      <h3 className="font-sans text-lg font-bold text-on-surface leading-snug line-clamp-1">
+                        {shop.name}
+                      </h3>
+                      <p className="text-xs text-on-surface-variant line-clamp-2 leading-relaxed">
+                        {shop.description || 'Delicious food curated for high-velocity speed.'}
+                      </p>
+                    </div>
+                    
+                    <div className="flex items-center justify-between mt-4 pt-3 border-t border-outline-variant/30">
+                      <span className="bg-primary-container/10 text-primary font-bold text-xs px-2.5 py-1 rounded-md">
+                        {shop.category || 'Restaurant'}
+                      </span>
+                      <span className="text-xs text-on-surface-variant font-medium flex items-center gap-1">
+                        📍 {shop.location?.city || 'Nearby'}
+                      </span>
+                    </div>
+                  </div>
+                </Link>
               ))}
             </div>
-          )}
-
-          {!loadingShops && shops.length === 0 && (
-            <div className="text-center py-12 text-on-surface-variant border border-outline-variant/35 rounded-[24px] bg-surface-container-low">
-              <span className="material-symbols-outlined text-5xl opacity-40">restaurant_menu</span>
-              <p className="text-base font-bold mt-2">No restaurants found</p>
-              <p className="text-xs mt-1">Try selecting a different cuisine filter.</p>
-            </div>
-          )}
-
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-            {shops.map((shop) => (
-              <Link
-                key={shop._id}
-                to={`/restaurant/${shop._id}`}
-                className="bg-surface-container-lowest rounded-[24px] border border-outline-variant/50 overflow-hidden shadow-sm transition-all duration-300 bento-hover hover:border-primary/30 flex flex-col"
-              >
-                <div className="relative h-48 overflow-hidden bg-surface-container-high shrink-0">
-                  {shop.featuredImage ? (
-                    <img
-                      src={shop.featuredImage}
-                      alt={shop.name}
-                      className="w-full h-full object-cover"
-                    />
-                  ) : (
-                    <div className="w-full h-full flex items-center justify-center text-4xl bg-surface-container-high">
-                      🍴
-                    </div>
-                  )}
-                  {/* Status badge */}
-                  <span className={`absolute top-3 left-3 text-[10px] font-bold px-2.5 py-1 rounded-md uppercase tracking-wider backdrop-blur-md border ${shop.isOpen ? 'bg-emerald-600/90 text-white border-emerald-500/30' : 'bg-rose-600/90 text-white border-rose-500/30'}`}>
-                    {shop.isOpen ? '● Open' : '● Closed'}
-                  </span>
-                  {/* Rating badge */}
-                  {shop.rating > 0 && (
-                    <span className="absolute top-3 right-3 bg-inverse-surface/90 text-amber-400 text-xs font-bold px-2 py-1 rounded-md flex items-center gap-1 backdrop-blur-md border border-outline/25">
-                      ⭐ {shop.rating.toFixed(1)}
-                    </span>
-                  )}
-                </div>
-
-                <div className="p-5 flex flex-col flex-1 justify-between">
-                  <div className="space-y-1.5">
-                    <h3 className="font-sans text-lg font-bold text-on-surface leading-snug line-clamp-1">
-                      {shop.name}
-                    </h3>
-                    <p className="text-xs text-on-surface-variant line-clamp-2 leading-relaxed">
-                      {shop.description || 'Delicious food curated for high-velocity speed.'}
-                    </p>
-                  </div>
-                  
-                  <div className="flex items-center justify-between mt-4 pt-3 border-t border-outline-variant/30">
-                    <span className="bg-primary-container/10 text-primary font-bold text-xs px-2.5 py-1 rounded-md">
-                      {shop.category || 'Restaurant'}
-                    </span>
-                    <span className="text-xs text-on-surface-variant font-medium flex items-center gap-1">
-                      📍 {shop.location?.city || 'Nearby'}
-                    </span>
-                  </div>
-                </div>
-              </Link>
-            ))}
-          </div>
-        </section>
+          </section>
+        )}
 
       </main>
     </div>

@@ -50,7 +50,7 @@ exports.createRazorpayOrder = async (req, res) => {
     const razorpayOrder = await razorpay.orders.create({
       amount: amountInPaise,
       currency: 'INR',
-      receipt: `blitzbite_${req.user.id}_${Date.now()}`,
+      receipt: `bb_${String(req.user.id).slice(-8)}_${Date.now()}`,
       notes: {
         userId: String(req.user.id),
       },

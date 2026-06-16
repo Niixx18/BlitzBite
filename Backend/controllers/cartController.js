@@ -41,6 +41,10 @@ exports.updateCartItem = async (req, res) => {
   try {
     const { quantity } = req.body;
     const { itemId } = req.params;
+    
+    const item = await Item.findById(itemId);
+    if (!item) return res.status(404).json({ message: 'Item not found' });
+
     const cart = await Cart.findOne({ user: req.user.id });
     if (!cart) return res.status(404).json({ message: 'Cart not found' });
 
@@ -50,6 +54,9 @@ exports.updateCartItem = async (req, res) => {
     if (Number(quantity) <= 0) {
       cart.items = cart.items.filter((entry) => entry.item.toString() !== itemId);
     } else {
+      if (!item.isAvailable && Number(quantity) > existing.quantity) {
+        return res.status(400).json({ message: 'Item is out of stock' });
+      }
       existing.quantity = Number(quantity);
     }
 

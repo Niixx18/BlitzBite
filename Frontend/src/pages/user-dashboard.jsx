@@ -1,5 +1,8 @@
 import { useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
+import { logout } from '../features/auth/authSlice';
+import { clearCartState } from '../features/cart/cartSlice';
 import { useCurrentUser } from '../hooks/useCurrentUser';
 import StatCard from '../components/dashboard/StatCard';
 import DashboardSection from '../components/dashboard/DashboardSection';
@@ -7,6 +10,7 @@ import EmptyState from '../components/dashboard/EmptyState';
 import Toast, { useToast } from '../components/dashboard/Toast';
 import { SkeletonRow } from '../components/dashboard/SkeletonCard';
 import OrderCard from '../components/OrderCard';
+import ProfileCard from '../components/ProfileCard';
 
 /* ─── Helpers ─────────────────────────────────────────── */
 function getGreeting() {
@@ -112,54 +116,7 @@ function FavoriteShopCard({ shop }) {
   );
 }
 
-/* ─── Profile Quick Card ───────────────────────────────── */
-function ProfileCard({ user, onLogout }) {
-  const navigate = useNavigate();
-  return (
-    <div className="dashboard-card p-5 space-y-4">
-      {/* Avatar + name */}
-      <div className="flex items-center gap-3">
-        <img
-          src={user.avatar || 'https://lh3.googleusercontent.com/aida-public/AB6AXuDY7bz4y7JB3bftfjsqwmgTpO79CfW26LdufMKVp_ZLqzt9UqjPEB7m-VE01p8r_xoqQeKu8VtnSrs1KB108fsI5ElISaj5h-RClyMKD0aiPdq9cTYLq_nV33iTujtj61WEJ7u4iVH1h1CldupYWOzqvDinDPDH2tnhr1-JE2ZFjdPqceeue-UHlGPzbrc8zIHUmM9zCSxX-Y_y2IaodPCB8N1I-i_DJCISi2YB_SwbEitbZiKLPE3FgvubvwDJiF9RRPLNMOOBzsA'}
-          alt={user.firstName}
-          className="w-12 h-12 rounded-full border-2 border-outline-variant object-cover shadow-sm"
-        />
-        <div className="min-w-0">
-          <p className="font-black text-sm text-on-surface truncate">{user.firstName} {user.lastName}</p>
-          <p className="text-[10px] font-semibold text-on-surface-variant/60 truncate">{user.email}</p>
-        </div>
-      </div>
-
-      {/* Quick links */}
-      <div className="grid grid-cols-2 gap-2">
-        {[
-          { icon: 'shopping_bag', label: 'My Orders', to: '/orders' },
-          { icon: 'favorite', label: 'Favourites', to: '/dashboard' },
-          { icon: 'home', label: 'Browse', to: '/' },
-          { icon: 'shopping_cart', label: 'Cart', to: '/cart' },
-        ].map(({ icon, label, to }) => (
-          <Link
-            key={label}
-            to={to}
-            className="flex flex-col items-center gap-1.5 p-3 rounded-xl bg-surface-container hover:bg-surface-container-high transition-all text-center group"
-          >
-            <span className="material-symbols-outlined text-xl text-on-surface-variant group-hover:text-primary transition-colors select-none">{icon}</span>
-            <span className="text-[10px] font-bold text-on-surface-variant group-hover:text-primary transition-colors">{label}</span>
-          </Link>
-        ))}
-      </div>
-
-      {/* Sign out */}
-      <button
-        onClick={onLogout}
-        className="w-full flex items-center justify-center gap-2 py-2.5 rounded-xl text-xs font-bold text-rose-600 hover:bg-rose-50 transition-all border border-rose-100 cursor-pointer"
-      >
-        <span className="material-symbols-outlined text-sm">logout</span>
-        Sign Out
-      </button>
-    </div>
-  );
-}
+// ProfileCard is now imported from components
 
 /* ─── Owner Shop Card ──────────────────────────────────── */
 function OwnerShopCard({ shop }) {
@@ -206,6 +163,7 @@ function OwnerShopCard({ shop }) {
 export default function UserDashboard() {
   const { user, loading, error } = useCurrentUser();
   const navigate = useNavigate();
+  const dispatch = useDispatch();
   const { toast, showToast, clearToast } = useToast();
 
   const [favoriteShops, setFavoriteShops] = useState([]);
@@ -304,7 +262,11 @@ export default function UserDashboard() {
 
   /* ── Logout ── */
   const handleLogout = () => {
+    dispatch(logout());
+    dispatch(clearCartState());
     localStorage.removeItem('token');
+    localStorage.removeItem('cart');
+    sessionStorage.removeItem('cart');
     navigate('/signin');
   };
 

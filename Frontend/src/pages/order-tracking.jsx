@@ -1,16 +1,15 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
-import { FiArrowLeft, FiMapPin, FiNavigation, FiRefreshCw } from 'react-icons/fi';
 import { useCurrentUser } from '../hooks/useCurrentUser';
 import { socket } from '../utils/socket';
 
 const terminalStatuses = ['delivered', 'cancelled'];
 const progressSteps = [
-  { key: 'placed', label: 'Placed' },
-  { key: 'accepted', label: 'Accepted' },
-  { key: 'preparing', label: 'Preparing' },
-  { key: 'out-for-delivery', label: 'On the way' },
-  { key: 'delivered', label: 'Delivered' }
+  { key: 'placed', label: 'Placed', icon: 'receipt_long' },
+  { key: 'accepted', label: 'Accepted', icon: 'thumb_up' },
+  { key: 'preparing', label: 'Preparing', icon: 'skillet' },
+  { key: 'out-for-delivery', label: 'On the way', icon: 'delivery_dining' },
+  { key: 'delivered', label: 'Delivered', icon: 'check_circle' },
 ];
 
 const hasLocation = (location) =>
@@ -35,40 +34,26 @@ export default function OrderTrackingPage() {
     && !terminalStatuses.includes(order.orderStatus);
 
   const mapUrl = useMemo(() => {
-    if (!hasLocation(deliveryLocation)) {
-      return '';
-    }
-
+    if (!hasLocation(deliveryLocation)) return '';
     const lat = Number(deliveryLocation.latitude);
     const lng = Number(deliveryLocation.longitude);
     const delta = 0.012;
-    const bbox = [
-      lng - delta,
-      lat - delta,
-      lng + delta,
-      lat + delta
-    ].join(',');
-
+    const bbox = [lng - delta, lat - delta, lng + delta, lat + delta].join(',');
     return `https://www.openstreetmap.org/export/embed.html?bbox=${bbox}&layer=mapnik&marker=${lat},${lng}`;
   }, [deliveryLocation]);
 
   const fetchTracking = useCallback(async () => {
     setTrackingError('');
     setLoadingOrder(true);
-
     try {
       const token = localStorage.getItem('token');
       const res = await fetch(`/api/orders/${id}/tracking`, {
-        headers: {
-          Authorization: `Bearer ${token}`
-        }
+        headers: { Authorization: `Bearer ${token}` },
       });
-
       if (!res.ok) {
         const data = await res.json().catch(() => null);
         throw new Error(data?.message || 'Failed to load tracking');
       }
-
       const data = await res.json();
       setOrder(data.order);
     } catch (err) {
@@ -80,26 +65,20 @@ export default function OrderTrackingPage() {
 
   const sendLocation = useCallback(async (position) => {
     setLocationError('');
-
     try {
       const token = localStorage.getItem('token');
       const res = await fetch(`/api/orders/${id}/location`, {
         method: 'PATCH',
-        headers: {
-          Authorization: `Bearer ${token}`,
-          'Content-Type': 'application/json'
-        },
+        headers: { Authorization: `Bearer ${token}`, 'Content-Type': 'application/json' },
         body: JSON.stringify({
           latitude: position.coords.latitude,
-          longitude: position.coords.longitude
-        })
+          longitude: position.coords.longitude,
+        }),
       });
-
       if (!res.ok) {
         const data = await res.json().catch(() => null);
         throw new Error(data?.message || 'Failed to update location');
       }
-
       const data = await res.json();
       setOrder(data.order);
     } catch (err) {
@@ -110,9 +89,7 @@ export default function OrderTrackingPage() {
 
   useEffect(() => {
     if (user) {
-      const timer = setTimeout(() => {
-        fetchTracking();
-      }, 0);
+      const timer = setTimeout(() => fetchTracking(), 0);
       return () => clearTimeout(timer);
     }
     return undefined;
@@ -120,44 +97,18 @@ export default function OrderTrackingPage() {
 
   useEffect(() => {
     if (!user || !id) return undefined;
-
-    // Connect socket if not connected
-    if (!socket.connected) {
-      socket.connect();
-    }
-
-    // Register user with their ID on socket
+    if (!socket.connected) socket.connect();
     socket.emit('register', user.id || user._id);
-
-    // Join tracking room for this order
     socket.emit('joinOrder', id);
-
-    // Listen for live status changes
     socket.on('statusUpdate', (data) => {
-      console.log('Real-time order status update:', data);
-      if (data.order) {
-        setOrder(data.order);
-      }
+      if (data.order) setOrder(data.order);
     });
-
-    // Listen for live location updates from the delivery rider
     socket.on('locationUpdate', (data) => {
-      console.log('Real-time order location update:', data);
-      setOrder((prevOrder) => {
-        if (!prevOrder) return prevOrder;
-        return {
-          ...prevOrder,
-          deliveryLocation: {
-            ...prevOrder.deliveryLocation,
-            latitude: data.latitude,
-            longitude: data.longitude,
-            updatedAt: data.updatedAt
-          }
-        };
+      setOrder((prev) => {
+        if (!prev) return prev;
+        return { ...prev, deliveryLocation: { ...prev.deliveryLocation, latitude: data.latitude, longitude: data.longitude, updatedAt: data.updatedAt } };
       });
     });
-
-    // Cleanup listeners and leave room on unmount
     return () => {
       socket.emit('leaveOrder', id);
       socket.off('statusUpdate');
@@ -167,7 +118,6 @@ export default function OrderTrackingPage() {
 
   useEffect(() => {
     if (!user) return undefined;
-
     const intervalId = window.setInterval(fetchTracking, 8000);
     return () => window.clearInterval(intervalId);
   }, [id, user, fetchTracking]);
@@ -180,28 +130,15 @@ export default function OrderTrackingPage() {
       }
       return undefined;
     }
-
     if (!navigator.geolocation) {
-      const timer = setTimeout(() => {
-        setLocationError('Location sharing is not supported in this browser.');
-        setSharing(false);
-      }, 0);
+      const timer = setTimeout(() => { setLocationError('Location sharing is not supported.'); setSharing(false); }, 0);
       return () => clearTimeout(timer);
     }
-
     watchIdRef.current = navigator.geolocation.watchPosition(
       sendLocation,
-      () => {
-        setLocationError('Unable to read your location. Please allow location access.');
-        setSharing(false);
-      },
-      {
-        enableHighAccuracy: true,
-        maximumAge: 5000,
-        timeout: 12000
-      }
+      () => { setLocationError('Unable to read location. Allow location access.'); setSharing(false); },
+      { enableHighAccuracy: true, maximumAge: 5000, timeout: 12000 },
     );
-
     return () => {
       if (watchIdRef.current !== null) {
         navigator.geolocation.clearWatch(watchIdRef.current);
@@ -210,150 +147,270 @@ export default function OrderTrackingPage() {
     };
   }, [sharing, canShareLocation, id, sendLocation]);
 
+  // ── Loading state ──────────────────────────────────────────────────
   if (loading) {
-    return <div style={{ padding: 24 }}>Loading tracking...</div>;
-  }
-
-  if (!user) {
     return (
-      <div style={{ padding: 24, maxWidth: 900, margin: '0 auto' }}>
-        <h1>Track Order</h1>
-        <p>Please <Link to="/signin">sign in</Link> to track this order.</p>
+      <div className="min-h-screen bg-background flex flex-col items-center justify-center pt-24">
+        <span className="material-symbols-outlined text-5xl text-primary animate-spin">restaurant</span>
+        <div className="text-on-surface-variant font-semibold mt-4">Loading tracking...</div>
       </div>
     );
   }
 
-  return (
-    <div style={{ padding: 24, maxWidth: 1100, margin: '0 auto' }}>
-      <Link to={backUrl} style={{ display: 'inline-flex', alignItems: 'center', gap: 8, marginBottom: 18 }}>
-        <FiArrowLeft /> Back to orders
-      </Link>
-
-      <div style={{ display: 'flex', justifyContent: 'space-between', gap: 16, flexWrap: 'wrap', alignItems: 'flex-start' }}>
-        <div>
-          <h1 style={{ margin: '0 0 6px' }}>Track Order</h1>
-          <p style={{ margin: 0, color: '#6b7280' }}>
-            {order ? `Order #${order._id.slice(-6)} · ${order.orderStatus.replace(/-/g, ' ')}` : 'Loading order details'}
-          </p>
+  // ── Not signed in ──────────────────────────────────────────────────
+  if (!user) {
+    return (
+      <div className="min-h-screen bg-background flex flex-col items-center justify-center pt-24 px-4 text-center space-y-5">
+        <div className="w-20 h-20 rounded-full bg-primary/10 flex items-center justify-center">
+          <span className="material-symbols-outlined text-4xl text-primary">lock</span>
         </div>
-        <button
-          type="button"
-          onClick={fetchTracking}
-          style={{ display: 'inline-flex', alignItems: 'center', gap: 8, padding: '10px 14px', borderRadius: 8, border: '1px solid #d1d5db', background: '#fff', cursor: 'pointer' }}
-        >
-          <FiRefreshCw /> Refresh
-        </button>
+        <h1 className="text-2xl font-black text-on-surface tracking-tight">Sign in to track orders</h1>
+        <p className="text-sm text-on-surface-variant/70 max-w-sm">Please sign in to view the real-time tracking for this order.</p>
+        <Link to="/signin" className="bg-primary text-on-primary font-bold text-sm px-8 py-3 rounded-full shadow-md hover:bg-primary-container transition-all">
+          Sign In
+        </Link>
       </div>
+    );
+  }
 
-      {trackingError && <p style={{ color: '#dc2626' }}>{trackingError}</p>}
-      {locationError && <p style={{ color: '#dc2626' }}>{locationError}</p>}
-      {loadingOrder && <p>Refreshing tracking...</p>}
+  const isCancelled = order?.orderStatus === 'cancelled';
 
-      <section style={{ display: 'grid', gap: 12, gridTemplateColumns: 'repeat(auto-fit, minmax(140px, 1fr))', marginTop: 22, padding: 16, border: '1px solid #e5e7eb', borderRadius: 8, background: '#fff' }}>
-        {progressSteps.map((step, index) => {
-          const isDone = order?.orderStatus === 'cancelled' ? false : index <= activeStepIndex;
-          return (
-            <div key={step.key} style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
-              <div style={{
-                width: 28,
-                height: 28,
-                borderRadius: 999,
-                display: 'grid',
-                placeItems: 'center',
-                background: isDone ? '#16a34a' : '#e5e7eb',
-                color: isDone ? '#fff' : '#6b7280',
-                fontWeight: 800,
-                flex: '0 0 auto'
-              }}>
-                {index + 1}
-              </div>
-              <span style={{ fontWeight: isDone ? 800 : 600, color: isDone ? '#111827' : '#6b7280' }}>{step.label}</span>
-            </div>
-          );
-        })}
-      </section>
+  return (
+    <div className="bg-background text-on-background min-h-screen pt-24 pb-20 font-sans">
+      <div className="max-w-7xl mx-auto px-4 md:px-margin-desktop space-y-6">
 
-      {order?.orderStatus === 'cancelled' && (
-        <p style={{ color: '#dc2626', fontWeight: 700 }}>This order has been cancelled.</p>
-      )}
-
-      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))', gap: 20, marginTop: 22 }}>
-        <section style={{ border: '1px solid #d1d5db', borderRadius: 8, overflow: 'hidden', minHeight: 520, background: '#eef2f7' }}>
-          {mapUrl ? (
-            <iframe
-              title="Live delivery location"
-              src={mapUrl}
-              style={{ width: '100%', height: 520, border: 0, display: 'block' }}
-            />
-          ) : (
-            <div style={{ minHeight: 520, display: 'grid', placeItems: 'center', padding: 24, textAlign: 'center' }}>
-              <div>
-                <FiMapPin size={42} color="#2563eb" />
-                <h2>{order?.deliveryPartner ? 'Waiting for live location' : 'Delivery partner not assigned yet'}</h2>
-                <p style={{ color: '#4b5563', maxWidth: 420 }}>
-                  {order?.deliveryPartner
-                    ? 'The map will appear after the delivery partner starts location sharing.'
-                    : 'You can keep this page open. Tracking will start once a delivery partner accepts your order.'}
-                </p>
-              </div>
-            </div>
-          )}
-        </section>
-
-        <aside style={{ display: 'grid', gap: 14, alignSelf: 'start' }}>
-          <div style={{ border: '1px solid #e5e7eb', borderRadius: 8, padding: 16, background: '#fff' }}>
-            <h2 style={{ marginTop: 0, fontSize: 20 }}>Tracking Details</h2>
-            <p><strong>Status:</strong> {order?.orderStatus?.replace(/-/g, ' ') || 'Loading'}</p>
-            <p><strong>Delivery partner:</strong> {order?.deliveryPartner ? `${order.deliveryPartner.firstName || ''} ${order.deliveryPartner.lastName || ''}`.trim() || 'Assigned' : 'Not assigned'}</p>
-            {order?.deliveryPartner?.phone && <p><strong>Rider phone:</strong> {order.deliveryPartner.phone}</p>}
-            {order?.deliveryOtp?.sentAt && (
-              <p style={{ color: '#166534', fontWeight: 700 }}>
-                Delivery OTP sent to your phone at {new Date(order.deliveryOtp.sentAt).toLocaleTimeString()}.
-              </p>
-            )}
-            <p><strong>Last updated:</strong> {deliveryLocation?.updatedAt ? new Date(deliveryLocation.updatedAt).toLocaleString() : 'Waiting for location'}</p>
-            {hasLocation(deliveryLocation) && (
-              <p style={{ color: '#6b7280', fontSize: 13 }}>
-                {Number(deliveryLocation.latitude).toFixed(5)}, {Number(deliveryLocation.longitude).toFixed(5)}
-              </p>
-            )}
-          </div>
-
-          {canShareLocation && (
-            <div style={{ border: '1px solid #bbf7d0', borderRadius: 8, padding: 16, background: '#f0fdf4' }}>
-              <h2 style={{ marginTop: 0, fontSize: 20 }}>Delivery Controls</h2>
-              <p style={{ color: '#166534' }}>Share your current location while you deliver this order.</p>
-              <button
-                type="button"
-                onClick={() => setSharing((current) => !current)}
-                style={{
-                  display: 'inline-flex',
-                  alignItems: 'center',
-                  gap: 8,
-                  padding: '11px 14px',
-                  borderRadius: 8,
-                  border: 'none',
-                  background: sharing ? '#dc2626' : '#16a34a',
-                  color: '#fff',
-                  cursor: 'pointer',
-                  fontWeight: 700
-                }}
-              >
-                <FiNavigation /> {sharing ? 'Stop sharing' : 'Start live tracking'}
-              </button>
-            </div>
-          )}
-
-          <div style={{ border: '1px solid #e5e7eb', borderRadius: 8, padding: 16, background: '#fff' }}>
-            <h2 style={{ marginTop: 0, fontSize: 20 }}>Delivery Address</h2>
-            <p style={{ marginBottom: 0 }}>
-              {order?.deliveryAddress
-                ? `${order.deliveryAddress.street}, ${order.deliveryAddress.city}, ${order.deliveryAddress.state} ${order.deliveryAddress.zipCode}, ${order.deliveryAddress.country}`
-                : 'Loading address'}
+        {/* Header */}
+        <div className="flex flex-col sm:flex-row sm:justify-between sm:items-end gap-4 pb-4 border-b border-outline-variant/20">
+          <div>
+            <Link to={backUrl} className="inline-flex items-center gap-1 text-xs font-bold text-on-surface-variant hover:text-primary transition-colors mb-2">
+              <span className="material-symbols-outlined text-base">arrow_back</span>
+              Back to orders
+            </Link>
+            <h1 className="text-3xl font-black text-on-surface tracking-tight">Track Order</h1>
+            <p className="text-xs font-semibold text-on-surface-variant/70 mt-1">
+              {order ? (
+                <>Order <span className="text-on-surface font-black">#{order._id.slice(-6)}</span> · <span className="capitalize">{order.orderStatus.replace(/-/g, ' ')}</span></>
+              ) : 'Loading order details...'}
             </p>
           </div>
-        </aside>
+          <button
+            type="button"
+            onClick={fetchTracking}
+            disabled={loadingOrder}
+            className="inline-flex items-center gap-2 bg-surface-container-lowest border border-outline-variant/30 text-on-surface-variant font-bold text-xs px-5 py-2.5 rounded-xl hover:bg-surface-container hover:text-primary transition-all cursor-pointer disabled:opacity-50"
+          >
+            <span className={`material-symbols-outlined text-base ${loadingOrder ? 'animate-spin' : ''}`}>refresh</span>
+            {loadingOrder ? 'Refreshing...' : 'Refresh'}
+          </button>
+        </div>
+
+        {/* Errors */}
+        {trackingError && (
+          <div className="p-4 bg-rose-50 border border-rose-300 rounded-2xl text-rose-700 text-xs font-semibold flex items-center gap-2">
+            <span className="material-symbols-outlined text-base">warning</span>
+            {trackingError}
+          </div>
+        )}
+        {locationError && (
+          <div className="p-4 bg-rose-50 border border-rose-300 rounded-2xl text-rose-700 text-xs font-semibold flex items-center gap-2">
+            <span className="material-symbols-outlined text-base">location_off</span>
+            {locationError}
+          </div>
+        )}
+
+        {/* Progress Steps */}
+        <div className="bg-surface-container-lowest border border-outline-variant/30 rounded-[24px] p-5 md:p-6 shadow-sm">
+          <div className="flex items-center justify-between gap-1 overflow-x-auto">
+            {progressSteps.map((step, index) => {
+              const isDone = isCancelled ? false : index <= activeStepIndex;
+              const isCurrent = !isCancelled && index === activeStepIndex;
+              return (
+                <div key={step.key} className="flex flex-col items-center gap-1.5 min-w-margin-desktop flex-1 relative">
+                  {/* Connector line */}
+                  {index > 0 && (
+                    <div className={`absolute top-4 -left-1/2 w-full h-0.5 -z-1 transition-colors duration-500 ${isDone ? 'bg-primary' : 'bg-outline-variant/30'}`} />
+                  )}
+                  <div className={`w-9 h-9 rounded-full flex items-center justify-center transition-all duration-500 z-10 ${
+                    isDone ? 'bg-primary text-on-primary shadow-md' : 'bg-surface-container-high text-on-surface-variant/50'
+                  } ${isCurrent ? 'ring-4 ring-primary/20 scale-110' : ''}`}>
+                    <span className="material-symbols-outlined text-lg">{step.icon}</span>
+                  </div>
+                  <span className={`text-[10px] font-bold text-center leading-tight ${isDone ? 'text-on-surface font-extrabold' : 'text-on-surface-variant/50'}`}>
+                    {step.label}
+                  </span>
+                </div>
+              );
+            })}
+          </div>
+        </div>
+
+        {/* Cancelled banner */}
+        {isCancelled && (
+          <div className="p-4 bg-rose-50 border border-rose-300 rounded-2xl flex items-center gap-3">
+            <span className="material-symbols-outlined text-rose-500 text-2xl">cancel</span>
+            <span className="text-rose-700 font-bold text-sm">This order has been cancelled.</span>
+          </div>
+        )}
+
+        {/* Main content grid: Map + Details */}
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
+
+          {/* Map */}
+          <div className="lg:col-span-7">
+            <div className="bg-surface-container-lowest border border-outline-variant/30 rounded-[24px] overflow-hidden shadow-sm">
+              {mapUrl ? (
+                <iframe
+                  title="Live delivery location"
+                  src={mapUrl}
+                  className="w-full border-0 block"
+                  style={{ height: 480 }}
+                />
+              ) : (
+                <div className="flex flex-col items-center justify-center text-center p-10" style={{ minHeight: 480 }}>
+                  <div className="w-20 h-20 rounded-full bg-primary/10 flex items-center justify-center mb-5">
+                    <span className="material-symbols-outlined text-4xl text-primary">location_on</span>
+                  </div>
+                  <h2 className="text-lg font-black text-on-surface mb-2">
+                    {order?.deliveryPartner ? 'Waiting for live location' : 'Delivery partner not assigned'}
+                  </h2>
+                  <p className="text-xs text-on-surface-variant/70 max-w-md leading-relaxed">
+                    {order?.deliveryPartner
+                      ? 'The map will appear once the delivery partner starts sharing their location.'
+                      : 'Keep this page open. Tracking begins once a delivery partner accepts your order.'}
+                  </p>
+                </div>
+              )}
+            </div>
+          </div>
+
+          {/* Details sidebar */}
+          <aside className="lg:col-span-5 space-y-5">
+
+            {/* Delivery Verification OTP Card */}
+            {order?.otpSentAt && !order?.otpVerified && order?.deliveryOtp && (
+              <Card title="🔑 Delivery Verification OTP">
+                <div className="flex flex-col items-center justify-center py-4 bg-primary/5 rounded-2xl border-2 border-dashed border-primary/20">
+                  <span className="text-[10px] uppercase font-black text-primary tracking-widest mb-1.5">Share with Rider on Delivery</span>
+                  <span className="text-3xl font-black text-primary tracking-[0.35em] pl-[0.35em] font-mono select-all">
+                    {order.deliveryOtp}
+                  </span>
+                  {order.deliveryOtpExpiry && (
+                    <span className="text-[10px] font-bold text-on-surface-variant/50 mt-2">
+                      Expires: {new Date(order.deliveryOtpExpiry).toLocaleTimeString()}
+                    </span>
+                  )}
+                </div>
+              </Card>
+            )}
+
+            {/* Tracking Details card */}
+            <Card title="📍 Tracking Details">
+              <InfoRow label="Status" value={
+                <span className={`capitalize font-extrabold ${isCancelled ? 'text-rose-500' : 'text-primary'}`}>
+                  {order?.orderStatus?.replace(/-/g, ' ') || 'Loading'}
+                </span>
+              } />
+              <InfoRow label="Delivery Partner" value={
+                order?.deliveryPartner
+                  ? `${order.deliveryPartner.firstName || ''} ${order.deliveryPartner.lastName || ''}`.trim() || 'Assigned'
+                  : <span className="text-on-surface-variant/50">Not assigned yet</span>
+              } />
+              {order?.deliveryPartner?.phone && (
+                <InfoRow label="Rider Phone" value={
+                  <a href={`tel:${order.deliveryPartner.phone}`} className="text-primary font-bold hover:underline">{order.deliveryPartner.phone}</a>
+                } />
+              )}
+              {order?.otpSentAt && !order?.otpVerified && (
+                <div className="mt-2 p-3 bg-green-50 border border-green-200 rounded-xl text-green-700 text-xs font-bold flex items-center gap-2">
+                  <span className="material-symbols-outlined text-sm">vpn_key</span>
+                  OTP sent at {new Date(order.otpSentAt).toLocaleTimeString()}
+                </div>
+              )}
+              <InfoRow label="Last Updated" value={
+                deliveryLocation?.updatedAt
+                  ? new Date(deliveryLocation.updatedAt).toLocaleString()
+                  : <span className="text-on-surface-variant/50">Waiting for location</span>
+              } />
+              {hasLocation(deliveryLocation) && (
+                <p className="text-[10px] text-on-surface-variant/40 font-mono mt-1">
+                  {Number(deliveryLocation.latitude).toFixed(5)}, {Number(deliveryLocation.longitude).toFixed(5)}
+                </p>
+              )}
+            </Card>
+
+            {/* Delivery Controls (for delivery riders) */}
+            {canShareLocation && (
+              <Card title="🚴 Delivery Controls">
+                <p className="text-xs text-on-surface-variant/70 leading-relaxed mb-3">
+                  Share your current location in real-time while delivering this order.
+                </p>
+                <button
+                  type="button"
+                  onClick={() => setSharing((c) => !c)}
+                  className={`w-full inline-flex items-center justify-center gap-2 font-black text-sm px-5 py-3.5 rounded-xl transition-all active:scale-[0.97] cursor-pointer ${
+                    sharing
+                      ? 'bg-rose-500 text-white hover:bg-rose-600 shadow-md'
+                      : 'bg-green-600 text-white hover:bg-green-700 shadow-md'
+                  }`}
+                >
+                  <span className="material-symbols-outlined text-lg">{sharing ? 'location_off' : 'my_location'}</span>
+                  {sharing ? 'Stop Sharing Location' : 'Start Live Tracking'}
+                </button>
+              </Card>
+            )}
+
+            {/* Delivery Address card */}
+            <Card title="🏠 Delivery Address">
+              <div className="text-sm text-on-surface space-y-1">
+                {order?.deliveryAddress ? (
+                  order.deliveryAddress.fullName ? (
+                    <>
+                      <p className="font-extrabold">{order.deliveryAddress.fullName} ({order.deliveryAddress.phoneNumber})</p>
+                      <p className="leading-relaxed">
+                        {order.deliveryAddress.flatNo}, {order.deliveryAddress.street}
+                        {order.deliveryAddress.landmark ? `, Landmark: ${order.deliveryAddress.landmark}` : ''}
+                      </p>
+                      <p className="leading-relaxed">
+                        {order.deliveryAddress.city}, {order.deliveryAddress.state} - {order.deliveryAddress.pincode || order.deliveryAddress.zipCode}
+                      </p>
+                      {order.deliveryAddress.deliveryInstructions && (
+                        <p className="text-xs text-on-surface-variant mt-2.5 p-2.5 bg-surface border border-outline-variant/20 rounded-xl italic">
+                          <strong>Instruction:</strong> {order.deliveryAddress.deliveryInstructions}
+                        </p>
+                      )}
+                    </>
+                  ) : (
+                    <p className="leading-relaxed">
+                      {order.deliveryAddress.street}, {order.deliveryAddress.city}, {order.deliveryAddress.state} {order.deliveryAddress.zipCode}, {order.deliveryAddress.country}
+                    </p>
+                  )
+                ) : (
+                  <span className="text-on-surface-variant/50">Loading address...</span>
+                )}
+              </div>
+            </Card>
+          </aside>
+        </div>
       </div>
+    </div>
+  );
+}
+
+// ─── Helper components ────────────────────────────────────────────────────────
+function Card({ title, children }) {
+  return (
+    <div className="bg-surface-container-lowest border border-outline-variant/30 rounded-[24px] p-6 shadow-sm space-y-3">
+      <h2 className="text-base font-black text-on-surface select-none pb-2 border-b border-outline-variant/10">{title}</h2>
+      {children}
+    </div>
+  );
+}
+
+function InfoRow({ label, value }) {
+  return (
+    <div className="flex justify-between items-start gap-4 text-xs py-1.5">
+      <span className="text-on-surface-variant/70 font-bold shrink-0">{label}</span>
+      <span className="text-on-surface font-extrabold text-right">{value}</span>
     </div>
   );
 }

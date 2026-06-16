@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useCurrentUser } from '../hooks/useCurrentUser';
 import { useSelector, useDispatch } from 'react-redux';
-import { selectCartItems } from '../features/cart/cartSlice';
+import { selectCartItems, clearCartState } from '../features/cart/cartSlice';
 import { logout } from '../features/auth/authSlice';
 
 export default function Nav() {
@@ -120,6 +120,9 @@ export default function Nav() {
 
   const handleLogout = () => {
     dispatch(logout());
+    dispatch(clearCartState());
+    localStorage.removeItem('cart');
+    sessionStorage.removeItem('cart');
     navigate('/');
   };
 
@@ -221,9 +224,7 @@ export default function Nav() {
 
         {/* Right Navigation & User Menu */}
         <div className="flex items-center gap-2 sm:gap-3 shrink-0">
-          <Link to="/" className="hidden sm:inline-block text-on-surface-variant hover:text-primary font-medium text-sm transition-colors px-2 py-1">
-            Home
-          </Link>
+
 
           {/* Cart Icon (Only for Customers / Guests) */}
           {(!user || user.userType === 'customer') && (
@@ -267,14 +268,7 @@ export default function Nav() {
 
                   {/* Navigation Links inside dropdown */}
                   <div className="p-1 flex flex-col">
-                    <Link
-                      to="/"
-                      onClick={() => setUserMenuOpen(false)}
-                      className="flex items-center gap-2 px-3 py-2 text-xs font-bold text-on-surface hover:bg-primary/5 hover:text-primary rounded-xl transition-colors"
-                    >
-                      <span className="material-symbols-outlined text-sm select-none">home</span>
-                      Home
-                    </Link>
+
 
                     {user.userType === 'customer' && (
                       <Link
@@ -290,7 +284,7 @@ export default function Nav() {
                     {user.userType === 'restaurant' && (
                       <>
                         <Link
-                          to="/owner-dashboard"
+                          to="/"
                           onClick={() => setUserMenuOpen(false)}
                           className="flex items-center gap-2 px-3 py-2 text-xs font-bold text-on-surface hover:bg-primary/5 hover:text-primary rounded-xl transition-colors"
                         >

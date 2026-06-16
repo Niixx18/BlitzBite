@@ -54,9 +54,8 @@ export default function SignIn() {
       dispatch(setCredentials({ user: data.user, token: data.token }));
       showToast('Logged in successfully! 🚀');
 
-      // Route based on role
       setTimeout(() => {
-        if (data.user.userType === 'restaurant') navigate('/owner-dashboard');
+        if (data.user.userType === 'restaurant') navigate('/');
         else if (data.user.userType === 'delivery') navigate('/delivery-orders');
         else navigate('/');
       }, 500);
@@ -122,7 +121,7 @@ export default function SignIn() {
       showToast('OTP verified! Welcome back. 🎉');
 
       setTimeout(() => {
-        if (data.user.userType === 'restaurant') navigate('/owner-dashboard');
+        if (data.user.userType === 'restaurant') navigate('/');
         else if (data.user.userType === 'delivery') navigate('/delivery-orders');
         else navigate('/');
       }, 500);

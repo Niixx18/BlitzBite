@@ -64,13 +64,13 @@ const sendDeliveryOtpToUser = async (order) => {
   }
 
   const otp = generateDeliveryOtp();
-  order.deliveryOtp = {
-    code: otp,
-    expiresAt: new Date(Date.now() + 10 * 60 * 1000),
-    sentAt: new Date(),
-    verifiedAt: undefined
-  };
+  order.deliveryOtp = otp;
+  order.deliveryOtpExpiry = new Date(Date.now() + 10 * 60 * 1000);
+  order.otpSentAt = new Date();
+  order.otpVerified = false;
   await order.save();
+
+  console.log(`[DEV OTP LOG] Generated OTP for Order #${order._id}: ${otp}`);
 
   if (!isTwilioConfigured) {
     return {
@@ -80,16 +80,25 @@ const sendDeliveryOtpToUser = async (order) => {
     };
   }
 
-  await twilioClient.messages.create({
-    body: `Your BlitzBite delivery OTP for order #${order._id.toString().slice(-6)} is ${otp}. Share it with the delivery partner only at delivery.`,
-    from: process.env.TWILIO_PHONE_NUMBER,
-    to: `+91${customer.phone}`
-  });
+  try {
+    await twilioClient.messages.create({
+      body: `Your BlitzBite delivery OTP for order #${order._id.toString().slice(-6)} is ${otp}. Share it with the delivery partner only at delivery.`,
+      from: process.env.TWILIO_PHONE_NUMBER,
+      to: `+91${customer.phone}`
+    });
 
-  return {
-    sent: true,
-    message: 'Delivery OTP sent successfully'
-  };
+    return {
+      sent: true,
+      message: 'Delivery OTP sent successfully'
+    };
+  } catch (twilioErr) {
+    console.error('[TWILIO ERROR] Failed to send SMS:', twilioErr.message);
+    return {
+      sent: false,
+      message: `Twilio error: ${twilioErr.message}. OTP logged locally for testing.`,
+      devOtp: otp
+    };
+  }
 };
 
 exports.createOrder = async (req, res) => {
@@ -269,7 +278,7 @@ exports.updateDeliveryLocation = async (req, res) => {
 
 exports.sendDeliveryOtp = async (req, res) => {
   try {
-    const order = await Order.findById(req.params.id).select('+deliveryOtp.code +deliveryOtp.expiresAt');
+    const order = await Order.findById(req.params.id);
     if (!order) {
       return res.status(404).json({ message: 'Order not found' });
     }
@@ -283,7 +292,7 @@ exports.sendDeliveryOtp = async (req, res) => {
       return res.status(400).json({ message: 'Delivery OTP can be sent only when the order is out for delivery' });
     }
 
-    if (order.deliveryOtp?.verifiedAt) {
+    if (order.otpVerified) {
       return res.status(400).json({ message: 'Delivery OTP is already verified' });
     }
 
@@ -464,6 +473,12 @@ exports.updateOrderStatus = async (req, res) => {
       });
     }
 
+    if (orderStatus === 'delivered' && !order.otpVerified) {
+      return res.status(400).json({
+        message: 'Order cannot be marked delivered without OTP verification'
+      });
+    }
+
     order.orderStatus = orderStatus;
     let otpResult = null;
     if (orderStatus === 'out-for-delivery') {
@@ -500,6 +515,77 @@ exports.updateOrderStatus = async (req, res) => {
         smsSent: otpResult.sent,
         devOtp: otpResult.devOtp
       } : undefined
+    });
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
+};
+
+exports.verifyDeliveryOtp = async (req, res) => {
+  try {
+    const { otp } = req.body;
+    if (!otp) {
+      return res.status(400).json({ message: 'OTP is required' });
+    }
+
+    const order = await Order.findById(req.params.id);
+    if (!order) {
+      return res.status(404).json({ message: 'Order not found' });
+    }
+
+    const isDeliveryPartner = order.deliveryPartner && String(order.deliveryPartner) === String(req.user.id);
+    if (!isDeliveryPartner) {
+      return res.status(403).json({ message: 'Only the assigned delivery partner can verify OTP' });
+    }
+
+    if (order.orderStatus !== 'out-for-delivery') {
+      return res.status(400).json({ message: 'OTP can only be verified when the order is out for delivery' });
+    }
+
+    if (order.otpVerified) {
+      return res.status(400).json({ message: 'OTP has already been verified' });
+    }
+
+    if (!order.deliveryOtp) {
+      return res.status(400).json({ message: 'No active OTP found. Please send OTP first.' });
+    }
+
+    if (new Date() > order.deliveryOtpExpiry) {
+      return res.status(400).json({ message: 'OTP has expired. Please request a new one.' });
+    }
+
+    if (order.deliveryOtp !== otp.trim()) {
+      return res.status(400).json({ message: 'Invalid OTP. Please try again.' });
+    }
+
+    // OTP matches and is valid! Update details
+    order.otpVerified = true;
+    order.deliveryOtp = null;
+    order.deliveryOtpExpiry = null;
+    order.orderStatus = 'delivered';
+    order.deliveredAt = new Date();
+
+    await order.save();
+
+    const updatedOrder = await Order.findById(order._id)
+      .populate('items.shop', 'name')
+      .populate('user', 'firstName lastName email')
+      .populate('deliveryPartner', 'firstName lastName email phone');
+
+    // Emit live order status update to the tracking room
+    try {
+      const { sendToOrderRoom } = require('../config/socket');
+      sendToOrderRoom(order._id, 'statusUpdate', {
+        orderStatus: 'delivered',
+        order: updatedOrder
+      });
+    } catch (socketErr) {
+      console.error('Socket status update emission error:', socketErr);
+    }
+
+    res.json({
+      message: 'OTP verified successfully. Order marked as delivered.',
+      order: updatedOrder
     });
   } catch (err) {
     res.status(500).json({ message: err.message });

@@ -142,6 +142,11 @@ const cartSlice = createSlice({
       .addCase(removeCartItem.rejected, (state, action) => {
         state.status = 'failed';
         state.error = action.payload ?? action.error.message;
+      })
+      .addCase('auth/logout', (state) => {
+        state.items = [];
+        state.status = 'idle';
+        state.error = null;
       });
   }
 });

@@ -13,6 +13,7 @@ router.get('/:id/tracking', protect, orderController.getOrderTracking);
 router.patch('/:id/accept-delivery', protect, authorize('delivery'), orderController.acceptDeliveryOrder);
 router.patch('/:id/location', protect, authorize('delivery'), orderController.updateDeliveryLocation);
 router.post('/:id/delivery-otp/send', protect, authorize('delivery'), orderController.sendDeliveryOtp);
+router.post('/:id/delivery-otp/verify', protect, authorize('delivery'), orderController.verifyDeliveryOtp);
 router.patch('/:id/assign-delivery', protect, orderController.assignDeliveryPartner);
 router.patch('/:id/status', protect, orderController.updateOrderStatus);
 router.post('/', protect, orderController.createOrder);

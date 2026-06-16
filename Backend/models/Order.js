@@ -50,10 +50,29 @@ const orderSchema = new mongoose.Schema({
     }
   },
   deliveryAddress: {
+    fullName: {
+      type: String,
+      trim: true,
+      required: [true, 'Full name is required']
+    },
+    phoneNumber: {
+      type: String,
+      trim: true,
+      required: [true, 'Phone number is required']
+    },
+    flatNo: {
+      type: String,
+      trim: true,
+      required: [true, 'House/Flat number is required']
+    },
     street: {
       type: String,
       trim: true,
       required: [true, 'Street address is required']
+    },
+    landmark: {
+      type: String,
+      trim: true
     },
     city: {
       type: String,
@@ -65,10 +84,18 @@ const orderSchema = new mongoose.Schema({
       trim: true,
       required: [true, 'State is required']
     },
-    zipCode: {
+    pincode: {
       type: String,
       trim: true,
-      required: [true, 'Zip code is required']
+      required: [true, 'Pincode is required']
+    },
+    deliveryInstructions: {
+      type: String,
+      trim: true
+    },
+    zipCode: {
+      type: String,
+      trim: true
     },
     country: {
       type: String,
@@ -148,16 +175,20 @@ const orderSchema = new mongoose.Schema({
     updatedAt: Date
   },
   deliveryOtp: {
-    code: {
-      type: String,
-      select: false
-    },
-    expiresAt: {
-      type: Date,
-      select: false
-    },
-    sentAt: Date,
-    verifiedAt: Date
+    type: String,
+    default: null
+  },
+  deliveryOtpExpiry: {
+    type: Date,
+    default: null
+  },
+  otpVerified: {
+    type: Boolean,
+    default: false
+  },
+  otpSentAt: {
+    type: Date,
+    default: null
   },
   notes: {
     type: String,
