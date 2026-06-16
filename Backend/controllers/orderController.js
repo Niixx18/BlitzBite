@@ -76,7 +76,7 @@ const sendDeliveryOtpToUser = async (order) => {
     return {
       sent: false,
       message: 'Twilio is not configured; OTP generated for local testing',
-      devOtp: otp
+      ...(process.env.NODE_ENV !== 'production' && { devOtp: otp })
     };
   }
 

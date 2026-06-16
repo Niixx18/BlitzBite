@@ -311,9 +311,12 @@ exports.sendOTP = async (req, res) => {
         }
 
         const responsePayload = {
-            message: sentViaSms ? 'OTP sent successfully' : 'OTP generated (SMS failed/skipped, using Dev Mode fallback)',
-            devOtp: otp
+            message: sentViaSms ? 'OTP sent successfully' : 'OTP generated',
         };
+
+        if (process.env.NODE_ENV !== 'production') {
+            responsePayload.devOtp = otp;
+        }
 
         if (smsError) {
             responsePayload.error = smsError;

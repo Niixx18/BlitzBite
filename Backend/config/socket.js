@@ -4,9 +4,16 @@ let io;
 const userSockets = new Map(); // userId string -> socketId string
 
 const initSocket = (server) => {
+  const allowedOrigins = (process.env.FRONTEND_URL || 'http://localhost:5173')
+      .split(',')
+      .map(o => o.trim());
+
   io = new Server(server, {
     cors: {
-      origin: process.env.FRONTEND_URL || 'http://localhost:5173',
+      origin: (origin, callback) => {
+          if (!origin || allowedOrigins.includes(origin)) callback(null, true);
+          else callback(new Error(`Socket CORS: ${origin} not allowed`));
+      },
       methods: ['GET', 'POST', 'PATCH', 'PUT', 'DELETE'],
       credentials: true
     }
